@@ -1,0 +1,17 @@
+### Project ###
+
+### Python ###
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[co]
+
+# coverage
+.coverage
+
+# Tag files
+tags
+
+### Django ###
+db.sqlite3
+
