@@ -1,0 +1,228 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-07-22 22:52+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: core/templates/core/includes/action_table_form.html:22
+msgid "Confirmation required:"
+msgstr "Требуется подтверждение:"
+
+#: core/templates/core/includes/action_table_form.html:24
+msgid "Are you sure you want to"
+msgstr "Вы уверены что хотите"
+
+#: core/templates/core/includes/action_table_form.html:31
+msgid "Yes"
+msgstr "Да"
+
+#: core/templates/core/includes/action_table_form.html:34
+msgid "No"
+msgstr "Нет"
+
+#: core/templates/core/includes/delete_form.html:7
+msgid "Are you sure you want to delete"
+msgstr "Вы уверены что хотите удалить"
+
+#: core/templates/core/includes/delete_form.html:8
+msgid "Delete"
+msgstr "Удалить"
+
+#: core/templates/core/includes/delete_form.html:10
+#: core/templates/core/includes/form.html:28
+msgid "Cancel"
+msgstr "Отмена"
+
+#: core/templates/core/includes/filter_table_form.html:56
+msgid "Filter"
+msgstr "Фильтр"
+
+#: core/templates/core/includes/formset_table.html:117
+#, python-format
+msgid ""
+"\n"
+"                        Page %(page)s of %(pages)s\n"
+"                    "
+msgstr ""
+"\n"
+"                        Страница %(page)s из %(pages)s\n"
+"                    "
+
+#: core/templates/core/includes/formset_table.html:123
+msgid "First"
+msgstr "Первая"
+
+#: core/templates/core/includes/formset_table.html:133
+msgid "Last"
+msgstr "Последняя"
+
+#: core/templates/core/includes/formset_table.html:143
+msgid "Add"
+msgstr "Добавить"
+
+#: core/validators.py:10
+msgid "This date should be a Monday."
+msgstr "Эта дата должна быть Понедельником"
+
+#: core/validators.py:18
+msgid "This date should be a Sunday."
+msgstr "Эта дата должна быть Воскресеньем"
+
+#: core/validators.py:26
+#, python-format
+msgid "Slug must not be \"%(slug)s\""
+msgstr "Slug не может быть \"%(slug)s\""
+
+#: core/validators.py:35
+msgid "This value must be grater than zero"
+msgstr "Это число должно быть больше нуля"
+
+#: core/validators.py:47
+#, python-format
+msgid "An error was founded in %(value)s template: %(message)s"
+msgstr "Обнаружена ошибка в значении %(value)s шаблон: %(message)s"
+
+#: employee/apps.py:7
+msgid "Employee"
+msgstr "Работник"
+
+#: mallenom/settings/base.py:125
+msgid "Russian"
+msgstr "Русский"
+
+#: mallenom/settings/base.py:126
+msgid "English"
+msgstr "Английский"
+
+#: mallenom/settings/base.py:152
+msgid "Mallenom administration"
+msgstr "Администрирование Mallenom"
+
+#: mallenom/settings/base.py:154
+msgid "Mallenom site admin"
+msgstr "Администрирование сайта Mallenom"
+
+#: mallenom/settings/base.py:156
+msgid "Site administration"
+msgstr "Администрирование сайта"
+
+#: schedule/apps.py:7 templates/base.html:65
+msgid "Schedule"
+msgstr "Расписание"
+
+#: staffing/apps.py:7 templates/base.html:67
+msgid "Staffing"
+msgstr "Штатное расписание"
+
+#: templates/400.html:5 templates/400.html:11
+msgid "Bad request"
+msgstr "Ошибка в запросе"
+
+#: templates/400.html:13
+msgid ""
+"\n"
+"                    I do not get upset when people do not understand me,\n"
+"                    upset if I do not understand people.\"\n"
+"                "
+msgstr ""
+"\n"
+"                    Я не огорчаюсь, если люди меня не понимают,\n"
+"                    - огорчаюсь, если я не понимаю людей.\"\n"
+"                "
+
+#: templates/403.html:5 templates/403.html:11
+msgid "Forbidden"
+msgstr "Доступ запрещен"
+
+#: templates/403.html:13
+msgid "No things are forbidden, they are just not recommended."
+msgstr "Запретных вещей нет, есть вещи нерекомендованные."
+
+#: templates/404.html:5 templates/404.html:11
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+#: templates/404.html:13
+msgid ""
+"\n"
+"                    There are all sorts here walking around,\n"
+"                    and then I have a page missing!\n"
+"                "
+msgstr ""
+"\n"
+"                    Ходят тут всякие,\n"
+"                    а потом у меня страницы пропадают!\n"
+"                "
+
+#: templates/500.html:5 templates/500.html:11
+msgid "Internal server error"
+msgstr "Ошибка сервера"
+
+#: templates/500.html:13
+msgid "Do not mistake the one who does nothing."
+msgstr "Никогда не ошибается тот, кто ничего не делает."
+
+#: templates/base.html:30
+msgid "LogOut"
+msgstr "Выйти"
+
+#: templates/base.html:32 templates/registration/login.html:37
+msgid "LogIn"
+msgstr "Войти"
+
+#: templates/base.html:66
+msgid "Employees"
+msgstr "Работники"
+
+#: templates/registration/logged_out.html:6
+msgid "Logged out!"
+msgstr "Выход выполнен!"
+
+#: templates/registration/logged_out.html:7
+msgid "Click here to login again."
+msgstr "Войти снова."
+
+#: templates/registration/login.html:8
+msgid ""
+"\n"
+"                    Your username and password didn't match.\n"
+"                    Please try again.\n"
+"                "
+msgstr ""
+"\n"
+"                    Имя пользователя и пароль не совпадают.\n"
+"                    Пожалуйста, попробуйте снова.\n"
+"                "
+
+#: templates/registration/login.html:18
+msgid "Your account doesn't have access to this page."
+msgstr "Ваш пользователь не имеет доступа к этой странице."
+
+#: templates/registration/login.html:21
+msgid "Please login to see this page."
+msgstr "Пожалуйста войдите чтобы увидеть страницу."
+
+#: templates/site/underconstruction.html:5
+#: templates/site/underconstruction.html:11
+msgid "Under construction"
+msgstr "В разработке"
+
+#: templates/site/underconstruction.html:13
+msgid "Sorry, this section is under construction."
+msgstr "Извините, раздел в разработке."
