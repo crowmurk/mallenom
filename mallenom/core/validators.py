@@ -34,3 +34,16 @@ def validate_positive(value):
         raise ValidationError(
             _('This value must be grater than zero'),
         )
+
+def validate_json(value):
+    """Проверяет текстовое поле на соответствие
+    формату json
+    """
+    try:
+        if value:
+            json.loads(value)
+    except ValueError as e:
+        raise ValidationError(
+            _('An error was founded in %(value)s template: %(message)s'),
+            params={'value': value, 'message': e, },
+        )
