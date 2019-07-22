@@ -1,0 +1,103 @@
+{% load staticfiles %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <title>
+            {% block title %}
+                Mallenom Time Sheet
+            {% endblock %}
+        </title>
+        <link rel="icon" href="{% static 'site/images/favicon.ico' %}" type="image/x-icon">
+        <link rel="shortcut icon" href="{% static 'site/images/favicon.ico' %}" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="{% static 'site/css/normalize.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'site/css/skeleton.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'site/css/style.css' %}">
+        <script type="text/javascript" src="{% static 'site/js/jquery.min.js' %}" defer></script>
+        {% block head %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container"><!-- container -->
+            <header>
+                <div class="row">
+                    <div class="offset-by-eight four columns">
+                        <ul class="inline">
+                            {% if user.is_authenticated %}
+                                <li>{{ user.get_full_name }}</li>
+                                <li><a href="{% url 'logout' %}">{% trans "LogOut" %}</a></li>
+                            {% else %}
+                                <li><a href="{% url 'login' %}">{% trans "LogIn" %}</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="u-pull-left">
+                        <h1><a class="logo" href="/">Time Sheet</a></h1>
+                    </div>
+                    <div class="five columns">
+                        <h1>Time Sheet</h1>
+                    </div>
+                    <div class="u-pull-right">
+                        <form action="{% url 'set_language' %}" method="post">
+                            {% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}" />
+                            <select class="inline" name="language" onchange="this.form.submit()">
+                                {% get_current_language as CURRENT_LANGUAGE  %}
+                                {% get_available_languages as LANGUAGES %}
+                                {% get_language_info_list for LANGUAGES as languages %}
+                                {% for language in languages %}
+                                    <option value="{{ language.code }}"
+                                            {% if language.code == CURRENT_LANGUAGE %} selected="selected"{% endif %}>
+                                    {{ language.name_local }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            </header>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'underconstruction' %}">{% trans "Schedule" %}</a></li>
+                    <li><a href="{% url 'underconstruction' %}">{% trans "Employees" %}</a></li>
+                    <li><a href="{% url 'underconstruction' %}">{% trans "Staffing" %}</a></li>
+                </ul>
+            </nav>
+            {% if messages %}
+                <div class="row">
+                    <div class="twelve columns">
+                        <ul class="messages">
+                            {% for message in messages %}
+                                {% if message.tags %}
+                                    <li class="{{ message.tags }}">
+                                {% else %}
+                                    <li>
+                                {% endif %}
+                                {{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+            <main>
+                <div class="loading-progress"></div>
+                <div class="main-container" style="visibility: hidden">
+                    {% block content %}
+                    {% endblock %}
+                </div>
+            </main>
+        </div><!-- container -->
+        <footer>
+            {% block footer %}
+            {% endblock %}
+            <p>&copy; {% now "Y" %} <a href="http://mallenom.ru/">Mallenom</a></p>
+        </footer>
+        <script type="text/javascript" src="{% static 'site/js/base.js' %}" defer></script>
+        {% block body %}
+        {% endblock %}
+    </body>
+</html>
