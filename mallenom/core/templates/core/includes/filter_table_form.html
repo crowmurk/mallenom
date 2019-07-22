@@ -1,0 +1,57 @@
+{% load i18n %}
+
+<form action="" method="get" class="inline">
+    <table>
+        <thead>
+            <tr>
+                {% for field in filter.form.visible_fields %}
+                    <th>{{ field.label }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% if filter.form.non_field_errors %}
+                {% for error in filter.form.non_field_errors %}
+                    <tr>
+                        <td colspan="{{ filter.form.visible_fields | length }}">
+                            <span class="error">{{ error }}</span>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            {% if filter.form.hidden_fields %}
+                {% for hidden in filter.form.hidden_fields %}
+                    <tr style="display: none;">
+                        <td colspan="{{ filter.form.visible_fields | length }}">
+                            {{ hidden }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+
+            {% if filter.form.errors %}
+                <tr>
+                    {% for field in filter.form.visible_fields %}
+                        <td>
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <span class="error">{{ error }}</span>
+                                {% endfor %}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endif %}
+
+            <tr>
+                {% for field in filter.form.visible_fields %}
+                    <td>
+                        {{ field }}
+                    </td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+    <input value="{% trans "Filter" %}" type="submit" style="display: none;" />
+</form>

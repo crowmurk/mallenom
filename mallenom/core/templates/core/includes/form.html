@@ -1,0 +1,34 @@
+{% load i18n %}
+{% load django_tables2 %}
+{% load forms %}
+
+<div class="row">
+    <div class="offset-by-two eight columns">
+        <h2>{{ action_verbose }}</h2>
+        <form
+            {% if paginator %}
+                action="{{ action }}?page={{ paginator.number }}"
+            {% else %}
+                action="{{ action }}"
+            {% endif %}
+            method="{{ method|default:'post' }}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if formset %}
+                {% formset_table formset %}
+            {% endif %}
+            {% if table %}
+                <div class="action-table-container">
+                    {% render_table table %}
+                </div>
+            {% endif %}
+            <button class="button-primary" type="submit">{{ action_verbose|default:'Submit' }}</button>
+            {% if cancel_url %}
+                <div class="u-pull-right">
+                    <a href="{{ cancel_url }}" class="button">{% trans "Cancel" %}</a>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+</div>
+

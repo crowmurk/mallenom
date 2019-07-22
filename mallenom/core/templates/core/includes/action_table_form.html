@@ -1,0 +1,44 @@
+{% load staticfiles %}
+{% load i18n %}
+{% load django_tables2 %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'site/css/datatables.min.css' %}">
+
+<div class="action-table-container">
+    {% if readonly %}
+        {% render_table table %}
+    {% else %}
+        <link rel="stylesheet" type="text/css" href="{% static 'site/css/jquery-ui.min.css' %}">
+        <form class="action-table-form" acrion="{{ action|default:'' }}" method="{{ method|default:'post' }}">
+            {% csrf_token %}
+            {% render_table table %}
+            <button type="{{ button_type|default:'submit' }}"
+                    class="{{ button_class|default:'button' }}"
+                    name="{{ button_name|default:'action-table-button' }}"
+                    value="{{ button_value|default:'action-table-column-item' }}"
+                    disabled>
+                {{ action_verbose|default:'Submit' }}
+            </button>
+            <div class="action-table-confirm-dialog" title="{% trans "Confirmation required:" %}" style="display: none;">
+                <p>
+                    {% trans "Are you sure you want to" %}
+                    {{ action_verbose|default:'Submit'|lower }} {{ object_type|default:'objects'|lower }}?
+                </p>
+                <button type="{{ button_type|default:'submit' }}"
+                        class="button"
+                        name="{{ button_name|default:'action-table-button' }}"
+                        value="{{ button_value|default:'action-table-column-item' }}">
+                    {% trans "Yes" %}
+                </button>
+                <div class="u-pull-right">
+                    <button class="button button-primary">{% trans "No" %}</button>
+                </div>
+            </div>
+        </form>
+    {% endif %}
+</div>
+
+<script type="text/javascript" src="{% static 'site/js/jquery-ui.min.js' %}" defer></script>
+<script type="text/javascript" src="{% static 'site/js/datatables.min.js' %}" defer></script>
+<script type="text/javascript" src="{% static 'site/js/jquery-action-table.js' %}" defer></script>
+<script type="text/javascript" src="{% static 'site/js/action-table.js' %}" defer></script>

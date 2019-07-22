@@ -41,6 +41,7 @@ THIRD_PARTY_APPS = [
 ]
 
 LOCAL_APPS = [
+    'core.apps.CoreConfig',
     'staffing.apps.StaffingConfig',
     'employee.apps.EmployeeConfig',
     'schedule.apps.ScheduleConfig',
