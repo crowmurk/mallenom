@@ -27,3 +27,10 @@ def validate_slug(value):
             params={'slug': value, },
         )
 
+def validate_positive(value):
+    """Проверяет числовое поле на значения большее 0
+    """
+    if value <= 0:
+        raise ValidationError(
+            _('This value must be grater than zero'),
+        )
