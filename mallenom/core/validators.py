@@ -17,3 +17,13 @@ def validate_sunday(value):
         raise ValidationError(
             _("This date should be a Sunday.")
         )
+
+def validate_slug(value):
+    """Проверяет поле slug на допустимые значения
+    """
+    if value.lower() in ('create', 'update', 'delete'):
+        raise ValidationError(
+            _('Slug must not be "%(slug)s"'),
+            params={'slug': value, },
+        )
+
