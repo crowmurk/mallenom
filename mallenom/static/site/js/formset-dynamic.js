@@ -5,7 +5,12 @@ $(document).ready(function() {
 
         if (options !== undefined) {
             var form_idx = $(`#id_${options.prefix}-TOTAL_FORMS`).val();
-            $(`#${options.formset}`).append($(`#${options.form}`).html().replace(/__prefix__/g, form_idx));
+            if (parseInt(form_idx) == 0) {
+                $(`#${options.formset}`).html($(`#${options.form}`).html().replace(/__prefix__/g, form_idx));
+            }
+            else {
+                $(`#${options.formset}`).append($(`#${options.form}`).html().replace(/__prefix__/g, form_idx));
+            }
             $(`#id_${options.prefix}-TOTAL_FORMS`).val(parseInt(form_idx) + 1);
         }
     });

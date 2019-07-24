@@ -3,6 +3,11 @@
 
 {{ formset.management_form }}
 
+{# Иначе не отображаются form.non_field_errors #}
+<div style="display:none">
+    {{ formset.non_form_errors }}
+</div>
+
 <table id="{{ formset.prefix }}_table">
     {% for form in formset.forms %}
         {% if forloop.first %}
@@ -16,25 +21,21 @@
             <tbody id="{{ formset.prefix }}_table_body">
         {% endif %}
 
-        {% if form.non_field_errors %}
-            {% for error in form.non_field_errors %}
-                <tr>
-                    <td colspan="{{ form.visible_fields | length }}">
-                        <span class="error">{{ error }}</span>
-                    </td>
-                </tr>
-            {% endfor %}
-        {% endif %}
+        {% for hidden in form.hidden_fields %}
+            <tr style="display: none;">
+                <td colspan="{{ form.visible_fields | length }}">
+                    {{ hidden }}
+                </td>
+            </tr>
+        {% endfor %}
 
-        {% if form.hidden_fields %}
-            {% for hidden in form.hidden_fields %}
-                <tr style="display: none;">
-                    <td colspan="{{ form.visible_fields | length }}">
-                        {{ hidden }}
-                    </td>
-                </tr>
-            {% endfor %}
-        {% endif %}
+        {% for error in form.non_field_errors %}
+            <tr>
+                <td colspan="{{ form.visible_fields | length }}">
+                    <span class="error">{{ error }}</span>
+                </td>
+            </tr>
+        {% endfor %}
 
         {% if form.errors %}
             <tr>
@@ -58,24 +59,25 @@
             {% endfor %}
         </tr>
     {% empty %}
-        <tbody id="{{ formset.prefix }}_table">
-    {% endfor %}
+        <thead id="{{ formset.prefix }}_table_head">
+            <tr>
+                {% for field in formset.empty_form.visible_fields %}
+                    <th>{{ field.label }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody id="{{ formset.prefix }}_table_body">
+            <tr>
+                <td colspan="{{ formset.empty_form.visible_fields | length }}">
+                    <span>{% trans "There are no records available" %}</span>
+                </td>
+            </tr>
+        {% endfor %}
         </tbody>
 </table>
 
 <table id="{{ formset.prefix }}_empty_form_table" style="display:none">
     <tbody id="{{ formset.prefix }}_empty_form_table_body">
-        {% if formset.empty_form.non_field_errors %}
-            {% for error in formset.empty_form.non_field_errors %}
-                <tr>
-                    <td colspan="{{ formset.empty_form.visible_fields | length }}">
-                        <span class="error">{{ error }}</span>
-                    </td>
-                </tr>
-            {% endfor %}
-        {% endif %}
-
-        {% if formset.empty_form.hidden_fields %}
             {% for hidden in formset.empty_form.hidden_fields %}
                 <tr style="display: none;">
                     <td colspan="{{ formset.empty_form.visible_fields | length }}">
@@ -83,7 +85,14 @@
                     </td>
                 </tr>
             {% endfor %}
-        {% endif %}
+
+            {% for error in formset.empty_form.non_field_errors %}
+                <tr>
+                    <td colspan="{{ formset.empty_form.visible_fields | length }}">
+                        <span class="error">{{ error }}</span>
+                    </td>
+                </tr>
+            {% endfor %}
 
         {% if formset.empty_form.errors %}
             <tr>
