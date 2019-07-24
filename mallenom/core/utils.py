@@ -1,86 +1,84 @@
 from django.utils.text import slugify
 
 
-def get_unique_slug(instance, slug_field, *slugable, unique=True):
+def get_unique_slug(instance, slug_field, *args, **kwargs):
     """ Генерирует уникальный slug.
     Аргументы:
         instance - экземпляр модели
         slug_field - строка с именем поля в котором хранится slug
-        slugable - источник для создания slug:
-            строки для создания slug или
+        args - источник для создания slug:
             строки с  именами полей экземпляра или
-            значения для создания slug
-        unique - должен ли slug быть уникальным:
-            True/False - для всей модели или
-            field - строка с именем поля с учетом значения
-                которого slug должен быть уникальным или
-                список строк с именами полей
+            строки значений для создания slug
+        unique=True - должен ли slug быть уникальным или
+        unique_for= () - строка или список строк с именами полей
+            экземпляра с учетом которых slug должен быть уникальным
+        prohibit = () - строка или  список строк запрещенных значений slug
     Возвращает:
         строку с уникальным slug
     """
+    def tuple_from_kwarg(name, **kwargs):
+        """Создает tuple из значения именованного аргумента.
+        Значение должно быть строкой или списком строк.
+        """
+        value = kwargs.get(name, None)
+        if value is None:
+            return tuple()
+        if isinstance(value, str):
+            return (value, )
+        if any([isinstance(value, item) for item in (list, tuple, set)]):
+            if all([isinstance(item, str) for item in value]):
+                return tuple(set(value))
 
-    # Получаем значения полей экземпляра
-    slugable = [
-        getattr(instance, field, field)
-        if isinstance(field, str)
-        else str(field) for field in slugable
-    ]
+        raise ValueError(
+            "'{}' argument must be str or iterable of str.".format(name)
+        )
+
+    # Получаем значения полей экземпляра из которых создается slug
+    if args and all([isinstance(arg, str) for arg in args]):
+        source = [getattr(instance, arg, arg) for arg in args]
+    else:
+        raise ValueError("Slug source must be str or iterable of str.")
+
+    # Составляем список запрещенных slug
+    prohibit = ['create', 'update', 'delete']
+    prohibit.extend(tuple_from_kwarg('prohibit', **kwargs))
+
+    # Должен ли slug быть уникальным
+    unique = kwargs.get('unique', True)
+    unique_for = tuple_from_kwarg('unique_for', **kwargs)
+
+    # Для уникальности будем создавать slug вида slug-1, slug-2, slug-n
+    slugExtension = 1
 
     # Создаем slug
-    slug = slugify('-'.join(slugable), allow_unicode=True)
+    slug = slugify('-'.join(source), allow_unicode=True)
 
-    # Значения slug конфликтуют с url
-    conflict = slug in ('create', 'update', 'delete')
+    # Уникальность slug не требуется
+    if not (unique or unique_for):
+        if slug in prohibit:
+            return "{}-{}".format(slug, slugExtension)
+        return slug
 
-    if unique:
-        # При необходимости проверям slug на уникальность
-        Model = instance.__class__
-        extension = 1
+    # Создаем уникальный slug
+    if slug in prohibit:
+        unique_slug = '{}-{}'.format(slug, slugExtension)
+        slugExtension += 1
+    else:
+        unique_slug = slug
 
-        if conflict:
-            # Начинаим поиск конфилктов с 'slug-1'
-            unique_slug = '{}-{}'.format(slug, extension)
-            extension += 1
-        else:
-            # Начинаим поиск конфилктов с 'slug'
-            unique_slug = slug
+    # Формируем словарь для фильтра модели
+    filter_dict = {slug_field: unique_slug}
+    filter_dict.update(
+        {field: getattr(instance, field) for field in unique_for}
+    )
 
-        # Формируем словарь для фильтрации модели
-        filter_dict = {slug_field: unique_slug}
+    # Пока slug не будет уникальным
+    while instance.__class__.objects.filter(
+        **filter_dict,
+    ).exclude(id=instance.id).exists():
+        # Генерируем новый slug
+        unique_slug = '{}-{}'.format(slug, slugExtension)
+        filter_dict.update({slug_field: unique_slug})
+        slugExtension += 1
 
-        if not isinstance(unique, bool):
-            # Если необходимо учитывать
-            # значения других полей, например:
-            # unique_together((slug, field, ))
-            if isinstance(unique, str):
-                # Если поле только одно
-                filter_dict.update(
-                    {unique: getattr(instance, unique)}
-                )
-            elif isinstance(unique, (list, tuple, set)):
-                # Если передан список полей
-                filter_dict.update(
-                    {field: getattr(instance, field)
-                     for field in unique}
-                )
-            else:
-                raise ValueError(
-                    "'unique' argument must be bool,"
-                    " str or iterable of str, not {}.".format(
-                        type(unique),
-                    )
-                )
-
-        # Пока slug не будет уникальным
-        while Model.objects.filter(
-            **filter_dict,
-        ).exclude(id=instance.id).exists():
-            # Генерируем новый вида
-            # slug-1, slug-2,..., slug-n
-            unique_slug = '{}-{}'.format(slug, extension)
-            filter_dict.update({slug_field: unique_slug})
-            extension += 1
-
-        return unique_slug
-
-    return "{}-{}".format(slug, 1) if conflict else slug
+    return unique_slug
