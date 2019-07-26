@@ -1,4 +1,9 @@
 from django.core.exceptions import ImproperlyConfigured
+from django.core.paginator import (
+    Paginator,
+    EmptyPage,
+    PageNotAnInteger,
+)
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.db.models import ProtectedError
@@ -97,3 +102,75 @@ class DeleteMessageMixin:
             messages.error(self.request, error_message)
             return HttpResponseRedirect(self.object.get_absolute_url())
         return result
+
+
+class SingleFormSetMixin:
+    """Добавляет formset форму
+    """
+    formset = None
+    paginate_by = None
+
+    def get_context_data(self, *args, **kwargs):
+        """ Добавляет formset в контекст
+        """
+        if not self.formset:
+            raise ImproperlyConfigured(
+                "You must specify formset in '{class_name}'"
+                " to configure '{mixin_name}'".format(
+                    class_name=self.__class__,
+                    mixin_name=__class__.__name__,
+                )
+            )
+
+        context_data = super().get_context_data(*args, **kwargs)
+
+        queryset = self.formset.model.objects.filter(
+            **{self.formset.fk.name: self.object}
+        )
+
+        if self.paginate_by:
+            paginator = Paginator(queryset, self.paginate_by)
+            page = self.request.GET.get('page')
+
+            try:
+                page_objects = paginator.page(page)
+            except PageNotAnInteger:
+                page_objects = paginator.page(1)
+            except EmptyPage:
+                page_objects = paginator.page(paginator.num_pages)
+
+            page_query = queryset.filter(
+                id__in=[item.id for item in page_objects]
+            )
+
+            context_data['paginator'] = page_objects
+
+        if self.request.method == 'POST':
+            context_data['formset'] = self.formset(
+                self.request.POST,
+                instance=self.object,
+            )
+        else:
+            context_data['formset'] = self.formset(
+                instance=self.object,
+                queryset=page_query if self.paginate_by else queryset,
+            )
+
+        return context_data
+
+    def form_valid(self, form):
+        """ Сохраняет formset
+        """
+        redirect = super().form_valid(form)
+        formset = self.formset(
+            self.request.POST,
+            instance=self.object,
+        )
+
+        if formset.is_valid():
+            formset.save()
+            return redirect
+
+        return self.render_to_response(
+            self.get_context_data(form=form, formset=formset)
+        )
