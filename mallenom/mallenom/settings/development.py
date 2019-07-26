@@ -85,6 +85,13 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': True,
         },
+        'werkzeug': {
+            'handlers': [
+                'console',
+            ],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
         'django.template': {
             'handlers': [
                 'console',
