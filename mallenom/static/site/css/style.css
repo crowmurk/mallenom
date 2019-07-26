@@ -381,6 +381,12 @@ table td select {
     content: '▾';
 }
 
+/* DataTables appearance */
+table.dataTable {
+    border-color: grey !important;
+    border-collapse: collapse !important;
+}
+
 /* DataTables buttons */
 .dataTables_wrapper .button,
 .pagination .button {
