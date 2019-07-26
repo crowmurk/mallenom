@@ -60,13 +60,38 @@
                     </div>
                 </div>
             </header>
-            <nav>
-                <ul>
-                    <li><a href="{% url 'underconstruction' %}">{% trans "Schedule" %}</a></li>
-                    <li><a href="{% url 'underconstruction' %}">{% trans "Employees" %}</a></li>
-                    <li><a href="{% url 'underconstruction' %}">{% trans "Staffing" %}</a></li>
-                </ul>
-            </nav>
+            <div class="nav">
+                <div class="dropdown">
+                    <button class="dropdown-button">{% trans "Schedule" %}</button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'underconstruction' %}">{% trans "Assigments" %}</a>
+                        <a href="{% url 'underconstruction' %}">{% trans "Absence" %}</a>
+                        <a href="{% url 'underconstruction' %}">{% trans "Projects" %}</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-button">{% trans "Employees" %}</button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'underconstruction' %}">{% trans "Employees" %}</a>
+                        <a href="{% url 'underconstruction' %}">{% trans "Positions" %}</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-button">{% trans "Staffing" %}</button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'staffing:staffing:list' %}">{% trans "Staffing" %}</a>
+                        <a href="{% url 'staffing:department:list' %}">{% trans "Departments" %}</a>
+                        <a href="{% url 'staffing:position:list' %}">{% trans "Positions" %}</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="dropdown-button">{% trans "Calendar" %}</button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'underconstruction' %}">{% trans "Days" %}</a>
+                        <a href="{% url 'underconstruction' %}">{% trans "Day types" %}</a>
+                    </div>
+                </div>
+            </div>
             {% if messages %}
                 <div class="row">
                     <div class="twelve columns">
