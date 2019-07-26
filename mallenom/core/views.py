@@ -55,7 +55,7 @@ class ActionTableDeleteMixin:
 
             if not success_message:
                 success_message = _("{name} were deleted successfuly").format(
-                    name=model._meta.verbose_name_plural.lower()
+                    name=model._meta.verbose_name_plural
                 )
 
             if not error_message:
@@ -88,7 +88,7 @@ class DeleteMessageMixin:
                 success_message = self.success_message
             else:
                 success_message = _("{name} was deleted successfuly").format(
-                    name=self.model._meta.verbose_name.lower()
+                    name=self.model._meta.verbose_name
                 )
             messages.success(self.request, success_message)
         except ProtectedError:
