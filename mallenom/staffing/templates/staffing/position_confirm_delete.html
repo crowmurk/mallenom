@@ -1,0 +1,12 @@
+{% extends "staffing/base_staffing.html" %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }} - {% trans "Delete" %} {{ position|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% delete_form position.get_delete_url %}
+{% endblock %}

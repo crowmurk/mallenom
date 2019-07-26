@@ -1,0 +1,26 @@
+{% extends "staffing/base_staffing.html" %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }}
+    {% if staffing %}
+        - {% trans "Edit" %}
+    {% else %}
+        - {% trans "Create" %}
+    {% endif %}
+    {{ view.model|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% url 'staffing:staffing:list' as cancel_url %}
+    {% if staffing %}
+        {% trans "Edit" as action_verbose %}
+        {% form staffing.get_update_url action_verbose %}
+    {% else %}
+        {% trans "Create" as action_verbose %}
+        {% url 'staffing:staffing:create' as form_url %}
+        {% form form_url action_verbose cancel_url=cancel_url %}
+    {% endif %}
+{% endblock %}

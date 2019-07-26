@@ -1,0 +1,37 @@
+{% extends "staffing/base_staffing.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} – {{ department|verbose_name }}
+{% endblock %}
+
+{% block staffing_header %}
+    <h5>{{ department|verbose_name }}:</h5>
+{% endblock %}
+
+{% block staffing_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ department.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ department.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block staffing_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name department 'name' %}:</strong></dt>
+                    <dd>{{ department.name }}</dd>
+                </dl>
+            </div>
+        </div>
+        <h5>{% field_verbose_name department 'positions' %}:</h5>
+        {% if table %}
+            {% action_table_form table readonly=True %}
+        {% endif %}
+    </article>
+{% endblock %}
