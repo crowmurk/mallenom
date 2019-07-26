@@ -11,7 +11,9 @@ from core.utils import get_unique_slug
 class DepartmentManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().annotate(
-            staff_units=models.Sum('staffing__count'),
+            staff_units=models.functions.Coalesce(
+                models.Sum('staffing__count'), 0
+            ),
         ).annotate(
             positions_count=models.Count('staffing')
         )
@@ -80,7 +82,9 @@ class Department(models.Model):
 class PositionManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().annotate(
-            staff_units=models.Sum('staffing__count'),
+            staff_units=models.functions.Coalesce(
+                models.Sum('staffing__count'), 0
+            ),
         ).annotate(
             departments_count=models.Count('staffing')
         )
