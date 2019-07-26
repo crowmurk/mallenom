@@ -55,13 +55,13 @@ class ActionTableDeleteMixin:
 
             if not success_message:
                 success_message = _("{name} were deleted successfuly").format(
-                    name=model._meta.verbose_name_plural
+                    name=model._meta.verbose_name_plural.lower()
                 )
 
             if not error_message:
                 error_message = _("Cannot delete {name} because of"
                                   " foreign references").format(
-                                      name=model._meta.verbose_name_plural
+                                      name=model._meta.verbose_name_plural.lower()
                                   )
 
             button = request.POST.get(button)
@@ -88,7 +88,7 @@ class DeleteMessageMixin:
                 success_message = self.success_message
             else:
                 success_message = _("{name} was deleted successfuly").format(
-                    name=self.model._meta.verbose_name
+                    name=self.model._meta.verbose_name.lower()
                 )
             messages.success(self.request, success_message)
         except ProtectedError:
@@ -97,7 +97,7 @@ class DeleteMessageMixin:
             else:
                 error_message = _("Cannot delete {name} because of"
                                   " foreign references").format(
-                                      name=self.model._meta.verbose_name
+                                      name=self.model._meta.verbose_name.lower()
                                   )
             messages.error(self.request, error_message)
             return HttpResponseRedirect(self.object.get_absolute_url())
