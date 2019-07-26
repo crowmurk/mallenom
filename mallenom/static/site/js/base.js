@@ -6,7 +6,7 @@ $(window).on('load', function() {
 
 $(document).ready(function() {
     // Hide notification messages
-    $("ul.messages").delay(3000). animate(
+    $("ul.messages").delay(5000). animate(
         {height:"toggle", opacity:"toggle"},
         1000
     );
