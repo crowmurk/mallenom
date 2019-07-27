@@ -10,10 +10,10 @@ class DepartmentTable(tables.Table):
     positions_count = tables.Column(
         verbose_name=_("Positions"),
     )
-    staff_units = tables.Column(
-        verbose_name=_("Staff Units"),
+    staff_units_count = tables.Column(
+        verbose_name=_("Staff units count"),
         footer=lambda table: _('Total: {}').format(
-            sum(x.staff_units for x in table.data)
+            sum(x.staff_units_count for x in table.data)
         )
     )
     delete = tables.CheckBoxColumn(accessor="pk")
@@ -23,7 +23,7 @@ class DepartmentTable(tables.Table):
         sequence = (
             'name',
             'positions_count',
-            'staff_units'
+            'staff_units_count'
         )
         exclude = ('id', 'slug', )
         empty_text = _("There are no records available")
@@ -34,10 +34,10 @@ class PositionTable(tables.Table):
     departments_count = tables.Column(
         verbose_name=_("Departments"),
     )
-    staff_units = tables.Column(
-        verbose_name=_("Staff Units"),
+    staff_units_count = tables.Column(
+        verbose_name=_("Staff units count"),
         footer=lambda table: _('Total: {}').format(
-            sum(x.staff_units for x in table.data)
+            sum(x.staff_units_count for x in table.data)
         )
     )
     delete = tables.CheckBoxColumn(accessor="pk")
@@ -47,7 +47,7 @@ class PositionTable(tables.Table):
         sequence = (
             'name',
             'departments_count',
-            'staff_units',
+            'staff_units_count',
         )
         exclude = ('id', 'slug', )
         empty_text = _("There are no records available")

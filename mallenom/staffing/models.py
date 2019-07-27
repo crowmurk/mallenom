@@ -11,7 +11,7 @@ from core.utils import get_unique_slug
 class DepartmentManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().annotate(
-            staff_units=models.functions.Coalesce(
+            staff_units_count=models.functions.Coalesce(
                 models.Sum('staffing__count'), 0
             ),
         ).annotate(
@@ -82,7 +82,7 @@ class Department(models.Model):
 class PositionManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().annotate(
-            staff_units=models.functions.Coalesce(
+            staff_units_count=models.functions.Coalesce(
                 models.Sum('staffing__count'), 0
             ),
         ).annotate(
@@ -167,18 +167,18 @@ class Staffing(models.Model):
         validators=[
             MinValueValidator(0),
         ],
-        verbose_name=_('Staff Units'),
+        verbose_name=_('Staff unit count'),
     )
 
     class Meta:
-        verbose_name = _('Staff Unit')
-        verbose_name_plural = _('Staff Units')
+        verbose_name = _('Staff unit')
+        verbose_name_plural = _('Staff units')
         unique_together = (('department', 'position'),)
         ordering = ['department__name', 'position__name']
 
     def __str__(self):
         return _("Department: {department} Position: {position}"
-                 " Unit count: {count}").format(
+                 " Staff unit count: {count}").format(
                      department=self.department.name,
                      position=self.position.name,
                      count=self.count,

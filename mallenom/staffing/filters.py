@@ -37,7 +37,7 @@ class StaffingFilter(filters.FilterSet):
         lookup_expr='icontains',
     )
     count = filters.ChoiceFilter(
-        label=_('Staff Units'),
+        label=_('Staff units'),
         empty_label=_('All'),
         choices=((0, _('Stale')), (1, _('Actual'))),
         method='count_filter',
