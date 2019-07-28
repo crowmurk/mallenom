@@ -177,11 +177,9 @@ class Staffing(models.Model):
         ordering = ['department__name', 'position__name']
 
     def __str__(self):
-        return _("Department: {department} Position: {position}"
-                 " Staff unit count: {count}").format(
-                     department=self.department.name,
-                     position=self.position.name,
-                     count=self.count,
+        return _("Department: {department} ({position})").format(
+            department=self.department.name,
+            position=self.position.name,
         )
 
     def get_absolute_url(self):
