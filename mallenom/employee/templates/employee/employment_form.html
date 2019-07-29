@@ -1,0 +1,26 @@
+{% extends "employee/base_employee.html" %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }}
+    {% if employment %}
+        - {% trans "Edit" %}
+    {% else %}
+        - {% trans "Create" %}
+    {% endif %}
+    {{ view.model|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% url 'employee:employment:list' as cancel_url %}
+    {% if employment %}
+        {% trans "Edit" as action_verbose %}
+        {% form employment.get_update_url action_verbose %}
+    {% else %}
+        {% trans "Create" as action_verbose %}
+        {% url 'employee:employment:create' as form_url %}
+        {% form form_url action_verbose cancel_url=cancel_url %}
+    {% endif %}
+{% endblock %}

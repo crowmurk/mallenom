@@ -1,0 +1,43 @@
+{% extends "employee/base_employee.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} – {{ employee|verbose_name }}
+{% endblock %}
+
+{% block employee_header %}
+    <h5>{{ employee|verbose_name }}:</h5>
+{% endblock %}
+
+{% block employee_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ employee.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ employee.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block employee_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name employee 'last_name' %}:</strong></dt>
+                    <dd>{{ employee.last_name }}</dd>
+                    <dt><strong>{% field_verbose_name employee 'first_name' %}:</strong></dt>
+                    <dd>{{ employee.first_name }}</dd>
+                    {% if employee.middle_name %}
+                        <dt><strong>{% field_verbose_name employee 'middle_name' %}:</strong></dt>
+                        <dd>{{ employee.middle_name }}</dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+        <h5>{% field_verbose_name employee 'positions' %}:</h5>
+        {% if table %}
+            {% action_table_form table readonly=True %}
+        {% endif %}
+    </article>
+{% endblock %}

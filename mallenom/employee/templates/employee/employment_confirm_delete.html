@@ -1,0 +1,12 @@
+{% extends "employee/base_employee.html" %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }} - {% trans "Delete" %} {{ employment|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% delete_form employment.get_delete_url %}
+{% endblock %}
