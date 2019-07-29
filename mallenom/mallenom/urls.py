@@ -32,6 +32,7 @@ urlpatterns = [
         pattern_name='underconstruction',
         permanent=False)),
     path('staffing/', include('staffing.urls')),
+    path('employee/', include('employee.urls')),
     path('underconstruction/', TemplateView.as_view(
         template_name='site/underconstruction.html'),
         name='underconstruction'),
