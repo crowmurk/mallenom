@@ -6,7 +6,9 @@ from .models import Department, Position, Staffing
 
 
 class DepartmentTable(tables.Table):
-    name = tables.LinkColumn()
+    name = tables.LinkColumn(
+        verbose_name=_('Department'),
+    )
     positions_count = tables.Column(
         verbose_name=_("Positions"),
     )
@@ -20,17 +22,18 @@ class DepartmentTable(tables.Table):
 
     class Meta:
         model = Department
-        sequence = (
+        fields = (
             'name',
             'positions_count',
             'staff_units_count'
         )
-        exclude = ('id', 'slug', )
         empty_text = _("There are no records available")
 
 
 class PositionTable(tables.Table):
-    name = tables.LinkColumn()
+    name = tables.LinkColumn(
+        verbose_name=_('Position'),
+    )
     departments_count = tables.Column(
         verbose_name=_("Departments"),
     )
@@ -44,12 +47,11 @@ class PositionTable(tables.Table):
 
     class Meta:
         model = Position
-        sequence = (
+        fields = (
             'name',
             'departments_count',
             'staff_units_count',
         )
-        exclude = ('id', 'slug', )
         empty_text = _("There are no records available")
 
 
@@ -57,9 +59,7 @@ class StaffingTable(tables.Table):
     department = tables.Column(
         linkify=(
             'staffing:department:detail',
-            {
-                'slug': tables.A('department.slug'),
-            },
+            {'slug': tables.A('department.slug'), },
         ),
         accessor='department.name',
         verbose_name=_('Department'),
@@ -73,10 +73,9 @@ class StaffingTable(tables.Table):
 
     class Meta:
         model = Staffing
-        sequence = (
+        fields = (
             'department',
             'position',
             'count',
         )
-        exclude = ('id', )
         empty_text = _("There are no records available")
