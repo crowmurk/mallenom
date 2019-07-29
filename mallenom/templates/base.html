@@ -72,14 +72,14 @@
                 <div class="dropdown">
                     <button class="dropdown-button">{% trans "Employees" %}</button>
                     <div class="dropdown-content">
-                        <a href="{% url 'underconstruction' %}">{% trans "Employees" %}</a>
-                        <a href="{% url 'underconstruction' %}">{% trans "Positions" %}</a>
+                        <a href="{% url 'employee:employee:list' %}">{% trans "Employees" %}</a>
+                        <a href="{% url 'employee:employment:list' %}">{% trans "Positions held" %}</a>
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="dropdown-button">{% trans "Staffing" %}</button>
                     <div class="dropdown-content">
-                        <a href="{% url 'staffing:staffing:list' %}">{% trans "Staffing" %}</a>
+                        <a href="{% url 'staffing:staffing:list' %}">{% trans "Staff units" %}</a>
                         <a href="{% url 'staffing:department:list' %}">{% trans "Departments" %}</a>
                         <a href="{% url 'staffing:position:list' %}">{% trans "Positions" %}</a>
                     </div>
