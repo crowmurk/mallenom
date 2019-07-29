@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-26 08:59+0300\n"
+"POT-Creation-Date: 2019-07-29 06:29+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,6 +41,12 @@ msgid "Are you sure you want to delete"
 msgstr "Вы уверены что хотите удалить"
 
 #: core/templates/core/includes/delete_form.html:8
+#: employee/templates/employee/employee_confirm_delete.html:7
+#: employee/templates/employee/employee_detail.html:17
+#: employee/templates/employee/employee_list.html:28
+#: employee/templates/employee/employment_confirm_delete.html:7
+#: employee/templates/employee/employment_detail.html:16
+#: employee/templates/employee/employment_list.html:28
 #: staffing/templates/staffing/department_confirm_delete.html:7
 #: staffing/templates/staffing/department_detail.html:17
 #: staffing/templates/staffing/department_list.html:28
@@ -62,8 +68,9 @@ msgstr "Отмена"
 msgid "Filter"
 msgstr "Фильтр"
 
-#: core/templates/core/includes/formset_table.html:72 staffing/tables.py:29
-#: staffing/tables.py:53 staffing/tables.py:82
+#: core/templates/core/includes/formset_table.html:72 employee/tables.py:34
+#: employee/tables.py:67 staffing/tables.py:30 staffing/tables.py:55
+#: staffing/tables.py:81
 msgid "There are no records available"
 msgstr "Записей не обнаружено"
 
@@ -115,7 +122,7 @@ msgstr "Обнаружена ошибка в значении %(value)s шабл
 #: core/views.py:57
 #, python-brace-format
 msgid "{name} were deleted successfuly"
-msgstr "{name} успешно удалены"
+msgstr "{name} были успешно удалены"
 
 #: core/views.py:62 core/views.py:98
 #, python-brace-format
@@ -125,11 +132,132 @@ msgstr "Невозможно удалить {name} при существующи
 #: core/views.py:90
 #, python-brace-format
 msgid "{name} was deleted successfuly"
-msgstr "Удаление {name} прошло успешно"
+msgstr "{name}, удаление прошло успешно"
 
-#: employee/apps.py:7
+#: employee/apps.py:7 employee/models.py:91 templates/base.html:73
+#: templates/base.html:75
+msgid "Employees"
+msgstr "Сотрудники"
+
+#: employee/filters.py:11 employee/filters.py:36 employee/models.py:90
+#: employee/models.py:143 employee/tables.py:10
 msgid "Employee"
 msgstr "Сотрудник"
+
+#: employee/filters.py:15 employee/filters.py:50 staffing/filters.py:40
+#: staffing/models.py:175 templates/base.html:82
+msgid "Staff units"
+msgstr "Штатные единицы"
+
+#: employee/filters.py:16 employee/filters.py:51 staffing/filters.py:41
+msgid "All"
+msgstr "Все"
+
+#: employee/filters.py:17 employee/filters.py:52 staffing/filters.py:42
+msgid "Stale"
+msgstr "Устаревшие"
+
+#: employee/filters.py:17 employee/filters.py:52 staffing/filters.py:42
+msgid "Actual"
+msgstr "Дейстующие"
+
+#: employee/filters.py:40 employee/tables.py:45 staffing/filters.py:30
+#: staffing/models.py:50 staffing/models.py:153 staffing/tables.py:10
+#: staffing/tables.py:65
+msgid "Department"
+msgstr "Отдел"
+
+#: employee/filters.py:45 employee/tables.py:49 staffing/filters.py:35
+#: staffing/models.py:114 staffing/models.py:161 staffing/tables.py:35
+msgid "Position"
+msgstr "Должность"
+
+#: employee/models.py:52
+msgid "Last name"
+msgstr "Фамилия"
+
+#: employee/models.py:59
+msgid "First name"
+msgstr "Имя"
+
+#: employee/models.py:66
+msgid "Middle name"
+msgstr "Отчество"
+
+#: employee/models.py:77 staffing/models.py:37 staffing/models.py:108
+msgid "A label for URL config."
+msgstr "URL идентификатор объекта"
+
+#: employee/models.py:84 employee/models.py:166 employee/tables.py:16
+#: templates/base.html:76
+msgid "Positions held"
+msgstr "Занимаемые должности"
+
+#: employee/models.py:135
+msgid "Employee ID number"
+msgstr "Табельный номер"
+
+#: employee/models.py:151 staffing/models.py:174
+msgid "Staff unit"
+msgstr "Штатная единица"
+
+#: employee/models.py:161 staffing/models.py:170
+msgid "Staff unit count"
+msgstr "Количество штатных единиц"
+
+#: employee/models.py:165
+msgid "Position held"
+msgstr "Занимаемая должность"
+
+#: employee/tables.py:13 staffing/models.py:51 staffing/tables.py:38
+#: templates/base.html:83
+msgid "Departments"
+msgstr "Отделы"
+
+#: employee/tables.py:19 staffing/tables.py:16 staffing/tables.py:41
+msgid "Staff units count"
+msgstr "Количество штатных единиц"
+
+#: employee/tables.py:20 employee/tables.py:52 staffing/tables.py:17
+#: staffing/tables.py:42 staffing/tables.py:68
+msgid "Total: {}"
+msgstr "Всего: {}"
+
+#: employee/templates/employee/employee_detail.html:16
+#: employee/templates/employee/employee_form.html:9
+#: employee/templates/employee/employee_form.html:19
+#: employee/templates/employee/employment_detail.html:15
+#: employee/templates/employee/employment_form.html:9
+#: employee/templates/employee/employment_form.html:19
+#: staffing/templates/staffing/department_detail.html:16
+#: staffing/templates/staffing/department_form.html:9
+#: staffing/templates/staffing/department_form.html:19
+#: staffing/templates/staffing/position_detail.html:16
+#: staffing/templates/staffing/position_form.html:9
+#: staffing/templates/staffing/position_form.html:19
+#: staffing/templates/staffing/staffing_detail.html:15
+#: staffing/templates/staffing/staffing_form.html:9
+#: staffing/templates/staffing/staffing_form.html:19
+msgid "Edit"
+msgstr "Изменить"
+
+#: employee/templates/employee/employee_form.html:11
+#: employee/templates/employee/employee_form.html:22
+#: employee/templates/employee/employee_list.html:18
+#: employee/templates/employee/employment_form.html:11
+#: employee/templates/employee/employment_form.html:22
+#: employee/templates/employee/employment_list.html:18
+#: staffing/templates/staffing/department_form.html:11
+#: staffing/templates/staffing/department_form.html:22
+#: staffing/templates/staffing/department_list.html:18
+#: staffing/templates/staffing/position_form.html:11
+#: staffing/templates/staffing/position_form.html:22
+#: staffing/templates/staffing/position_list.html:18
+#: staffing/templates/staffing/staffing_form.html:11
+#: staffing/templates/staffing/staffing_form.html:22
+#: staffing/templates/staffing/staffing_list.html:18
+msgid "Create"
+msgstr "Создать"
 
 #: mallenom/settings/base.py:125
 msgid "Russian"
@@ -155,90 +283,23 @@ msgstr "Администрирование сайта"
 msgid "Schedule"
 msgstr "Расписание"
 
-#: staffing/apps.py:7 templates/base.html:80 templates/base.html:82
+#: staffing/apps.py:7 templates/base.html:80
 msgid "Staffing"
 msgstr "Штатное расписание"
-
-#: staffing/filters.py:30 staffing/models.py:50 staffing/models.py:153
-#: staffing/tables.py:65
-msgid "Department"
-msgstr "Отдел"
-
-#: staffing/filters.py:35 staffing/models.py:114 staffing/models.py:161
-msgid "Position"
-msgstr "Должность"
-
-#: staffing/filters.py:40 staffing/models.py:170 staffing/models.py:175
-#: staffing/tables.py:14 staffing/tables.py:38
-msgid "Staff Units"
-msgstr "Штатные единицы"
-
-#: staffing/filters.py:41
-msgid "All"
-msgstr "Все"
-
-#: staffing/filters.py:42
-msgid "Stale"
-msgstr "Устаревшие"
-
-#: staffing/filters.py:42
-msgid "Actual"
-msgstr "Дейстующие"
 
 #: staffing/models.py:26 staffing/models.py:97
 msgid "Name"
 msgstr "Название"
 
-#: staffing/models.py:37 staffing/models.py:108
-msgid "A label for URL config."
-msgstr "URL идентификатор объекта"
-
-#: staffing/models.py:44 staffing/models.py:115 staffing/tables.py:11
-#: templates/base.html:76 templates/base.html:84
+#: staffing/models.py:44 staffing/models.py:115 staffing/tables.py:13
+#: templates/base.html:84
 msgid "Positions"
 msgstr "Должности"
 
-#: staffing/models.py:51 staffing/tables.py:35 templates/base.html:83
-msgid "Departments"
-msgstr "Отделы"
-
-#: staffing/models.py:174
-msgid "Staff Unit"
-msgstr "Штатная единица"
-
 #: staffing/models.py:180
 #, python-brace-format
-msgid "Department: {department} Position: {position} Unit count: {count}"
-msgstr ""
-"Отдел: {department} Должность: {position} Количество штатных единиц: {count}"
-
-#: staffing/tables.py:15 staffing/tables.py:39 staffing/tables.py:68
-msgid "Total: {}"
-msgstr "Всего: {}"
-
-#: staffing/templates/staffing/department_detail.html:16
-#: staffing/templates/staffing/department_form.html:9
-#: staffing/templates/staffing/department_form.html:19
-#: staffing/templates/staffing/position_detail.html:16
-#: staffing/templates/staffing/position_form.html:9
-#: staffing/templates/staffing/position_form.html:19
-#: staffing/templates/staffing/staffing_detail.html:15
-#: staffing/templates/staffing/staffing_form.html:9
-#: staffing/templates/staffing/staffing_form.html:19
-msgid "Edit"
-msgstr "Изменить"
-
-#: staffing/templates/staffing/department_form.html:11
-#: staffing/templates/staffing/department_form.html:22
-#: staffing/templates/staffing/department_list.html:18
-#: staffing/templates/staffing/position_form.html:11
-#: staffing/templates/staffing/position_form.html:22
-#: staffing/templates/staffing/position_list.html:18
-#: staffing/templates/staffing/staffing_form.html:11
-#: staffing/templates/staffing/staffing_form.html:22
-#: staffing/templates/staffing/staffing_list.html:18
-msgid "Create"
-msgstr "Создать"
+msgid "Department: {department} ({position})"
+msgstr "Отдел: {department} ({position})"
 
 #: templates/400.html:5 templates/400.html:11
 msgid "Bad request"
@@ -307,10 +368,6 @@ msgstr "Отсутствие"
 #: templates/base.html:69
 msgid "Projects"
 msgstr "Проекты"
-
-#: templates/base.html:73 templates/base.html:75
-msgid "Employees"
-msgstr "Сотрудники"
 
 #: templates/base.html:88
 msgid "Calendar"
