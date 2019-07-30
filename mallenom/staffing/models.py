@@ -167,7 +167,7 @@ class Staffing(models.Model):
         validators=[
             MinValueValidator(0),
         ],
-        verbose_name=_('Staff unit count'),
+        verbose_name=_('Staff units count'),
     )
 
     class Meta:

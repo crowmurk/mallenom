@@ -11,18 +11,18 @@ class EmployeeFilter(filters.FilterSet):
         label=_('Employee'),
         lookup_expr='icontains',
     )
-    staff_units_count = filters.ChoiceFilter(
+    staff_units = filters.ChoiceFilter(
         label=_('Staff units'),
         empty_label=_('All'),
         choices=((0, _('Stale')), (1, _('Actual'))),
-        method='count_filter',
+        method='staff_units_filter',
     )
 
     class Meta:
         model = Employee
         fields = []
 
-    def count_filter(self, queryset, name, value):
+    def staff_units_filter(self, queryset, name, value):
         return queryset.filter(
             **{'staff_units_count__gt' if int(value) else 'staff_units_count': 0}
         )
@@ -46,18 +46,18 @@ class EmploymentFilter(filters.FilterSet):
         field_name='staffing__position__name',
         lookup_expr='icontains',
     )
-    count = filters.ChoiceFilter(
+    staff_units = filters.ChoiceFilter(
         label=_('Staff units'),
         empty_label=_('All'),
         choices=((0, _('Stale')), (1, _('Actual'))),
-        method='count_filter',
+        method='staff_units_filter',
     )
 
     class Meta:
         model = Employment
         fields = []
 
-    def count_filter(self, queryset, name, value):
+    def staff_units_filter(self, queryset, name, value):
         return queryset.filter(
             **{'count__gt' if int(value) else 'count': 0}
         )

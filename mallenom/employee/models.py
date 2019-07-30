@@ -6,7 +6,6 @@ from django.core.validators import (
     MinValueValidator,
     MaxValueValidator,
 )
-from django.core.exceptions import ValidationError
 
 from core.validators import validate_slug
 from core.utils import get_unique_slug
@@ -158,7 +157,7 @@ class Employment(models.Model):
             MinValueValidator(0),
             MaxValueValidator(1),
         ],
-        verbose_name=_('Staff unit count'),
+        verbose_name=_('Staff units count'),
     )
 
     class Meta:

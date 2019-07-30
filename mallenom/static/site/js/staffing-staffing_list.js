@@ -4,8 +4,8 @@ $(document).ready(
         $('#id_department').attr('autocomplete', 'off');
         $('#id_position').attr('autocomplete', 'off');
 
-        // Auto submit filter form when count selector changed
-        $("#id_count").change(function() {
+        // Auto submit filter form when staff units selector changed
+        $("#id_staff_units").change(function() {
             $(this).parents("form").submit();
         });
     }
