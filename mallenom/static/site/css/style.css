@@ -322,25 +322,27 @@ textarea {
     width: 100%;
 }
 
-/* selection2 style */
-.select2-selection__rendered {
-    line-height: 38px !important;
-}
-
-.select2-container .select2-selection--single {
-    height: 38px !important;
-}
-
-.select2-selection__arrow {
-    height: 38px !important;
-}
-
 /* jquery-ui dialog style */
 .ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
     font-size: 11px !important;
+}
+
+/* selection2 style */
+
+table .select2-container {
+    min-width: 100%;
+}
+
+.select2-selection__rendered {
+    line-height: 38px !important;
+}
+
+.select2-selection--single,
+.select2-selection__arrow {
+    height: 38px !important;
 }
 
 /* Tables
