@@ -29,10 +29,11 @@ register_converter(RussianSlugConverter, 'slug')
 
 urlpatterns = [
     path('', RedirectView.as_view(
-        pattern_name='underconstruction',
+        pattern_name='schedule:assignment:list',
         permanent=False)),
     path('staffing/', include('staffing.urls')),
     path('employee/', include('employee.urls')),
+    path('schedule/', include('schedule.urls')),
     path('underconstruction/', TemplateView.as_view(
         template_name='site/underconstruction.html'),
         name='underconstruction'),
