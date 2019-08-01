@@ -62,22 +62,23 @@
             </header>
             <div class="nav">
                 <div class="dropdown">
-                    <button class="dropdown-button">{% trans "Schedule" %}</button>
+                    <a class="button dropdown-button" href="{% url 'schedule:assignment:list' %}">{% trans "Schedule" %}</a>
                     <div class="dropdown-content">
-                        <a href="{% url 'underconstruction' %}">{% trans "Assigments" %}</a>
-                        <a href="{% url 'underconstruction' %}">{% trans "Absence" %}</a>
-                        <a href="{% url 'underconstruction' %}">{% trans "Projects" %}</a>
+                        <a href="{% url 'schedule:assignment:list' %}">{% trans "Employees' assignments" %}</a>
+                        <a href="{% url 'schedule:projectassignment:list' %}">{% trans "Projects' assignments" %}</a>
+                        <a href="{% url 'schedule:absence:list' %}">{% trans "Employees' absences" %}</a>
+                        <a href="{% url 'schedule:project:list' %}">{% trans "Projects" %}</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button">{% trans "Employees" %}</button>
+                    <a class="button dropdown-button" href="{% url 'employee:employee:list' %}">{% trans "Employees" %}</a>
                     <div class="dropdown-content">
                         <a href="{% url 'employee:employee:list' %}">{% trans "Employees" %}</a>
                         <a href="{% url 'employee:employment:list' %}">{% trans "Positions held" %}</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button">{% trans "Staffing" %}</button>
+                    <a class="button dropdown-button" href="{% url 'staffing:staffing:list' %}">{% trans "Staffing" %}</a>
                     <div class="dropdown-content">
                         <a href="{% url 'staffing:staffing:list' %}">{% trans "Staff units" %}</a>
                         <a href="{% url 'staffing:department:list' %}">{% trans "Departments" %}</a>
@@ -85,7 +86,7 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="dropdown-button">{% trans "Calendar" %}</button>
+                    <a class="button dropdown-button" href="{% url 'underconstruction' %}">{% trans "Calendar" %}</a>
                     <div class="dropdown-content">
                         <a href="{% url 'underconstruction' %}">{% trans "Days" %}</a>
                         <a href="{% url 'underconstruction' %}">{% trans "Day types" %}</a>
