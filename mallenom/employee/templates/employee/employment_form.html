@@ -1,4 +1,5 @@
 {% extends "employee/base_employee.html" %}
+{% load staticfiles %}
 {% load i18n %}
 {% load forms %}
 {% load names %}
@@ -13,6 +14,10 @@
     {{ view.model|verbose_name|lower }}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'site/css/select2.min.css' %}">
+{% endblock %}
+
 {% block content %}
     {% url 'employee:employment:list' as cancel_url %}
     {% if employment %}
@@ -23,4 +28,10 @@
         {% url 'employee:employment:create' as form_url %}
         {% form form_url action_verbose cancel_url=cancel_url %}
     {% endif %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="{% static 'site/js/select2.min.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'site/js/select2-ru.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'site/js/employee-employment_form.js' %}" defer></script>
 {% endblock %}
