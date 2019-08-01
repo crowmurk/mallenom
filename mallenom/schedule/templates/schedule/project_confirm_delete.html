@@ -1,0 +1,12 @@
+{% extends "schedule/base_schedule.html" %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }} - {% trans "Delete" %} {{ project|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% delete_form project.get_delete_url %}
+{% endblock %}

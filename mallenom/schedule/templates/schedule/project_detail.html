@@ -1,0 +1,43 @@
+{% extends "schedule/base_schedule.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} – {{ project|verbose_name }}
+{% endblock %}
+
+{% block schedule_header %}
+    <h5>{{ project|verbose_name }}:</h5>
+{% endblock %}
+
+{% block schedule_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ project.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ project.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block schedule_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name project 'name' %}:</strong></dt>
+                    <dd>{{ project.name }}</dd>
+                    <dt><strong>{% field_verbose_name project 'status' %}:</strong></dt>
+                    {% if project.status %}
+                        <dd>{% trans 'Active' %}</dd>
+                    {% else %}
+                        <dd>{% trans 'Closed' %}</dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+        <h5>{% field_verbose_name project 'projectassignments' %}:</h5>
+        {% if table %}
+            {% action_table_form table readonly=True %}
+        {% endif %}
+    </article>
+{% endblock %}

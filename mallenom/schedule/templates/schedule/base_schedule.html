@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <section class="seven columns">
+            {% block schedule_header %}
+            {% endblock %}
+        </section>
+        <section class="u-pull-right">
+            {% block schedule_button %}
+            {% endblock %}
+        </section>
+    </div>
+    {% block schedule_content %}
+    {% endblock %}
+{% endblock %}

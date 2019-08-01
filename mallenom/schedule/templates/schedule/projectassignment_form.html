@@ -1,0 +1,37 @@
+{% extends "schedule/base_schedule.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }}
+    {% if projectassignment %}
+        - {% trans "Edit" %}
+    {% else %}
+        - {% trans "Create" %}
+    {% endif %}
+    {{ view.model|verbose_name|lower }}
+{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'site/css/select2.min.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% url 'schedule:projectassignment:list' as cancel_url %}
+    {% if projectassignment %}
+        {% trans "Edit" as action_verbose %}
+        {% form projectassignment.get_update_url action_verbose %}
+    {% else %}
+        {% trans "Create" as action_verbose %}
+        {% url 'schedule:projectassignment:create' as form_url %}
+        {% form form_url action_verbose cancel_url=cancel_url %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="{% static 'site/js/select2.min.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'site/js/select2-ru.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'site/js/schedule-projectassignment_form.js' %}" defer></script>
+{% endblock %}

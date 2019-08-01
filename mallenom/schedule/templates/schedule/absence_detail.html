@@ -1,0 +1,41 @@
+{% extends "schedule/base_schedule.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} – {{ absence|verbose_name }}
+{% endblock %}
+
+{% block schedule_header %}
+    <h5>{{ absence|verbose_name }}:</h5>
+{% endblock %}
+
+{% block schedule_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ absence.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ absence.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block schedule_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name absence 'employee' %}:</strong></dt>
+                    <dd><a href="{{ absence.employee.get_absolute_url }}">{{ absence.employee }}</a></dd>
+                    <dt><strong>{% field_verbose_name absence 'start' %}:</strong></dt>
+                    <dd>{{ absence.start }}</dd>
+                    <dt><strong>{% field_verbose_name absence 'end' %}:</strong></dt>
+                    <dd>{{ absence.end }}</dd>
+                    <dt><strong>{% field_verbose_name absence 'hours' %}:</strong></dt>
+                    <dd>{{ absence.hours }}</dd>
+                    <dt><strong>{% field_verbose_name absence 'reason' %}:</strong></dt>
+                    <dd>{{ absence.reason }}</dd>
+                </dl>
+            </div>
+        </div>
+    </article>
+{% endblock %}

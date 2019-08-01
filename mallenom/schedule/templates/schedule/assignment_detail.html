@@ -1,0 +1,41 @@
+{% extends "schedule/base_schedule.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} – {{ assignment|verbose_name }}
+{% endblock %}
+
+{% block schedule_header %}
+    <h5>{{ assignment|verbose_name }}:</h5>
+{% endblock %}
+
+{% block schedule_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ assignment.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ assignment.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block schedule_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name assignment 'employee' %}:</strong></dt>
+                    <dd><a href="{{ assignment.employee.get_absolute_url }}">{{ assignment.employee }}</a></dd>
+                    <dt><strong>{% field_verbose_name assignment 'start' %}:</strong></dt>
+                    <dd>{{ assignment.start }}</dd>
+                    <dt><strong>{% field_verbose_name assignment 'end' %}:</strong></dt>
+                    <dd>{{ assignment.end }}</dd>
+                </dl>
+            </div>
+        </div>
+        <h5>{% field_verbose_name assignment 'projects' %}:</h5>
+        {% if table %}
+            {% action_table_form table readonly=True %}
+        {% endif %}
+    </article>
+{% endblock %}

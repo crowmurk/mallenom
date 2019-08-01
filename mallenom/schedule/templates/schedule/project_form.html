@@ -1,0 +1,31 @@
+{% extends "schedule/base_schedule.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }}
+    {% if project %}
+        - {% trans "Edit" %}
+    {% else %}
+        - {% trans "Create" %}
+    {% endif %}
+    {{ view.model|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% url 'schedule:project:list' as cancel_url %}
+    {% if project %}
+        {% trans "Edit" as action_verbose %}
+        {% form project.get_update_url action_verbose %}
+    {% else %}
+        {% trans "Create" as action_verbose %}
+        {% url 'schedule:project:create' as form_url %}
+        {% form form_url action_verbose cancel_url=cancel_url %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="{% static 'site/js/schedule-project_form.js' %}" defer></script>
+{% endblock %}

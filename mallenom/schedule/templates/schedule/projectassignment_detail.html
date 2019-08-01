@@ -1,0 +1,40 @@
+{% extends "schedule/base_schedule.html" %}
+{% load i18n %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }} – {{ projectassignment|verbose_name }}
+{% endblock %}
+
+{% block schedule_header %}
+    <h5>{{ projectassignment|verbose_name }}:</h5>
+{% endblock %}
+
+{% block schedule_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ projectassignment.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ projectassignment.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block schedule_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name projectassignment 'project' %}:</strong></dt>
+                    <dd><a href="{{ projectassignment.project.get_absolute_url }}">{{ projectassignment.project.name }}</a></dd>
+                    <dt><strong>{% field_verbose_name projectassignment.assignment 'employee' %}:</strong></dt>
+                    <dd><a href="{{ projectassignment.assignment.employee.get_absolute_url }}">{{ projectassignment.assignment.employee }}</a></dd>
+                    <dt><strong>{% field_verbose_name projectassignment.assignment 'start' %}:</strong></dt>
+                    <dd>{{ projectassignment.assignment.start }}</dd>
+                    <dt><strong>{% field_verbose_name projectassignment.assignment 'end' %}:</strong></dt>
+                    <dd>{{ projectassignment.assignment.end }}</dd>
+                    <dt><strong>{% field_verbose_name projectassignment 'hours' %}:</strong></dt>
+                    <dd>{{ projectassignment.hours }}</dd>
+                </dl>
+            </div>
+        </div>
+    </article>
+{% endblock %}
