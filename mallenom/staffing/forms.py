@@ -26,9 +26,9 @@ class StaffingForm(forms.ModelForm):
 
     def clean_count(self):
         if any(self.errors):
-            return
+            return None
 
-        count = self.cleaned_data.get('count')
+        count = self.cleaned_data['count']
         if self.instance.pk:
             staff_units_holded = self.instance.employments.aggregate(
                 count_sum=models.functions.Coalesce(

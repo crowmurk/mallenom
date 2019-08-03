@@ -21,7 +21,7 @@ class EmploymentForm(forms.ModelForm):
         cleaned_data = super().clean()
 
         if any(self.errors):
-            return
+            return cleaned_data
 
         staffing = cleaned_data['staffing']
         staff_units = cleaned_data['count']
@@ -65,7 +65,7 @@ class BaseEmploymentFormSet(forms.BaseInlineFormSet):
         cleaned_data = super().clean()
 
         if any(self.errors):
-            return
+            return cleaned_data
 
         validate_again = {}
 
