@@ -154,3 +154,6 @@ ADMIN_SITE_HEADER = _("Mallenom administration")
 ADMIN_SITE_TITLE = _("Mallenom site admin")
 
 ADMIN_INDEX_TITLE = _('Site administration')
+
+# Float tolerance
+FLOAT_TOLERANCE = 7
