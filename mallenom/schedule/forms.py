@@ -21,11 +21,11 @@ class AssignmentForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
 
-        start = cleaned_data.get('start', None)
-        end = cleaned_data.get('end', None)
+        if any(self.errors):
+            return cleaned_data
 
-        if not start or not end:
-            return
+        start = cleaned_data['start']
+        end = cleaned_data['end']
 
         delta = end - start
 
@@ -52,6 +52,7 @@ class AssignmentForm(forms.ModelForm):
                     },
                 ),
             )
+        return cleaned_data
 
 
 class ProjectAssignmentForm(forms.ModelForm):
@@ -68,11 +69,11 @@ class AbsenceForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
 
-        start = cleaned_data.get('start', None)
-        end = cleaned_data.get('end', None)
+        if any(self.errors):
+            return cleaned_data
 
-        if not start or not end:
-            return
+        start = cleaned_data['start']
+        end = cleaned_data['end']
 
         if start > end:
             self.add_error(
@@ -85,6 +86,7 @@ class AbsenceForm(forms.ModelForm):
                     },
                 ),
             )
+        return cleaned_data
 
 
 ProjectAssignmentFormSet = inlineformset_factory(
