@@ -62,7 +62,7 @@ class ActionTableDeleteMixin:
                 error_message = _("Cannot delete {name} because of"
                                   " foreign references").format(
                                       name=model._meta.verbose_name_plural.lower()
-                                  )
+                )
 
             button = request.POST.get(button)
             pks = request.POST.getlist(button)
@@ -98,7 +98,7 @@ class DeleteMessageMixin:
                 error_message = _("Cannot delete {name} because of"
                                   " foreign references").format(
                                       name=self.model._meta.verbose_name.lower()
-                                  )
+                )
             messages.error(self.request, error_message)
             return HttpResponseRedirect(self.object.get_absolute_url())
         return result
@@ -168,7 +168,14 @@ class SingleFormSetMixin:
         )
 
         if formset.is_valid():
-            formset.save()
+            try:
+                formset.save()
+            except ProtectedError:
+                error_message = _("Cannot delete {name} because of"
+                                  " foreign references").format(
+                                      name=formset.model._meta.verbose_name.lower()
+                )
+                messages.error(self.request, error_message)
             return redirect
 
         return self.render_to_response(
