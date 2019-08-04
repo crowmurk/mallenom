@@ -15,7 +15,7 @@
 
 {% block schedule_button %}
     {% if request.user.is_superuser %}
-        <a href="{% url 'schedule:projectassignment:create' %}" class="button button-primary">{% trans "Create" %}</a>
+        <a href="{% url 'schedule:assignment:create' %}" class="button button-primary">{% trans "Create" %}</a>
     {% endif %}
 {% endblock %}
 
