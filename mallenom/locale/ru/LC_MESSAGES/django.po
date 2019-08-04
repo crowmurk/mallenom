@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-01 20:39+0300\n"
+"POT-Creation-Date: 2019-08-04 15:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -80,14 +80,14 @@ msgstr "Отмена"
 msgid "Filter"
 msgstr "Фильтр"
 
-#: core/templates/core/includes/formset_table.html:72 employee/tables.py:34
-#: employee/tables.py:67 schedule/tables.py:18 schedule/tables.py:41
-#: schedule/tables.py:72 schedule/tables.py:88 staffing/tables.py:30
-#: staffing/tables.py:55 staffing/tables.py:81
+#: core/templates/core/includes/formset_table.html:74 employee/tables.py:34
+#: employee/tables.py:67 schedule/tables.py:32 schedule/tables.py:60
+#: schedule/tables.py:94 schedule/tables.py:115 staffing/tables.py:37
+#: staffing/tables.py:69 staffing/tables.py:102
 msgid "There are no records available"
 msgstr "Записей не обнаружено"
 
-#: core/templates/core/includes/formset_table.html:126
+#: core/templates/core/includes/formset_table.html:128
 #, python-format
 msgid ""
 "\n"
@@ -98,15 +98,15 @@ msgstr ""
 "                        Страница %(page)s из %(pages)s\n"
 "                    "
 
-#: core/templates/core/includes/formset_table.html:132
+#: core/templates/core/includes/formset_table.html:134
 msgid "First"
 msgstr "Первая"
 
-#: core/templates/core/includes/formset_table.html:142
+#: core/templates/core/includes/formset_table.html:144
 msgid "Last"
 msgstr "Последняя"
 
-#: core/templates/core/includes/formset_table.html:152
+#: core/templates/core/includes/formset_table.html:154
 msgid "Add"
 msgstr "Добавить"
 
@@ -137,7 +137,7 @@ msgstr "Обнаружена ошибка в значении %(value)s шабл
 msgid "{name} were deleted successfuly"
 msgstr "{name} были успешно удалены"
 
-#: core/views.py:62 core/views.py:98
+#: core/views.py:62 core/views.py:98 core/views.py:174
 #, python-brace-format
 msgid "Cannot delete {name} because of foreign references"
 msgstr "Невозможно удалить {name} при существующих внешних ссылках"
@@ -154,13 +154,13 @@ msgstr "Сотрудники"
 
 #: employee/filters.py:11 employee/filters.py:36 employee/models.py:89
 #: employee/models.py:142 employee/tables.py:10 schedule/filters.py:34
-#: schedule/filters.py:117 schedule/filters.py:190 schedule/models.py:93
-#: schedule/models.py:228
+#: schedule/filters.py:117 schedule/filters.py:190 schedule/models.py:104
+#: schedule/models.py:239
 msgid "Employee"
 msgstr "Сотрудник"
 
 #: employee/filters.py:15 employee/filters.py:50 staffing/filters.py:13
-#: staffing/filters.py:34 staffing/filters.py:62 staffing/models.py:175
+#: staffing/filters.py:34 staffing/filters.py:62 staffing/models.py:204
 #: templates/base.html:83
 msgid "Staff units"
 msgstr "Штатные единицы"
@@ -181,15 +181,29 @@ msgid "Actual"
 msgstr "Дейстующие"
 
 #: employee/filters.py:40 employee/tables.py:45 staffing/filters.py:52
-#: staffing/models.py:50 staffing/models.py:153 staffing/tables.py:10
-#: staffing/tables.py:65
+#: staffing/models.py:60 staffing/models.py:180 staffing/tables.py:10
+#: staffing/tables.py:79
 msgid "Department"
 msgstr "Отдел"
 
 #: employee/filters.py:45 employee/tables.py:49 staffing/filters.py:57
-#: staffing/models.py:114 staffing/models.py:161 staffing/tables.py:35
+#: staffing/models.py:132 staffing/models.py:188 staffing/tables.py:42
 msgid "Position"
 msgstr "Должность"
+
+#: employee/forms.py:49
+#, python-format
+msgid "This value must be less than or equal to %(count)s"
+msgstr "Это значение должно быть меньше или равно %(count)s"
+
+#: employee/forms.py:115
+#, python-format
+msgid ""
+"%(units_count_name)s for all values %(staffing_name)s \"%(staffing)s\" must "
+"be less than or equal to %(count)s summary"
+msgstr ""
+"%(units_count_name)s для всех значений %(staffing_name)s \"%(staffing)s\" "
+"должно быть в сумме меньше или равно %(count)s"
 
 #: employee/models.py:51
 msgid "Last name"
@@ -203,8 +217,8 @@ msgstr "Имя"
 msgid "Middle name"
 msgstr "Отчество"
 
-#: employee/models.py:76 schedule/models.py:41 staffing/models.py:37
-#: staffing/models.py:108
+#: employee/models.py:76 schedule/models.py:50 staffing/models.py:47
+#: staffing/models.py:126
 msgid "A label for URL config."
 msgstr "URL идентификатор объекта"
 
@@ -217,12 +231,12 @@ msgstr "Занимаемые должности"
 msgid "Employee ID number"
 msgstr "Табельный номер"
 
-#: employee/models.py:150 staffing/models.py:174
+#: employee/models.py:150 staffing/models.py:203
 msgid "Staff unit"
 msgstr "Штатная единица"
 
-#: employee/models.py:160 employee/tables.py:19 staffing/models.py:170
-#: staffing/tables.py:16 staffing/tables.py:41
+#: employee/models.py:160 employee/tables.py:19 staffing/models.py:197
+#: staffing/tables.py:16 staffing/tables.py:48
 msgid "Staff units count"
 msgstr "Количество штатных единиц"
 
@@ -230,13 +244,16 @@ msgstr "Количество штатных единиц"
 msgid "Position held"
 msgstr "Занимаемая должность"
 
-#: employee/tables.py:13 staffing/models.py:51 staffing/tables.py:38
+#: employee/tables.py:13 staffing/models.py:61 staffing/tables.py:45
 #: templates/base.html:84
 msgid "Departments"
 msgstr "Отделы"
 
-#: employee/tables.py:20 employee/tables.py:52 staffing/tables.py:17
-#: staffing/tables.py:42 staffing/tables.py:68
+#: employee/tables.py:20 employee/tables.py:52 schedule/tables.py:13
+#: schedule/tables.py:19 schedule/tables.py:45 schedule/tables.py:79
+#: schedule/tables.py:101 staffing/tables.py:17 staffing/tables.py:23
+#: staffing/tables.py:49 staffing/tables.py:55 staffing/tables.py:82
+#: staffing/tables.py:88
 msgid "Total: {}"
 msgstr "Всего: {}"
 
@@ -332,8 +349,8 @@ msgstr "Закрыт"
 msgid "Active"
 msgstr "Активен"
 
-#: schedule/filters.py:38 schedule/filters.py:112 schedule/models.py:45
-#: schedule/models.py:168
+#: schedule/filters.py:38 schedule/filters.py:112 schedule/models.py:56
+#: schedule/models.py:179
 msgid "Project"
 msgstr "Проект"
 
@@ -368,99 +385,113 @@ msgstr "Начальная дата должна быть меньше чем %(
 msgid "There are seven days in a week, not %(delta)s"
 msgstr "В неделе семь дней, не %(delta)s"
 
-#: schedule/forms.py:81
+#: schedule/forms.py:82
 #, python-format
 msgid "Start date must be less or equal %(end)s"
 msgstr "Начальная дата должна быть меньше или равна %(end)s"
 
-#: schedule/models.py:24 staffing/models.py:26 staffing/models.py:97
+#: schedule/models.py:33 staffing/models.py:36 staffing/models.py:115
 msgid "Name"
 msgstr "Название"
 
-#: schedule/models.py:30
+#: schedule/models.py:39
 msgid "Status"
 msgstr "Статус"
 
-#: schedule/models.py:46 schedule/models.py:116 templates/base.html:70
+#: schedule/models.py:57 schedule/models.py:127 templates/base.html:70
 msgid "Projects"
 msgstr "Проекты"
 
-#: schedule/models.py:101 schedule/models.py:233
+#: schedule/models.py:112 schedule/models.py:244
 msgid "Start"
 msgstr "Начало"
 
-#: schedule/models.py:109 schedule/models.py:238
+#: schedule/models.py:120 schedule/models.py:249
 msgid "End"
 msgstr "Конец"
 
-#: schedule/models.py:122
+#: schedule/models.py:133
 msgid "Employee's assignments"
 msgstr "Назначения для сотрудника"
 
-#: schedule/models.py:123 templates/base.html:67
+#: schedule/models.py:134 templates/base.html:67
 msgid "Employees' assignments"
 msgstr "Назначения для сотрудников"
 
-#: schedule/models.py:136
+#: schedule/models.py:147
 #, python-brace-format
 msgid "{start}-{end}: {employee}"
 msgstr "{start}-{end}: {employee}"
 
-#: schedule/models.py:176
+#: schedule/models.py:187
 msgid "Assignment"
 msgstr "Назначение"
 
-#: schedule/models.py:185 schedule/models.py:246
+#: schedule/models.py:196 schedule/models.py:257 schedule/tables.py:18
+#: schedule/tables.py:44 schedule/tables.py:100
 msgid "Hours"
 msgstr "Часы"
 
-#: schedule/models.py:189
+#: schedule/models.py:200
 msgid "Project's assigment"
 msgstr "Назначение для проекта"
 
-#: schedule/models.py:190
+#: schedule/models.py:201
 msgid "Projects' assigments"
 msgstr "Назначения для проектов"
 
-#: schedule/models.py:195
+#: schedule/models.py:206
 #, python-brace-format
 msgid "Assingment: {assingment} Project: {project} Hours: {hours}"
 msgstr "Нвзначение: {assingment} Проект: {project} Часы: {hours}"
 
-#: schedule/models.py:251
+#: schedule/models.py:262
 msgid "Reason"
 msgstr "Причина"
 
-#: schedule/models.py:252
+#: schedule/models.py:263
 msgid "Reason for employee absence"
 msgstr "Причина отсутствия сотрудника"
 
-#: schedule/models.py:256
+#: schedule/models.py:267
 msgid "Employee's absence"
 msgstr "Отсутствие сотрудника"
 
-#: schedule/models.py:257 templates/base.html:69
+#: schedule/models.py:268 templates/base.html:69
 msgid "Employees' absences"
 msgstr "Отсутствия сотрудников"
 
-#: schedule/models.py:268
+#: schedule/models.py:279
 #, python-brace-format
 msgid "{start}-{end}: {employee} {hours}"
 msgstr "{start}-{end}: {employee} {hours}"
+
+#: schedule/tables.py:12
+msgid "Assignments count"
+msgstr "Число назначений"
 
 #: staffing/apps.py:7 templates/base.html:81
 msgid "Staffing"
 msgstr "Штатное расписание"
 
-#: staffing/models.py:44 staffing/models.py:115 staffing/tables.py:13
+#: staffing/forms.py:39
+#, python-brace-format
+msgid "This value must be greater than or equal to {staff_units_holded}"
+msgstr "Это занчение должно быть больше или равно {staff_units_holded}"
+
+#: staffing/models.py:54 staffing/models.py:133 staffing/tables.py:13
 #: templates/base.html:85
 msgid "Positions"
 msgstr "Должности"
 
-#: staffing/models.py:180
+#: staffing/models.py:209
 #, python-brace-format
 msgid "Department: {department} ({position})"
 msgstr "Отдел: {department} ({position})"
+
+#: staffing/tables.py:22 staffing/tables.py:54 staffing/tables.py:87
+msgid "Staff units held"
+msgstr "Штатных единиц занято"
 
 #: templates/400.html:5 templates/400.html:11
 msgid "Bad request"
@@ -570,9 +601,3 @@ msgstr "В разработке"
 #: templates/site/underconstruction.html:13
 msgid "Sorry, this section is under construction."
 msgstr "Извините, раздел в разработке."
-
-#~ msgid "active"
-#~ msgstr "активный"
-
-#~ msgid "closed"
-#~ msgstr "закрыт"
