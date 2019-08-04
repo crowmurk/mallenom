@@ -17,6 +17,15 @@ from employee.models import Employee
 
 # Create your models here.
 
+class ProjectManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().annotate(
+            hours=models.functions.Coalesce(
+                models.Sum('projectassignments__hours'), 0
+            ),
+            assignments_count=models.Count('projectassignments'),
+        )
+
 class Project(models.Model):
     name = models.CharField(
         max_length=128,
@@ -40,6 +49,8 @@ class Project(models.Model):
         ],
         help_text=_('A label for URL config.'),
     )
+
+    objects = ProjectManager()
 
     class Meta:
         verbose_name = _('Project')
