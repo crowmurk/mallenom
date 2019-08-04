@@ -18,6 +18,12 @@ class DepartmentTable(tables.Table):
             sum(x.staff_units_count for x in table.data)
         )
     )
+    staff_units_held = tables.Column(
+        verbose_name=_("Staff units held"),
+        footer=lambda table: _('Total: {}').format(
+            sum(x.staff_units_held for x in table.data)
+        )
+    )
     delete = tables.CheckBoxColumn(accessor="pk")
 
     class Meta:
@@ -25,7 +31,8 @@ class DepartmentTable(tables.Table):
         fields = (
             'name',
             'positions_count',
-            'staff_units_count'
+            'staff_units_count',
+            'staff_units_held',
         )
         empty_text = _("There are no records available")
 
@@ -43,6 +50,12 @@ class PositionTable(tables.Table):
             sum(x.staff_units_count for x in table.data)
         )
     )
+    staff_units_held = tables.Column(
+        verbose_name=_("Staff units held"),
+        footer=lambda table: _('Total: {}').format(
+            sum(x.staff_units_held for x in table.data)
+        )
+    )
     delete = tables.CheckBoxColumn(accessor="pk")
 
     class Meta:
@@ -51,6 +64,7 @@ class PositionTable(tables.Table):
             'name',
             'departments_count',
             'staff_units_count',
+            'staff_units_held',
         )
         empty_text = _("There are no records available")
 
@@ -69,6 +83,12 @@ class StaffingTable(tables.Table):
             sum(x.count for x in table.data)
         )
     )
+    staff_units_held = tables.Column(
+        verbose_name=_("Staff units held"),
+        footer=lambda table: _('Total: {}').format(
+            sum(x.staff_units_held for x in table.data)
+        )
+    )
     delete = tables.CheckBoxColumn(accessor="pk")
 
     class Meta:
@@ -77,5 +97,6 @@ class StaffingTable(tables.Table):
             'department',
             'position',
             'count',
+            'staff_units_held',
         )
         empty_text = _("There are no records available")

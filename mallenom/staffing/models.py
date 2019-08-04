@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.expressions import Subquery, OuterRef
+from django.db.models.functions import Coalesce
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import validate_unicode_slug, MinValueValidator
@@ -10,12 +12,20 @@ from core.utils import get_unique_slug
 
 class DepartmentManager(models.Manager):
     def get_queryset(self):
+        staff_units_held = Subquery(
+            Staffing.objects.filter(
+                department=OuterRef('pk')
+            ).values('department').order_by('department').annotate(
+                sum=Coalesce(models.Sum('employments__count'), 0)
+            ).values('sum')
+        )
+
         return super().get_queryset().annotate(
+            positions_count=models.Count('positions'),
             staff_units_count=models.functions.Coalesce(
                 models.Sum('staffing__count'), 0
             ),
-        ).annotate(
-            positions_count=models.Count('staffing')
+            staff_units_held=staff_units_held,
         )
 
 
@@ -81,12 +91,20 @@ class Department(models.Model):
 
 class PositionManager(models.Manager):
     def get_queryset(self):
+        staff_units_held = Subquery(
+            Staffing.objects.filter(
+                position=OuterRef('pk')
+            ).values('position').order_by('position').annotate(
+                sum=Coalesce(models.Sum('employments__count'), 0)
+            ).values('sum')
+        )
+
         return super().get_queryset().annotate(
+            departments_count=models.Count('departments'),
             staff_units_count=models.functions.Coalesce(
                 models.Sum('staffing__count'), 0
             ),
-        ).annotate(
-            departments_count=models.Count('staffing')
+            staff_units_held=staff_units_held,
         )
 
 
@@ -143,6 +161,15 @@ class Position(models.Model):
         )
 
 
+class StaffingManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().annotate(
+            staff_units_held=models.functions.Coalesce(
+                models.Sum('employments__count'), 0
+            )
+        )
+
+
 class Staffing(models.Model):
     department = models.ForeignKey(
         Department,
@@ -169,6 +196,8 @@ class Staffing(models.Model):
         ],
         verbose_name=_('Staff units count'),
     )
+
+    objects = StaffingManager()
 
     class Meta:
         verbose_name = _('Staff unit')
