@@ -511,3 +511,44 @@ table.dataTable {
     display: block;
     background-color: #fff;
 }
+
+
+/* Year Calendar
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.year table {
+    width: 90%;
+    margin: 12px;
+}
+
+.year tr {
+    vertical-align: top;
+}
+
+.year tr:hover {
+    background-color: transparent;
+}
+
+.year th, .year td {
+    border-bottom: 1px solid transparent;
+}
+
+.month th, .month td {
+    border-bottom: 1px solid #E1E1E1;
+}
+
+.month th {
+  color: #FFF;
+  background-color: #33C3F0;
+}
+
+.month td:hover {
+    color: #33C3F0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+th.mon, th.tue, th.wed,
+th.thu, th.fri, th.sat,  th.sun {
+    color: grey !important;
+    background-color: #F1F1F1 !important;
+}
