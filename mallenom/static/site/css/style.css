@@ -242,6 +242,14 @@ article footer li {
 
 }
 
+.pagination a {
+    color: #555;
+}
+
+.pagination .active a {
+    color: #1EAEDB;
+}
+
 body>footer {
     position: absolute;
     bottom: 0;
