@@ -536,13 +536,24 @@ table.dataTable {
     border-bottom: 1px solid #E1E1E1;
 }
 
+.month td a {
+    text-decoration: none;
+    color: black;
+}
+
+.month td a.restDay {
+    color: red;
+}
+.month td a.shortDay {
+    color: grey;
+}
+
 .month th {
   color: #FFF;
   background-color: #33C3F0;
 }
 
 .month td:hover {
-    color: #33C3F0;
     font-weight: bold;
     cursor: pointer;
 }
