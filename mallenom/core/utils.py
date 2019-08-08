@@ -51,7 +51,10 @@ def get_unique_slug(instance, slug_field, *args, **kwargs):
     slugExtension = 1
 
     # Создаем slug
-    slug = slugify('-'.join(source), allow_unicode=True)
+    slug = slugify(
+        '-'.join([str(item) for item in source]),
+        allow_unicode=True,
+    )
 
     # Уникальность slug не требуется
     if not (unique or unique_for):
