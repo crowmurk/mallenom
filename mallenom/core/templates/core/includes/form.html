@@ -11,7 +11,11 @@
             {% else %}
                 action="{{ action }}"
             {% endif %}
-            method="{{ method|default:'post' }}">
+            method="{{ method|default:'post' }}"
+            {% if upload %}
+                enctype="multipart/form-data"
+            {% endif %}
+                >
             {% csrf_token %}
             {{ form.as_p }}
             {% if formset %}

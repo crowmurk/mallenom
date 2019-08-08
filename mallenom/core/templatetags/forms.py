@@ -159,6 +159,7 @@ def form(context, *args, **kwargs):
     formset = kwargs.get('formset', context.get('formset'))
     paginator = kwargs.get('paginator', context.get('paginator'))
     table = kwargs.get('table', context.get('table'))
+    upload = kwargs.get('upload')
 
     return {
         'request': request,
@@ -170,6 +171,7 @@ def form(context, *args, **kwargs):
         'formset': formset,
         'paginator': paginator,
         'table': table,
+        'upload': upload,
         'cancel_url': cancel_url,
     }
 
