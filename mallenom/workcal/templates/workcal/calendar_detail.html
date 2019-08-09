@@ -1,0 +1,29 @@
+{% extends "workcal/base_workcal.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+{% load work_calendar %}
+
+{% block title %}
+    {{ block.super }} – {% trans 'Calendar' %}: {{ year }}
+{% endblock %}
+
+{% block workcal_header %}
+{% endblock %}
+
+{% block workcal_button %}
+{% endblock %}
+
+{% block workcal_content %}
+    <div class="row">
+        <div class="u-pull-left">
+            <a href="{% url 'workcal:calendar:year' year|add:"-1" %}" class="button">{% trans "Previous" %}</a>
+        </div>
+        <div class="u-pull-right">
+            <a href="{% url 'workcal:calendar:year' year|add:"1" %}" class="button">{% trans "Next" %}</a>
+        </div>
+    </div>
+    <article>
+        {% work_calendar year %}
+    </article>
+{% endblock %}

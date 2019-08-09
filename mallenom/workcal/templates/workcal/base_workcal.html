@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <section class="seven columns">
+            {% block workcal_header %}
+            {% endblock %}
+        </section>
+        <section class="u-pull-right">
+            {% block workcal_button %}
+            {% endblock %}
+        </section>
+    </div>
+    {% block workcal_content %}
+    {% endblock %}
+{% endblock %}

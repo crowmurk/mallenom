@@ -1,0 +1,20 @@
+{% extends "workcal/base_workcal.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }} - {% trans "Calendar upload" %}
+{% endblock %}
+
+{% block content %}
+    {% url 'workcal:calendar:detail' as cancel_url %}
+    {% trans "Upload calendar" as action_verbose %}
+    {% url 'workcal:calendar:upload' as form_url %}
+    {% form form_url action_verbose cancel_url=cancel_url upload=True %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="{% static 'site/js/workcal-calendar_upload_form.js' %}" defer></script>
+{% endblock %}

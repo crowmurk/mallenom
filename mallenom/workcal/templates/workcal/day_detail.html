@@ -1,0 +1,37 @@
+{% extends "workcal/base_workcal.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} – {{ day|verbose_name }}
+{% endblock %}
+
+{% block workcal_header %}
+    <h5>{{ day|verbose_name }}:</h5>
+{% endblock %}
+
+{% block workcal_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ day.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ day.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block workcal_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name day 'date' %}:</strong></dt>
+                    <dd>{{ day.date }}</dd>
+                    <dt><strong>{% field_verbose_name day 'day_type' %}:</strong></dt>
+                    <dd>{{ day.day_type.name }}</dd>
+                    <dt><strong>{% field_verbose_name day.day_type 'hours' %}:</strong></dt>
+                    <dd>{{ day.day_type.hours }}</dd>
+                </dl>
+            </div>
+        </div>
+    </article>
+{% endblock %}

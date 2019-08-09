@@ -1,0 +1,12 @@
+{% extends "workcal/base_workcal.html" %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }} - {% trans "Delete" %} {{ day|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% delete_form day.get_delete_url %}
+{% endblock %}

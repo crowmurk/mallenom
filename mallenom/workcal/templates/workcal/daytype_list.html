@@ -1,0 +1,38 @@
+{% extends "workcal/base_workcal.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load django_tables2 %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} - {{ view.model|verbose_name_plural }}
+{% endblock %}
+
+{% block workcal_header %}
+    <h2>{{ view.model|verbose_name_plural }}</h2>
+{% endblock %}
+
+{% block workcal_button %}
+    {% if request.user.is_superuser %}
+        <a href="{% url 'workcal:daytype:create' %}" class="button button-primary">{% trans "Create" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block workcal_content %}
+    {% if filter %}
+        {% filter_table_form filter %}
+    {% endif %}
+    {% if table %}
+        {% if request.user.is_superuser %}
+            {% trans "Delete" as action_verbose %}
+            {% action_table_form table button_class='button button-primary' action_verbose=action_verbose %}
+        {% else %}
+            {% action_table_form readonly=True %}
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="{% static 'site/js/workcal-daytype_list.js' %}" defer></script>
+{% endblock %}

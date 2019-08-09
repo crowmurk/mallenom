@@ -1,0 +1,49 @@
+{% extends "workcal/base_workcal.html" %}
+{% load i18n %}
+{% load names %}
+{% load forms %}
+
+{% block title %}
+    {{ block.super }} – {{ daytype|verbose_name }}
+{% endblock %}
+
+{% block workcal_header %}
+    <h5>{{ daytype|verbose_name }}:</h5>
+{% endblock %}
+
+{% block workcal_button %}
+    {% if request.user.is_superuser %}
+        <a href="{{ daytype.get_update_url }}" class="button">{% trans "Edit" %}</a>
+        <a href="{{ daytype.get_delete_url }}" class="button">{% trans "Delete" %}</a>
+    {% endif %}
+{% endblock %}
+
+{% block workcal_content %}
+    <article>
+        <div class="row">
+            <div class="one column"></div>
+            <div class="ten columns">
+                <dl>
+                    <dt><strong>{% field_verbose_name daytype 'name' %}:</strong></dt>
+                    <dd>{{ daytype.name }}</dd>
+                    <dt><strong>{% field_verbose_name daytype 'hours' %}:</strong></dt>
+                    <dd>{{ daytype.hours }}</dd>
+                    <dt><strong>{% field_verbose_name daytype 'days' %}:</strong></dt>
+                    <dd>{{ daytype.days_count }}</dd>
+                    <dt><strong>{% field_verbose_name daytype 'csv_mark' %}:</strong></dt>
+                    {% if daytype.csv_mark %}
+                        <dd>{{ daytype.csv_mark }}</dd>
+                    {% else %}
+                        <dd>{% trans "None" %}</dd>
+                    {% endif %}
+                    <dt><strong>{% field_verbose_name daytype 'css_class' %}:</strong></dt>
+                    {% if daytype.css_class %}
+                        <dd>{{ daytype.css_class }}</dd>
+                    {% else %}
+                        <dd>{% trans "None" %}</dd>
+                    {% endif %}
+                </dl>
+            </div>
+        </div>
+    </article>
+{% endblock %}

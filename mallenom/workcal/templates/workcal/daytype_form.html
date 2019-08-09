@@ -1,0 +1,31 @@
+{% extends "workcal/base_workcal.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }}
+    {% if daytype %}
+        - {% trans "Edit" %}
+    {% else %}
+        - {% trans "Create" %}
+    {% endif %}
+    {{ view.model|verbose_name|lower }}
+{% endblock %}
+
+{% block content %}
+    {% url 'workcal:daytype:list' as cancel_url %}
+    {% if daytype %}
+        {% trans "Edit" as action_verbose %}
+        {% form daytype.get_update_url action_verbose %}
+    {% else %}
+        {% trans "Create" as action_verbose %}
+        {% url 'workcal:daytype:create' as form_url %}
+        {% form form_url action_verbose cancel_url=cancel_url %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="{% static 'site/js/workcal-daytype_form.js' %}" defer></script>
+{% endblock %}
