@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-04 15:34+0300\n"
+"POT-Creation-Date: 2019-08-09 08:44+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,11 +68,17 @@ msgstr "Вы уверены что хотите удалить"
 #: staffing/templates/staffing/staffing_confirm_delete.html:7
 #: staffing/templates/staffing/staffing_detail.html:16
 #: staffing/templates/staffing/staffing_list.html:28
+#: workcal/templates/workcal/day_confirm_delete.html:7
+#: workcal/templates/workcal/day_detail.html:17
+#: workcal/templates/workcal/day_list.html:28
+#: workcal/templates/workcal/daytype_confirm_delete.html:7
+#: workcal/templates/workcal/daytype_detail.html:17
+#: workcal/templates/workcal/daytype_list.html:28
 msgid "Delete"
 msgstr "Удалить"
 
 #: core/templates/core/includes/delete_form.html:10
-#: core/templates/core/includes/form.html:28
+#: core/templates/core/includes/form.html:32
 msgid "Cancel"
 msgstr "Отмена"
 
@@ -83,7 +89,8 @@ msgstr "Фильтр"
 #: core/templates/core/includes/formset_table.html:74 employee/tables.py:34
 #: employee/tables.py:67 schedule/tables.py:32 schedule/tables.py:60
 #: schedule/tables.py:94 schedule/tables.py:115 staffing/tables.py:37
-#: staffing/tables.py:69 staffing/tables.py:102
+#: staffing/tables.py:69 staffing/tables.py:102 workcal/tables.py:26
+#: workcal/tables.py:47
 msgid "There are no records available"
 msgstr "Записей не обнаружено"
 
@@ -167,6 +174,7 @@ msgstr "Штатные единицы"
 
 #: employee/filters.py:16 employee/filters.py:51 schedule/filters.py:20
 #: staffing/filters.py:14 staffing/filters.py:35 staffing/filters.py:63
+#: workcal/filters.py:39
 msgid "All"
 msgstr "Все"
 
@@ -218,7 +226,7 @@ msgid "Middle name"
 msgstr "Отчество"
 
 #: employee/models.py:76 schedule/models.py:50 staffing/models.py:47
-#: staffing/models.py:126
+#: staffing/models.py:126 workcal/models.py:64 workcal/models.py:133
 msgid "A label for URL config."
 msgstr "URL идентификатор объекта"
 
@@ -284,6 +292,12 @@ msgstr "Всего: {}"
 #: staffing/templates/staffing/staffing_detail.html:15
 #: staffing/templates/staffing/staffing_form.html:10
 #: staffing/templates/staffing/staffing_form.html:24
+#: workcal/templates/workcal/day_detail.html:16
+#: workcal/templates/workcal/day_form.html:10
+#: workcal/templates/workcal/day_form.html:25
+#: workcal/templates/workcal/daytype_detail.html:16
+#: workcal/templates/workcal/daytype_form.html:10
+#: workcal/templates/workcal/daytype_form.html:20
 msgid "Edit"
 msgstr "Изменить"
 
@@ -314,26 +328,32 @@ msgstr "Изменить"
 #: staffing/templates/staffing/staffing_form.html:12
 #: staffing/templates/staffing/staffing_form.html:27
 #: staffing/templates/staffing/staffing_list.html:18
+#: workcal/templates/workcal/day_form.html:12
+#: workcal/templates/workcal/day_form.html:28
+#: workcal/templates/workcal/day_list.html:18
+#: workcal/templates/workcal/daytype_form.html:12
+#: workcal/templates/workcal/daytype_form.html:23
+#: workcal/templates/workcal/daytype_list.html:18
 msgid "Create"
 msgstr "Создать"
 
-#: mallenom/settings/base.py:125
+#: mallenom/settings/base.py:126
 msgid "Russian"
 msgstr "Русский"
 
-#: mallenom/settings/base.py:126
+#: mallenom/settings/base.py:127
 msgid "English"
 msgstr "Английский"
 
-#: mallenom/settings/base.py:152
+#: mallenom/settings/base.py:153
 msgid "Mallenom administration"
 msgstr "Администрирование Mallenom"
 
-#: mallenom/settings/base.py:154
+#: mallenom/settings/base.py:155
 msgid "Mallenom site admin"
 msgstr "Администрирование сайта Mallenom"
 
-#: mallenom/settings/base.py:156
+#: mallenom/settings/base.py:157
 msgid "Site administration"
 msgstr "Администрирование сайта"
 
@@ -360,6 +380,7 @@ msgstr "Начинается после"
 
 #: schedule/filters.py:47 schedule/filters.py:55 schedule/filters.py:125
 #: schedule/filters.py:133 schedule/filters.py:198 schedule/filters.py:206
+#: workcal/filters.py:27 workcal/filters.py:35
 msgid "MM/DD/YYYY"
 msgstr "ДД.ММ.ГГГГ"
 
@@ -391,6 +412,7 @@ msgid "Start date must be less or equal %(end)s"
 msgstr "Начальная дата должна быть меньше или равна %(end)s"
 
 #: schedule/models.py:33 staffing/models.py:36 staffing/models.py:115
+#: workcal/models.py:26
 msgid "Name"
 msgstr "Название"
 
@@ -428,7 +450,7 @@ msgid "Assignment"
 msgstr "Назначение"
 
 #: schedule/models.py:196 schedule/models.py:257 schedule/tables.py:18
-#: schedule/tables.py:44 schedule/tables.py:100
+#: schedule/tables.py:44 schedule/tables.py:100 workcal/models.py:34
 msgid "Hours"
 msgstr "Часы"
 
@@ -553,17 +575,22 @@ msgstr "Войти"
 msgid "Projects' assignments"
 msgstr "Назначения для проектов"
 
-#: templates/base.html:89
+#: templates/base.html:89 workcal/templates/workcal/calendar_detail.html:8
 msgid "Calendar"
 msgstr "Календарь"
 
-#: templates/base.html:91
+#: templates/base.html:91 workcal/models.py:140
 msgid "Days"
 msgstr "Дни"
 
-#: templates/base.html:92
+#: templates/base.html:92 workcal/models.py:71
 msgid "Day types"
 msgstr "Типы дней"
+
+#: templates/base.html:93
+#: workcal/templates/workcal/calendar_upload_form.html:13
+msgid "Upload calendar"
+msgstr "Загрузить календарь"
 
 #: templates/registration/logged_out.html:6
 msgid "Logged out!"
@@ -601,3 +628,123 @@ msgstr "В разработке"
 #: templates/site/underconstruction.html:13
 msgid "Sorry, this section is under construction."
 msgstr "Извините, раздел в разработке."
+
+#: workcal/apps.py:7
+msgid "Work calendar"
+msgstr "Трудовой календарь"
+
+#: workcal/filters.py:11 workcal/tables.py:10 workcal/tables.py:35
+msgid "Type"
+msgstr "Тип"
+
+#: workcal/filters.py:23
+msgid "After"
+msgstr "После"
+
+#: workcal/filters.py:31
+msgid "Before"
+msgstr "До"
+
+#: workcal/forms.py:26
+msgid "Year"
+msgstr "Год"
+
+#: workcal/forms.py:27
+msgid "Pick a year to import"
+msgstr "Выберите год для импорта"
+
+#: workcal/forms.py:31
+msgid "File"
+msgstr "Файл"
+
+#: workcal/forms.py:32
+msgid "Pick a CSV file containing work calendar"
+msgstr "Выберите CSV файл содержащий календарь"
+
+#: workcal/forms.py:41
+msgid "CSV file required"
+msgstr "Требуется CSV файл"
+
+#: workcal/models.py:41
+msgid "Mark in CSV file"
+msgstr "Отметка в CSV файле"
+
+#: workcal/models.py:53
+msgid "CSS class"
+msgstr "Класс CSS"
+
+#: workcal/models.py:70 workcal/models.py:122
+msgid "Day type"
+msgstr "Тип дня"
+
+#: workcal/models.py:114 workcal/models.py:139
+msgid "Day"
+msgstr "День"
+
+#: workcal/tables.py:13
+msgid "Days count"
+msgstr "Количество дней"
+
+#: workcal/templates/workcal/calendar_detail.html:20
+msgid "Previous"
+msgstr "Предыдущий"
+
+#: workcal/templates/workcal/calendar_detail.html:23
+msgid "Next"
+msgstr "Следующий"
+
+#: workcal/templates/workcal/calendar_upload_form.html:8
+msgid "Calendar upload"
+msgstr "Загрузка календаря"
+
+#: workcal/templates/workcal/daytype_detail.html:37
+#: workcal/templates/workcal/daytype_detail.html:43
+msgid "None"
+msgstr "Нет"
+
+#: workcal/utils.py:59
+msgid "Language '{}' does not supported"
+msgstr "Язык '{}' не поддерживается"
+
+#: workcal/utils.py:78
+msgid "Day types not specified"
+msgstr "Типы дней не определены"
+
+#: workcal/utils.py:136
+msgid "Invalid day format: '{}'"
+msgstr "Неверный формат дня: '{}'"
+
+#: workcal/utils.py:146
+msgid "Unknown day type: '{}'"
+msgstr "Неизвестный тип дня: '{}'"
+
+#: workcal/utils.py:164
+#, python-brace-format
+msgid "CSV module exception: {error}"
+msgstr "Ошибка в CSV модуле: {error}"
+
+#: workcal/utils.py:177
+msgid "Invalid CSV format: {}"
+msgstr "Неверный формат CSV: {}"
+
+#: workcal/views.py:147
+#, python-brace-format
+msgid "Uploaded file is too big ({0:.2f} MB)."
+msgstr "Загружаемый файл слишком велик ({0:.2f} MB)."
+
+#: workcal/views.py:161
+#, python-brace-format
+msgid "Parsing error ({type}): {error}"
+msgstr "Ошибка парсера ({type}): {error}"
+
+#: workcal/views.py:171
+msgid "Nothing to upload: data set is empty"
+msgstr "Нечего загружать, набор данных пуст"
+
+#: workcal/views.py:209
+msgid "CSV import finished with errors (see more in logs)"
+msgstr "CSV импорт завершен с ошибками (подробности в логах)"
+
+#: workcal/views.py:215
+msgid "CSV import finished without errors"
+msgstr "Импорт CSV завершен без ошибок"
