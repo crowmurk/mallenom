@@ -86,10 +86,11 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a class="button dropdown-button" href="{% url 'underconstruction' %}">{% trans "Calendar" %}</a>
+                    <a class="button dropdown-button" href="{% url 'workcal:calendar:current' %}">{% trans "Calendar" %}</a>
                     <div class="dropdown-content">
-                        <a href="{% url 'underconstruction' %}">{% trans "Days" %}</a>
-                        <a href="{% url 'underconstruction' %}">{% trans "Day types" %}</a>
+                        <a href="{% url 'workcal:day:list' %}">{% trans "Days" %}</a>
+                        <a href="{% url 'workcal:daytype:list' %}">{% trans "Day types" %}</a>
+                        <a href="{% url 'workcal:calendar:upload' %}">{% trans "Upload calendar" %}</a>
                     </div>
                 </div>
             </div>
