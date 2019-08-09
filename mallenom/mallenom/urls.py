@@ -34,6 +34,7 @@ urlpatterns = [
     path('staffing/', include('staffing.urls')),
     path('employee/', include('employee.urls')),
     path('schedule/', include('schedule.urls')),
+    path('workcalendar/', include('workcal.urls')),
     path('underconstruction/', TemplateView.as_view(
         template_name='site/underconstruction.html'),
         name='underconstruction'),
