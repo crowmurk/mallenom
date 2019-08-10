@@ -158,3 +158,6 @@ ADMIN_INDEX_TITLE = _('Site administration')
 
 # Float tolerance
 FLOAT_TOLERANCE = 7
+
+# Work day length in hours
+WORK_DAY_HOURS = 8
