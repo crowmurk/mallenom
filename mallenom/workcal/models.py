@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import (
@@ -106,6 +107,40 @@ class DayManager(models.Manager):
         return super().get_queryset().select_related(
             'day_type',
         )
+
+    def get_days(self, start, end):
+        if start > end:
+            start, end = end, start
+
+        return self.get_queryset().filter(
+            date__gte=start,
+            date__lte=end,
+        )
+
+    def get_rest_days(self, start, end):
+        return self.get_days(start, end).filter(
+            day_type__hours=0,
+        )
+
+    def get_uncommon_days(self, start, end):
+        return self.get_days(start, end).filter(
+            day_type__hours__gt=0,
+        )
+
+    def get_work_days_count(self, start, end):
+        days_total = abs(end - start).days + 1
+        return days_total - self.get_rest_days(start, end).count()
+
+    def get_work_hours_count(self, start, end,
+                             day_hours=settings.WORK_DAY_HOURS):
+        work_days = self.get_work_days_count(start, end)
+        uncommon_days = self.get_uncommon_days(start, end).aggregate(
+            count=models.Count('id'),
+            hours=models.functions.Coalesce(
+                models.Sum('day_type__hours'), 0
+            ),
+        )
+        return (work_days - uncommon_days['count']) * day_hours + uncommon_days['hours']
 
 
 class Day(models.Model):
