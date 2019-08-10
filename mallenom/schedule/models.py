@@ -203,7 +203,7 @@ class ProjectAssignment(models.Model):
         ordering = ['-assignment__start', ]
 
     def __str__(self):
-        return _("Assingment: {assingment} Project: {project}"
+        return _("Assignment: {assignment} Project: {project}"
                  " Hours: {hours}").format(
                      assignment=self.assignment.pk,
                      project=self.project.name,
