@@ -203,12 +203,13 @@ class Staffing(models.Model):
         verbose_name = _('Staff unit')
         verbose_name_plural = _('Staff units')
         unique_together = (('department', 'position'),)
-        ordering = ['department__name', 'position__name']
+        ordering = ['position__name', 'department__name']
 
     def __str__(self):
-        return _("Department: {department} ({position})").format(
-            department=self.department.name,
-            position=self.position.name,
+        return _("{position} ({department_verbose}: {department})").format(
+            position=self.position,
+            department_verbose=self.department._meta.verbose_name,
+            department=self.department,
         )
 
     def get_absolute_url(self):

@@ -27,7 +27,7 @@
                     <dt><strong>{% field_verbose_name day 'date' %}:</strong></dt>
                     <dd>{{ day.date }}</dd>
                     <dt><strong>{% field_verbose_name day 'day_type' %}:</strong></dt>
-                    <dd>{{ day.day_type.name }}</dd>
+                    <dd><a href="{{ day.day_type.get_absolute_url }}">{{ day.day_type }}</a></dd>
                     <dt><strong>{% field_verbose_name day.day_type 'hours' %}:</strong></dt>
                     <dd>{{ day.day_type.hours }}</dd>
                 </dl>

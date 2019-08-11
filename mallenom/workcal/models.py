@@ -73,10 +73,8 @@ class DayType(models.Model):
         ordering = ['name', ]
 
     def __str__(self):
-        return "{name} - {hours_verbose}: {hours}".format(
+        return "{name}".format(
             name=self.name,
-            hours_verbose=self._meta.get_field('hours').verbose_name,
-            hours=self.hours,
         )
 
     def save(self, *args, **kwargs):
@@ -176,10 +174,9 @@ class Day(models.Model):
         ordering = ['-date', ]
 
     def __str__(self):
-        return "{date}: {hours} ({day_type})".format(
+        return "{date}: {day_type}".format(
             date=self.date,
-            hours=self.day_type.hours,
-            day_type=self.day_type.name,
+            day_type=self.day_type,
         )
 
     def save(self, *args, **kwargs):

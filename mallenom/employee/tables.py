@@ -41,11 +41,11 @@ class EmploymentTable(tables.Table):
             'staffing:department:detail',
             {'slug': tables.A('staffing.department.slug'), },
         ),
-        accessor='staffing.department.name',
+        accessor='staffing.department',
         verbose_name=_('Department'),
     )
     position = tables.Column(
-        accessor='staffing.position.name',
+        accessor='staffing.position',
         verbose_name=_('Position'),
     )
     count = tables.Column(

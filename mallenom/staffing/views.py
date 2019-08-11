@@ -6,7 +6,7 @@ from django.views.generic import (
     DeleteView
 )
 
-from django_tables2 import SingleTableMixin
+from django_tables2 import SingleTableMixin, LinkColumn
 from django_filters.views import FilterView
 
 from core.views import (
@@ -56,6 +56,7 @@ class DepartmentDetail(SingleTableMixin, ActionTableDeleteMixin, DetailView):
 
     def get_table_kwargs(self):
         return {
+            'extra_columns': (('position', LinkColumn(), ), ),
             'exclude': ('department', 'delete', )
         }
 

@@ -27,13 +27,17 @@ class DayTypeTable(tables.Table):
 
 
 class DayTable(tables.Table):
-    date = tables.LinkColumn()
+    date = tables.DateColumn(
+        linkify=(
+            'workcal:day:detail',
+            {'slug': tables.A('slug'), },
+        ),
+    )
     hours = tables.Column(
         accessor='day_type.hours',
     )
     day_type = tables.LinkColumn(
         verbose_name=_('Type'),
-        accessor='day_type.name',
     )
     delete = tables.CheckBoxColumn(accessor="pk")
 

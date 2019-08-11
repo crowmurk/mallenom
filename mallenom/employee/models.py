@@ -166,9 +166,9 @@ class Employment(models.Model):
         ordering = ['number', ]
 
     def __str__(self):
-        return "{number}: {employee}".format(
+        return "{staffing} [{number}]".format(
+            staffing=self.staffing,
             number=self.number,
-            employee=self.employee,
         )
 
     def get_absolute_url(self):

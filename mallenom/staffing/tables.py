@@ -75,7 +75,7 @@ class StaffingTable(tables.Table):
             'staffing:department:detail',
             {'slug': tables.A('department.slug'), },
         ),
-        accessor='department.name',
+        accessor='department',
         verbose_name=_('Department'),
     )
     count = tables.Column(
