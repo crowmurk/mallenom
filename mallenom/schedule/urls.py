@@ -39,8 +39,8 @@ absence = [
 ]
 
 urlpatterns = [
+    path('', include((assignment, 'assignment'))),
     path('project/', include((project, 'project'))),
-    path('assignment/', include((assignment, 'assignment'))),
     path('projectassignment/', include((projectassignment, 'projectassignment'))),
     path('absence/', include((absence, 'absence'))),
 ]

@@ -29,7 +29,7 @@ calendar = [
 ]
 
 urlpatterns = [
+    path('', include((calendar, 'calendar'))),
     path('daytype/', include((day_type, 'daytype'))),
     path('day/', include((day, 'day'))),
-    path('calendar/', include((calendar, 'calendar'))),
 ]

@@ -31,7 +31,7 @@ staffing = [
 ]
 
 urlpatterns = [
+    path('', include((staffing, 'staffing'))),
     path('department/', include((department, 'department'))),
     path('position/', include((position, 'position'))),
-    path('staffing/', include((staffing, 'staffing'))),
 ]

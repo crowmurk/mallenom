@@ -64,8 +64,6 @@
                 <div class="dropdown">
                     <a class="button dropdown-button" href="{% url 'schedule:assignment:list' %}">{% trans "Schedule" %}</a>
                     <div class="dropdown-content">
-                        <a href="{% url 'schedule:assignment:list' %}">{% trans "Employees' assignments" %}</a>
-                        <a href="{% url 'schedule:projectassignment:list' %}">{% trans "Projects' assignments" %}</a>
                         <a href="{% url 'schedule:absence:list' %}">{% trans "Employees' absences" %}</a>
                         <a href="{% url 'schedule:project:list' %}">{% trans "Projects" %}</a>
                     </div>
@@ -73,14 +71,12 @@
                 <div class="dropdown">
                     <a class="button dropdown-button" href="{% url 'employee:employee:list' %}">{% trans "Employees" %}</a>
                     <div class="dropdown-content">
-                        <a href="{% url 'employee:employee:list' %}">{% trans "Employees" %}</a>
                         <a href="{% url 'employee:employment:list' %}">{% trans "Positions held" %}</a>
                     </div>
                 </div>
                 <div class="dropdown">
-                    <a class="button dropdown-button" href="{% url 'staffing:staffing:list' %}">{% trans "Staffing" %}</a>
+                    <a class="button dropdown-button" href="{% url 'staffing:staffing:list' %}">{% trans "Staff units" %}</a>
                     <div class="dropdown-content">
-                        <a href="{% url 'staffing:staffing:list' %}">{% trans "Staff units" %}</a>
                         <a href="{% url 'staffing:department:list' %}">{% trans "Departments" %}</a>
                         <a href="{% url 'staffing:position:list' %}">{% trans "Positions" %}</a>
                     </div>

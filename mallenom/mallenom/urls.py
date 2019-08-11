@@ -32,7 +32,7 @@ urlpatterns = [
         pattern_name='schedule:assignment:list',
         permanent=False)),
     path('staffing/', include('staffing.urls')),
-    path('employee/', include('employee.urls')),
+    path('employment/', include('employee.urls')),
     path('schedule/', include('schedule.urls')),
     path('workcalendar/', include('workcal.urls')),
     path('underconstruction/', TemplateView.as_view(
