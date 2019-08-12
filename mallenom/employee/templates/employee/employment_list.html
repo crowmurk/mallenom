@@ -10,13 +10,18 @@
 {% endblock %}
 
 {% block employee_header %}
-    <h2>{{ view.model|verbose_name_plural }}</h2>
+    {% if employee %}
+        <h4>{{ view.model|verbose_name_plural }}</h4>
+        <dl>
+            <dt><strong>{{ employee|verbose_name }}:</strong></dt>
+            <dd><a href="{{ employee.get_absolute_url }}">{{ employee }}</a></dd>
+        </dl>
+    {% else %}
+        <h2>{{ view.model|verbose_name_plural }}</h2>
+    {% endif %}
 {% endblock %}
 
 {% block employee_button %}
-    {% if request.user.is_superuser %}
-        <a href="{% url 'employee:employment:create' %}" class="button button-primary">{% trans "Create" %}</a>
-    {% endif %}
 {% endblock %}
 
 {% block employee_content %}

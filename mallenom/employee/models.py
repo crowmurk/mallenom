@@ -173,18 +173,27 @@ class Employment(models.Model):
 
     def get_absolute_url(self):
         return reverse(
-            'employee:employment:detail',
-            kwargs={'pk': self.pk},
+            'employee:employee:employment:detail',
+            kwargs={
+                'pk': self.pk,
+                'slug': self.employee.slug,
+            },
         )
 
     def get_update_url(self):
         return reverse(
-            'employee:employment:update',
-            kwargs={'pk': self.pk},
+            'employee:employee:employment:update',
+            kwargs={
+                'pk': self.pk,
+                'slug': self.employee.slug,
+            },
         )
 
     def get_delete_url(self):
         return reverse(
-            'employee:employment:delete',
-            kwargs={'pk': self.pk},
+            'employee:employee:employment:delete',
+            kwargs={
+                'pk': self.pk,
+                'slug': self.employee.slug,
+            },
         )

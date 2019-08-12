@@ -1,5 +1,7 @@
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.views.generic import (
+    ListView,
     CreateView,
     DetailView,
     UpdateView,
@@ -23,6 +25,7 @@ from .forms import (
 )
 from .tables import EmployeeTable, EmploymentTable
 from .filters import EmployeeFilter, EmploymentFilter
+from .utils import EmployeeContextMixin, EmploymentGetObjectMixin
 
 # Create your views here.
 
@@ -89,22 +92,78 @@ class EmploymentList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
             'exclude': ('delete', ),
         }
 
+class EmploymentListEmployee(
+    EmployeeContextMixin,
+    SingleTableMixin,
+    ActionTableDeleteMixin,
+    ListView,
+):
+    model = Employment
+    table_class = EmploymentTable
+    template_name = 'employee/employment_list.html'
+    action_table_model = Employment
 
-class EmploymentCreate(CreateView):
+    def get_table_kwargs(self):
+        if self.request.user.is_superuser:
+            return {
+                'exclude': ('employee', )
+            }
+        return {
+            'exclude': ('employee', 'delete', ),
+        }
+
+    def get_table_data(self):
+        employee_slug = self.kwargs.get(self.employee_slug_url_kwarg)
+        employee = Employee.objects.get(slug__iexact=employee_slug)
+        return self.model.objects.filter(employee=employee)
+
+
+class EmploymentCreate(
+        EmployeeContextMixin,
+        EmploymentGetObjectMixin,
+        CreateView
+):
+    model = Employment
+    form_class = EmploymentForm
+
+    def get_initial(self):
+        employee_slug = self.kwargs.get(
+            self.employee_slug_url_kwarg)
+        self.employee = get_object_or_404(
+            Employee, slug__iexact=employee_slug)
+        initial = {
+            self.employee_context_object_name:
+                self.employee,
+        }
+        initial.update(self.initial)
+        return initial
+
+
+class EmploymentDetail(
+        EmployeeContextMixin,
+        EmploymentGetObjectMixin,
+        DetailView
+):
     model = Employment
     form_class = EmploymentForm
 
 
-class EmploymentDetail(DetailView):
+class EmploymentUpdate(
+        EmployeeContextMixin,
+        EmploymentGetObjectMixin,
+        UpdateView
+):
     model = Employment
     form_class = EmploymentForm
 
 
-class EmploymentUpdate(UpdateView):
+class EmploymentDelete(
+        EmployeeContextMixin,
+        EmploymentGetObjectMixin,
+        DeleteMessageMixin,
+        DeleteView
+):
     model = Employment
-    form_class = EmploymentForm
 
-
-class EmploymentDelete(DeleteMessageMixin, DeleteView):
-    model = Employment
-    success_url = reverse_lazy('employee:employment:list')
+    def get_success_url(self):
+        return self.object.employee.get_absolute_url()
