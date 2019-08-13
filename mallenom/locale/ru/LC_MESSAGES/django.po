@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-09 08:44+0300\n"
+"POT-Creation-Date: 2019-08-13 16:49+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr "Вы уверены что хотите удалить"
 #: employee/templates/employee/employee_list.html:28
 #: employee/templates/employee/employment_confirm_delete.html:7
 #: employee/templates/employee/employment_detail.html:16
-#: employee/templates/employee/employment_list.html:28
+#: employee/templates/employee/employment_list.html:33
 #: schedule/templates/schedule/absence_confirm_delete.html:7
 #: schedule/templates/schedule/absence_detail.html:17
 #: schedule/templates/schedule/absence_list.html:28
@@ -87,10 +87,10 @@ msgid "Filter"
 msgstr "Фильтр"
 
 #: core/templates/core/includes/formset_table.html:74 employee/tables.py:34
-#: employee/tables.py:67 schedule/tables.py:32 schedule/tables.py:60
-#: schedule/tables.py:94 schedule/tables.py:115 staffing/tables.py:37
+#: employee/tables.py:67 schedule/tables.py:32 schedule/tables.py:70
+#: schedule/tables.py:110 schedule/tables.py:130 staffing/tables.py:37
 #: staffing/tables.py:69 staffing/tables.py:102 workcal/tables.py:26
-#: workcal/tables.py:47
+#: workcal/tables.py:51
 msgid "There are no records available"
 msgstr "Записей не обнаружено"
 
@@ -154,21 +154,19 @@ msgstr "Невозможно удалить {name} при существующи
 msgid "{name} was deleted successfuly"
 msgstr "{name}, удаление прошло успешно"
 
-#: employee/apps.py:7 employee/models.py:90 templates/base.html:74
-#: templates/base.html:76
+#: employee/apps.py:7 employee/models.py:90 templates/base.html:72
 msgid "Employees"
 msgstr "Сотрудники"
 
 #: employee/filters.py:11 employee/filters.py:36 employee/models.py:89
 #: employee/models.py:142 employee/tables.py:10 schedule/filters.py:34
-#: schedule/filters.py:117 schedule/filters.py:190 schedule/models.py:104
-#: schedule/models.py:239
+#: schedule/filters.py:117 schedule/filters.py:190 schedule/models.py:241
 msgid "Employee"
 msgstr "Сотрудник"
 
 #: employee/filters.py:15 employee/filters.py:50 staffing/filters.py:13
 #: staffing/filters.py:34 staffing/filters.py:62 staffing/models.py:204
-#: templates/base.html:83
+#: templates/base.html:78
 msgid "Staff units"
 msgstr "Штатные единицы"
 
@@ -186,7 +184,7 @@ msgstr "Устаревшие"
 #: employee/filters.py:17 employee/filters.py:52 staffing/filters.py:15
 #: staffing/filters.py:36 staffing/filters.py:64
 msgid "Actual"
-msgstr "Дейстующие"
+msgstr "Действующие"
 
 #: employee/filters.py:40 employee/tables.py:45 staffing/filters.py:52
 #: staffing/models.py:60 staffing/models.py:180 staffing/tables.py:10
@@ -194,8 +192,9 @@ msgstr "Дейстующие"
 msgid "Department"
 msgstr "Отдел"
 
-#: employee/filters.py:45 employee/tables.py:49 staffing/filters.py:57
-#: staffing/models.py:132 staffing/models.py:188 staffing/tables.py:42
+#: employee/filters.py:45 employee/tables.py:49 schedule/models.py:105
+#: staffing/filters.py:57 staffing/models.py:132 staffing/models.py:188
+#: staffing/tables.py:42
 msgid "Position"
 msgstr "Должность"
 
@@ -225,13 +224,13 @@ msgstr "Имя"
 msgid "Middle name"
 msgstr "Отчество"
 
-#: employee/models.py:76 schedule/models.py:50 staffing/models.py:47
-#: staffing/models.py:126 workcal/models.py:64 workcal/models.py:133
+#: employee/models.py:76 schedule/models.py:51 staffing/models.py:47
+#: staffing/models.py:126 workcal/models.py:65 workcal/models.py:166
 msgid "A label for URL config."
 msgstr "URL идентификатор объекта"
 
 #: employee/models.py:83 employee/models.py:165 employee/tables.py:16
-#: templates/base.html:77
+#: templates/base.html:74
 msgid "Positions held"
 msgstr "Занимаемые должности"
 
@@ -248,18 +247,18 @@ msgstr "Штатная единица"
 msgid "Staff units count"
 msgstr "Количество штатных единиц"
 
-#: employee/models.py:164
+#: employee/models.py:164 schedule/tables.py:44 schedule/tables.py:83
 msgid "Position held"
 msgstr "Занимаемая должность"
 
 #: employee/tables.py:13 staffing/models.py:61 staffing/tables.py:45
-#: templates/base.html:84
+#: templates/base.html:80
 msgid "Departments"
 msgstr "Отделы"
 
-#: employee/tables.py:20 employee/tables.py:52 schedule/tables.py:13
-#: schedule/tables.py:19 schedule/tables.py:45 schedule/tables.py:79
-#: schedule/tables.py:101 staffing/tables.py:17 staffing/tables.py:23
+#: employee/tables.py:20 employee/tables.py:52 schedule/tables.py:12
+#: schedule/tables.py:18 schedule/tables.py:54 schedule/tables.py:94
+#: schedule/tables.py:116 staffing/tables.py:17 staffing/tables.py:23
 #: staffing/tables.py:49 staffing/tables.py:55 staffing/tables.py:82
 #: staffing/tables.py:88
 msgid "Total: {}"
@@ -306,7 +305,6 @@ msgstr "Изменить"
 #: employee/templates/employee/employee_list.html:18
 #: employee/templates/employee/employment_form.html:12
 #: employee/templates/employee/employment_form.html:27
-#: employee/templates/employee/employment_list.html:18
 #: schedule/templates/schedule/absence_form.html:12
 #: schedule/templates/schedule/absence_form.html:28
 #: schedule/templates/schedule/absence_list.html:18
@@ -337,23 +335,23 @@ msgstr "Изменить"
 msgid "Create"
 msgstr "Создать"
 
-#: mallenom/settings/base.py:126
+#: mallenom/settings/base.py:127
 msgid "Russian"
 msgstr "Русский"
 
-#: mallenom/settings/base.py:127
+#: mallenom/settings/base.py:128
 msgid "English"
 msgstr "Английский"
 
-#: mallenom/settings/base.py:153
+#: mallenom/settings/base.py:154
 msgid "Mallenom administration"
 msgstr "Администрирование Mallenom"
 
-#: mallenom/settings/base.py:155
+#: mallenom/settings/base.py:156
 msgid "Mallenom site admin"
 msgstr "Администрирование сайта Mallenom"
 
-#: mallenom/settings/base.py:157
+#: mallenom/settings/base.py:158
 msgid "Site administration"
 msgstr "Администрирование сайта"
 
@@ -369,8 +367,8 @@ msgstr "Закрыт"
 msgid "Active"
 msgstr "Активен"
 
-#: schedule/filters.py:38 schedule/filters.py:112 schedule/models.py:56
-#: schedule/models.py:179
+#: schedule/filters.py:38 schedule/filters.py:112 schedule/models.py:57
+#: schedule/models.py:181
 msgid "Project"
 msgstr "Проект"
 
@@ -396,120 +394,140 @@ msgstr "Месяц/Год"
 msgid "[MM/]YYYY"
 msgstr "[ММ]/ГГГГ"
 
-#: schedule/forms.py:36
+#: schedule/forms.py:28 schedule/forms.py:98
+msgid "Check hours"
+msgstr "Проверить часы"
+
+#: schedule/forms.py:52
+#, python-format
+msgid "Selected %(employee_verbose)s does not hold this %(position_verbose)s"
+msgstr "Выбранный %(employee_verbose)s не занимает эту %(position_verbose)s"
+
+#: schedule/forms.py:73
 #, python-format
 msgid "Start date must be less than %(end)s"
 msgstr "Начальная дата должна быть меньше чем %(end)s"
 
-#: schedule/forms.py:48
+#: schedule/forms.py:84
 #, python-format
 msgid "There are seven days in a week, not %(delta)s"
 msgstr "В неделе семь дней, не %(delta)s"
 
-#: schedule/forms.py:82
+#: schedule/forms.py:143
+#, python-format
+msgid "This value must be less than or equal to %(hours)s"
+msgstr "Это значение должно быть меньше или равно %(hours)s"
+
+#: schedule/forms.py:179
 #, python-format
 msgid "Start date must be less or equal %(end)s"
 msgstr "Начальная дата должна быть меньше или равна %(end)s"
 
-#: schedule/models.py:33 staffing/models.py:36 staffing/models.py:115
-#: workcal/models.py:26
+#: schedule/forms.py:218
+#, python-format
+msgid ""
+"%(hours_name)s must be less than or equal to %(hours_available)s summary"
+msgstr "%(hours_name)s должны быть меньше или равны%(hours_available)s в сумме"
+
+#: schedule/models.py:34 staffing/models.py:36 staffing/models.py:115
+#: workcal/models.py:27
 msgid "Name"
 msgstr "Название"
 
-#: schedule/models.py:39
+#: schedule/models.py:40
 msgid "Status"
 msgstr "Статус"
 
-#: schedule/models.py:57 schedule/models.py:127 templates/base.html:70
+#: schedule/models.py:58 schedule/models.py:128 templates/base.html:68
 msgid "Projects"
 msgstr "Проекты"
 
-#: schedule/models.py:112 schedule/models.py:244
+#: schedule/models.py:113 schedule/models.py:246
 msgid "Start"
 msgstr "Начало"
 
-#: schedule/models.py:120 schedule/models.py:249
+#: schedule/models.py:121 schedule/models.py:251
 msgid "End"
 msgstr "Конец"
 
-#: schedule/models.py:133
+#: schedule/models.py:134
 msgid "Employee's assignments"
 msgstr "Назначения для сотрудника"
 
-#: schedule/models.py:134 templates/base.html:67
+#: schedule/models.py:135
 msgid "Employees' assignments"
 msgstr "Назначения для сотрудников"
 
-#: schedule/models.py:147
+#: schedule/models.py:148
 #, python-brace-format
-msgid "{start}-{end}: {employee}"
-msgstr "{start}-{end}: {employee}"
+msgid "{start}-{end}: {employee} ({employment})"
+msgstr "{start}-{end}: {employee} ({employment})"
 
-#: schedule/models.py:187
+#: schedule/models.py:189
 msgid "Assignment"
 msgstr "Назначение"
 
-#: schedule/models.py:196 schedule/models.py:257 schedule/tables.py:18
-#: schedule/tables.py:44 schedule/tables.py:100 workcal/models.py:34
+#: schedule/models.py:198 schedule/models.py:259 schedule/tables.py:17
+#: schedule/tables.py:53 workcal/models.py:35
 msgid "Hours"
 msgstr "Часы"
 
-#: schedule/models.py:200
+#: schedule/models.py:202
 msgid "Project's assigment"
 msgstr "Назначение для проекта"
 
-#: schedule/models.py:201
+#: schedule/models.py:203
 msgid "Projects' assigments"
 msgstr "Назначения для проектов"
 
-#: schedule/models.py:206
+#: schedule/models.py:208
 #, python-brace-format
-msgid "Assingment: {assingment} Project: {project} Hours: {hours}"
-msgstr "Нвзначение: {assingment} Проект: {project} Часы: {hours}"
+msgid "{project}: {assignment} ({hours_verbose}: {hours})"
+msgstr "{project}: {assignment} ({hours_verbose}: {hours})"
 
-#: schedule/models.py:262
+#: schedule/models.py:264
 msgid "Reason"
 msgstr "Причина"
 
-#: schedule/models.py:263
+#: schedule/models.py:265
 msgid "Reason for employee absence"
 msgstr "Причина отсутствия сотрудника"
 
-#: schedule/models.py:267
+#: schedule/models.py:269
 msgid "Employee's absence"
 msgstr "Отсутствие сотрудника"
 
-#: schedule/models.py:268 templates/base.html:69
+#: schedule/models.py:270 templates/base.html:67
 msgid "Employees' absences"
 msgstr "Отсутствия сотрудников"
 
-#: schedule/models.py:279
+#: schedule/models.py:281
 #, python-brace-format
-msgid "{start}-{end}: {employee} {hours}"
-msgstr "{start}-{end}: {employee} {hours}"
+msgid "{start}-{end}: {employee} ({hours_verbose}: {hours})"
+msgstr "{start}-{end}: {employee} ({hours_verbose}: {hours})"
 
-#: schedule/tables.py:12
+#: schedule/tables.py:11
 msgid "Assignments count"
 msgstr "Число назначений"
 
-#: staffing/apps.py:7 templates/base.html:81
+#: staffing/apps.py:7
 msgid "Staffing"
 msgstr "Штатное расписание"
 
 #: staffing/forms.py:39
 #, python-brace-format
 msgid "This value must be greater than or equal to {staff_units_holded}"
-msgstr "Это занчение должно быть больше или равно {staff_units_holded}"
+msgstr "Это значение должно быть больше или равно {staff_units_holded}"
 
 #: staffing/models.py:54 staffing/models.py:133 staffing/tables.py:13
-#: templates/base.html:85
+#: templates/base.html:81
 msgid "Positions"
 msgstr "Должности"
 
 #: staffing/models.py:209
 #, python-brace-format
-msgid "Department: {department} ({position})"
-msgstr "Отдел: {department} ({position})"
+msgid "{position} ({department_verbose}: {department})"
+msgstr "{position} ({department_verbose}: {department})"
 
 #: staffing/tables.py:22 staffing/tables.py:54 staffing/tables.py:87
 msgid "Staff units held"
@@ -571,23 +589,19 @@ msgstr "Выйти"
 msgid "LogIn"
 msgstr "Войти"
 
-#: templates/base.html:68
-msgid "Projects' assignments"
-msgstr "Назначения для проектов"
-
-#: templates/base.html:89 workcal/templates/workcal/calendar_detail.html:8
+#: templates/base.html:85 workcal/templates/workcal/calendar_detail.html:8
 msgid "Calendar"
 msgstr "Календарь"
 
-#: templates/base.html:91 workcal/models.py:140
+#: templates/base.html:87 workcal/models.py:173
 msgid "Days"
 msgstr "Дни"
 
-#: templates/base.html:92 workcal/models.py:71
+#: templates/base.html:88 workcal/models.py:72
 msgid "Day types"
 msgstr "Типы дней"
 
-#: templates/base.html:93
+#: templates/base.html:89
 #: workcal/templates/workcal/calendar_upload_form.html:13
 msgid "Upload calendar"
 msgstr "Загрузить календарь"
@@ -633,7 +647,7 @@ msgstr "Извините, раздел в разработке."
 msgid "Work calendar"
 msgstr "Трудовой календарь"
 
-#: workcal/filters.py:11 workcal/tables.py:10 workcal/tables.py:35
+#: workcal/filters.py:11 workcal/tables.py:10 workcal/tables.py:40
 msgid "Type"
 msgstr "Тип"
 
@@ -665,19 +679,19 @@ msgstr "Выберите CSV файл содержащий календарь"
 msgid "CSV file required"
 msgstr "Требуется CSV файл"
 
-#: workcal/models.py:41
+#: workcal/models.py:42
 msgid "Mark in CSV file"
 msgstr "Отметка в CSV файле"
 
-#: workcal/models.py:53
+#: workcal/models.py:54
 msgid "CSS class"
 msgstr "Класс CSS"
 
-#: workcal/models.py:70 workcal/models.py:122
+#: workcal/models.py:71 workcal/models.py:155
 msgid "Day type"
 msgstr "Тип дня"
 
-#: workcal/models.py:114 workcal/models.py:139
+#: workcal/models.py:147 workcal/models.py:172
 msgid "Day"
 msgstr "День"
 
