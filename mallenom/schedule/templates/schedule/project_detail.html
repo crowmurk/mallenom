@@ -25,7 +25,7 @@
             <div class="ten columns">
                 <dl>
                     <dt><strong>{% field_verbose_name project 'name' %}:</strong></dt>
-                    <dd>{{ project.name }}</dd>
+                    <dd>{{ project}}</dd>
                     <dt><strong>{% field_verbose_name project 'status' %}:</strong></dt>
                     {% if project.status %}
                         <dd>{% trans 'Active' %}</dd>

@@ -4,6 +4,7 @@ from django.db import models
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
+from employee.models import Employee
 from workcal.models import Day
 
 from .models import Project, Assignment, ProjectAssignment, Absence
@@ -16,6 +17,11 @@ class ProjectForm(forms.ModelForm):
 
 
 class AssignmentForm(forms.ModelForm):
+    employee = forms.ModelChoiceField(
+        required=True,
+        queryset=Employee.objects.all(),
+        label=Employee._meta.verbose_name,
+    )
     check_hours = forms.BooleanField(
         required=False,
         initial=True,
@@ -24,6 +30,10 @@ class AssignmentForm(forms.ModelForm):
 
     class Meta:
         model = Assignment
+        fields = (
+            'employee', 'employment',
+            'start', 'end', 'check_hours',
+        )
         exclude = ('projects', )
 
     def clean(self):
@@ -31,6 +41,25 @@ class AssignmentForm(forms.ModelForm):
 
         if any(self.errors):
             return cleaned_data
+
+        employee = cleaned_data['employee']
+        employment = cleaned_data['employment']
+
+        if employee != employment.employee:
+            self.add_error(
+                'employment',
+                forms.ValidationError(
+                    _('Selected %(employee_verbose)s does'
+                      ' not hold this %(position_verbose)s'),
+                    code='invalid',
+                    params={
+                        'employee_verbose': employee._meta.verbose_name.lower(),
+                        'position_verbose': self._meta.model._meta.get_field(
+                            'employment',
+                        ).verbose_name.lower(),
+                    },
+                ),
+            )
 
         start = cleaned_data['start']
         end = cleaned_data['end']
@@ -103,7 +132,9 @@ class ProjectAssignmentForm(forms.ModelForm):
             ),
         )['hours']
 
-        hours_available = work_hours_max - hours_assigned
+        staff_units_count = assignment.employment.count
+
+        hours_available = work_hours_max * staff_units_count - hours_assigned
 
         if hours > hours_available:
             self.add_error(
@@ -179,9 +210,13 @@ class BaseProjectAssignmentFormSet(forms.BaseInlineFormSet):
             assignment.end,
         )
 
-        if sum(hours) > work_hours_max:
+        staff_units_count = assignment.employment.count
+
+        hours_available = work_hours_max * staff_units_count
+
+        if sum(hours) > hours_available:
             message = _('%(hours_name)s must be less than or equal to'
-                        ' %(work_hours_max)s summary')
+                        ' %(hours_available)s summary')
             self._non_form_errors.append(
                 forms.ValidationError(
                     message,
@@ -193,7 +228,7 @@ class BaseProjectAssignmentFormSet(forms.BaseInlineFormSet):
                         'assignment_name': self.model._meta.get_field(
                             'assignment',
                         ).verbose_name.lower(),
-                        'work_hours_max': work_hours_max,
+                        'hours_available': hours_available,
                     },
                 )
             )

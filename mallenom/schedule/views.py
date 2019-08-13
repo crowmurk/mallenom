@@ -115,7 +115,10 @@ class AssignmentDetail(SingleTableMixin, ActionTableDeleteMixin, DetailView):
     def get_table_kwargs(self):
         return {
             'extra_columns': (('hours', Column(), ), ),
-            'exclude': ('employee', 'start', 'end', 'delete', ),
+            'exclude': (
+                'employee', 'employment',
+                'start', 'end', 'delete',
+            ),
         }
 
     def get_table_data(self):
@@ -128,6 +131,11 @@ class AssignmentUpdate(SingleFormSetMixin, UpdateView):
     model = Assignment
     form_class = AssignmentForm
     formset = ProjectAssignmentFormSet
+
+    def get_initial(self):
+        initial = {'employee': self.object.employment.employee}
+        initial.update(self.initial)
+        return initial
 
 
 class AssignmentDelete(DeleteMessageMixin, DeleteView):

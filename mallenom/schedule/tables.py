@@ -7,7 +7,6 @@ from .models import Project, Assignment, ProjectAssignment, Absence
 
 class ProjectTable(tables.Table):
     name = tables.LinkColumn()
-    delete = tables.CheckBoxColumn(accessor="pk")
     assignments_count = tables.Column(
         verbose_name=_("Assignments count"),
         footer=lambda table: _('Total: {}').format(
@@ -20,6 +19,7 @@ class ProjectTable(tables.Table):
             sum(x.hours for x in table.data)
         )
     )
+    delete = tables.CheckBoxColumn(accessor="pk")
 
     class Meta:
         model = Project
@@ -33,18 +33,27 @@ class ProjectTable(tables.Table):
 
 
 class AssignmentTable(tables.Table):
-    employee = tables.LinkColumn()
+    employee = tables.Column(
+        linkify=(
+            'employee:employee:detail',
+            {'slug': tables.A('employment.employee.slug'), },
+        ),
+        accessor="employment.employee",
+    )
+    employment = tables.Column(
+        verbose_name=_("Position held"),
+    )
     projects = tables.ManyToManyColumn(
         linkify_item=(
             'schedule:project:detail',
             {'slug': tables.A('slug'), },
-        )
+        ),
     )
     hours = tables.LinkColumn(
         verbose_name=_("Hours"),
         footer=lambda table: _('Total: {}').format(
             sum(x.hours for x in table.data)
-        )
+        ),
     )
     delete = tables.CheckBoxColumn(accessor="pk")
 
@@ -52,6 +61,7 @@ class AssignmentTable(tables.Table):
         model = Assignment
         fields = (
             'employee',
+            'employment',
             'projects',
             'start',
             'end',
@@ -65,12 +75,17 @@ class ProjectAssignmentTable(tables.Table):
     employee = tables.Column(
         linkify=(
             'employee:employee:detail',
-            {'slug': tables.A('assignment.employee.slug'), },
+            {'slug': tables.A('assignment.employment.employee.slug'), },
         ),
-        accessor="assignment.employee"
+        accessor="assignment.employment.employee",
     )
-    start = tables.Column(accessor="assignment.start")
-    end = tables.Column(accessor="assignment.end")
+    employment = tables.Column(
+        verbose_name=_("Position held"),
+        accessor="assignment.employment",
+
+    )
+    start = tables.DateColumn(accessor="assignment.start")
+    end = tables.DateColumn(accessor="assignment.end")
     hours = tables.Column(
         linkify=(
             'schedule:assignment:detail',
@@ -78,7 +93,7 @@ class ProjectAssignmentTable(tables.Table):
         ),
         footer=lambda table: _('Total: {}').format(
             sum(x.hours for x in table.data)
-        )
+        ),
     )
     delete = tables.CheckBoxColumn(accessor="pk")
 
@@ -87,6 +102,7 @@ class ProjectAssignmentTable(tables.Table):
         fields = (
             'project',
             'employee',
+            'employment',
             'start',
             'end',
             'hours',
@@ -97,7 +113,6 @@ class ProjectAssignmentTable(tables.Table):
 class AbsenceTable(tables.Table):
     employee = tables.LinkColumn()
     hours = tables.LinkColumn(
-        verbose_name=_("Hours"),
         footer=lambda table: _('Total: {}').format(
             sum(x.hours for x in table.data)
         )

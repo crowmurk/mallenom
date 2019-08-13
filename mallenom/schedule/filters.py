@@ -56,8 +56,8 @@ class AssignmentFilter(filters.FilterSet):
         ),
     )
     year_month = filters.CharFilter(
-        method='year_month_filter',
         label=_('Month/Year'),
+        method='year_month_filter',
         widget=forms.TextInput(
             attrs={'placeholder': _('[MM/]YYYY')},
         ),
@@ -80,9 +80,9 @@ class AssignmentFilter(filters.FilterSet):
     def employee_filter(self, queryset, name, value):
         for word in value.split():
             queryset = queryset.filter(
-                models.Q(employee__last_name__icontains=word) |
-                models.Q(employee__first_name__icontains=word) |
-                models.Q(employee__middle_name__icontains=word)
+                models.Q(employment__employee__last_name__icontains=word) |
+                models.Q(employment__employee__first_name__icontains=word) |
+                models.Q(employment__employee__middle_name__icontains=word)
             )
         return queryset
 
@@ -134,8 +134,8 @@ class ProjectAssignmentFilter(filters.FilterSet):
         ),
     )
     year_month = filters.CharFilter(
-        method='year_month_filter',
         label=_('Month/Year'),
+        method='year_month_filter',
         widget=forms.TextInput(
             attrs={'placeholder': _('[MM/]YYYY')},
         ),
@@ -158,9 +158,9 @@ class ProjectAssignmentFilter(filters.FilterSet):
     def employee_filter(self, queryset, name, value):
         for word in value.split():
             queryset = queryset.filter(
-                models.Q(assignment__employee__last_name__icontains=word) |
-                models.Q(assignment__employee__first_name__icontains=word) |
-                models.Q(assignment__employee__middle_name__icontains=word)
+                models.Q(assignment__employment__employee__last_name__icontains=word) |
+                models.Q(assignment__employment__employee__first_name__icontains=word) |
+                models.Q(assignment__employment__employee__middle_name__icontains=word)
             )
         return queryset
 
@@ -207,8 +207,8 @@ class AbsenceFilter(filters.FilterSet):
         ),
     )
     year_month = filters.CharFilter(
-        method='year_month_filter',
         label=_('Month/Year'),
+        method='year_month_filter',
         widget=forms.TextInput(
             attrs={'placeholder': _('[MM/]YYYY')},
         ),

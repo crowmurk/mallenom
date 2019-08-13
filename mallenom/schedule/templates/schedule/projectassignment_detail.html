@@ -24,9 +24,13 @@
             <div class="ten columns">
                 <dl>
                     <dt><strong>{% field_verbose_name projectassignment 'project' %}:</strong></dt>
-                    <dd><a href="{{ projectassignment.project.get_absolute_url }}">{{ projectassignment.project.name }}</a></dd>
-                    <dt><strong>{% field_verbose_name projectassignment.assignment 'employee' %}:</strong></dt>
-                    <dd><a href="{{ projectassignment.assignment.employee.get_absolute_url }}">{{ projectassignment.assignment.employee }}</a></dd>
+                    <dd><a href="{{ projectassignment.project.get_absolute_url }}">{{ projectassignment.project}}</a></dd>
+                    <dt><strong>{% field_verbose_name projectassignment.assignment.employment 'employee' %}:</strong></dt>
+                    <dd><a href="{{ projectassignment.assignment.employment.employee.get_absolute_url }}">{{ projectassignment.assignment.employment.employee }}</a></dd>
+                    <dt><strong>{% field_verbose_name projectassignment.assignment.employment 'number' %}:</strong></dt>
+                    <dd>{{ projectassignment.assignment.employment.number }}</dd>
+                    <dt><strong>{{ projectassignment.assignment.employment|verbose_name }}:</strong></dt>
+                    <dd>{{ projectassignment.assignment.employment.staffing }}</dd>
                     <dt><strong>{% field_verbose_name projectassignment.assignment 'start' %}:</strong></dt>
                     <dd>{{ projectassignment.assignment.start }}</dd>
                     <dt><strong>{% field_verbose_name projectassignment.assignment 'end' %}:</strong></dt>

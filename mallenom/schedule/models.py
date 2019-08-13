@@ -13,7 +13,7 @@ from core.validators import (
 )
 from core.utils import get_unique_slug
 
-from employee.models import Employee
+from employee.models import Employee, Employment
 
 # Create your models here.
 
@@ -25,6 +25,7 @@ class ProjectManager(models.Manager):
             ),
             assignments_count=models.Count('projectassignments'),
         )
+
 
 class Project(models.Model):
     name = models.CharField(
@@ -95,13 +96,13 @@ class AssignmentManager(models.Manager):
 
 
 class Assignment(models.Model):
-    employee = models.ForeignKey(
-        Employee,
+    employment = models.ForeignKey(
+        Employment,
         null=False,
         blank=False,
         on_delete=models.PROTECT,
         related_name='assignments',
-        verbose_name=_('Employee'),
+        verbose_name=_('Position'),
     )
     start = models.DateField(
         null=False,
@@ -132,7 +133,7 @@ class Assignment(models.Model):
     class Meta:
         verbose_name = _("Employee's assignments")
         verbose_name_plural = _("Employees' assignments")
-        unique_together = (('employee', 'start', 'end',),)
+        unique_together = (('employment', 'start', 'end',),)
         ordering = ['-start', ]
         constraints = [
             models.CheckConstraint(
@@ -144,10 +145,11 @@ class Assignment(models.Model):
         ]
 
     def __str__(self):
-        return _("{start}-{end}: {employee}").format(
+        return _("{start}-{end}: {employee} ({employment})").format(
             start=self.start,
             end=self.end,
-            employee=self.employee,
+            employee=self.employment.employee,
+            employment=self.employment,
         )
 
     def get_absolute_url(self):
@@ -203,11 +205,11 @@ class ProjectAssignment(models.Model):
         ordering = ['-assignment__start', ]
 
     def __str__(self):
-        return _("Assignment: {assignment} Project: {project}"
-                 " Hours: {hours}").format(
-                     assignment=self.assignment.pk,
-                     project=self.project.name,
-                     hours=self.hours,
+        return _("{project}: {assignment} ({hours_verbose}: {hours})").format(
+            project=self.project,
+            assignment=self.assignment,
+            hours_verbose=self._meta.get_field('hours').verbose_name,
+            hours=self.hours,
         )
 
     def get_absolute_url(self):
@@ -276,10 +278,11 @@ class Absence(models.Model):
         ]
 
     def __str__(self):
-        return _("{start}-{end}: {employee} {hours}").format(
+        return _("{start}-{end}: {employee} ({hours_verbose}: {hours})").format(
             start=self.start,
             end=self.end,
             employee=self.employee,
+            hours_verbose=self._meta.get_field('hours').verbose_name,
             hours=self.hours,
         )
 
