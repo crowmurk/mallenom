@@ -88,7 +88,13 @@ class Project(models.Model):
 
 class AssignmentManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().annotate(
+        return super().get_queryset().select_related(
+            'employment__employee',
+            'employment__staffing__department',
+            'employment__staffing__position',
+        ).prefetch_related(
+            'projects',
+        ).annotate(
             hours=models.functions.Coalesce(
                 models.Sum('projectassignments__hours'), 0
             ),
@@ -171,6 +177,16 @@ class Assignment(models.Model):
         )
 
 
+class ProjectAssignmentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related(
+            'project',
+            'assignment__employment__employee',
+            'assignment__employment__staffing__position',
+            'assignment__employment__staffing__department',
+        )
+
+
 class ProjectAssignment(models.Model):
     project = models.ForeignKey(
         Project,
@@ -197,6 +213,8 @@ class ProjectAssignment(models.Model):
         ],
         verbose_name=_('Hours'),
     )
+
+    objects = ProjectAssignmentManager()
 
     class Meta:
         verbose_name = _("Project's assigment")
@@ -228,6 +246,13 @@ class ProjectAssignment(models.Model):
         return reverse(
             'schedule:projectassignment:delete',
             kwargs={'pk': self.pk},
+        )
+
+
+class AbsenceManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related(
+            'employee',
         )
 
 
@@ -264,6 +289,8 @@ class Absence(models.Model):
         verbose_name=_('Reason'),
         help_text=_('Reason for employee absence'),
     )
+
+    objects = AbsenceManager()
 
     class Meta:
         verbose_name = _("Employee's absence")

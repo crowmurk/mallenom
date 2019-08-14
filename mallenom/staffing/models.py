@@ -163,7 +163,9 @@ class Position(models.Model):
 
 class StaffingManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().annotate(
+        return super().get_queryset().select_related(
+            'department', 'position',
+        ).annotate(
             staff_units_held=models.functions.Coalesce(
                 models.Sum('employments__count'), 0
             )

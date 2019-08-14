@@ -125,6 +125,14 @@ class Employee(models.Model):
         )
 
 
+class EmploymentManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().select_related(
+            'employee',
+            'staffing__department', 'staffing__position',
+        )
+
+
 class Employment(models.Model):
     number = models.CharField(
         max_length=256,
@@ -159,6 +167,8 @@ class Employment(models.Model):
         ],
         verbose_name=_('Staff units count'),
     )
+
+    objects = EmploymentManager()
 
     class Meta:
         verbose_name = _('Position held')
