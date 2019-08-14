@@ -46,6 +46,7 @@ LOCAL_APPS = [
     'employee.apps.EmployeeConfig',
     'schedule.apps.ScheduleConfig',
     'workcal.apps.WorkCalConfig',
+    'reports.apps.ReportsConfig',
     'api.apps.ApiConfig',
 ]
 
