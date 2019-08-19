@@ -159,15 +159,43 @@ class ProjectAssignmentFormsetForm(ProjectAssignmentForm):
 
 
 class AbsenceForm(forms.ModelForm):
+    employee = forms.ModelChoiceField(
+        required=True,
+        queryset=Employee.objects.all(),
+        label=Employee._meta.verbose_name,
+    )
+
     class Meta:
         model = Absence
-        fields = '__all__'
+        fields = (
+            'employee', 'employment',
+            'start', 'end', 'hours', 'reason',
+        )
 
     def clean(self):
         cleaned_data = super().clean()
 
         if any(self.errors):
             return cleaned_data
+
+        employee = cleaned_data['employee']
+        employment = cleaned_data['employment']
+
+        if employee != employment.employee:
+            self.add_error(
+                'employment',
+                forms.ValidationError(
+                    _('Selected %(employee_verbose)s does'
+                      ' not hold this %(position_verbose)s'),
+                    code='invalid',
+                    params={
+                        'employee_verbose': employee._meta.verbose_name.lower(),
+                        'position_verbose': self._meta.model._meta.get_field(
+                            'employment',
+                        ).verbose_name.lower(),
+                    },
+                ),
+            )
 
         start = cleaned_data['start']
         end = cleaned_data['end']

@@ -111,7 +111,16 @@ class ProjectAssignmentTable(tables.Table):
 
 
 class AbsenceTable(tables.Table):
-    employee = tables.LinkColumn()
+    employee = tables.Column(
+        linkify=(
+            'employee:employee:detail',
+            {'slug': tables.A('employment.employee.slug'), },
+        ),
+        accessor="employment.employee",
+    )
+    employment = tables.Column(
+        verbose_name=_("Position held"),
+    )
     hours = tables.LinkColumn(
         footer=lambda table: _('Total: {}').format(
             sum(x.hours for x in table.data)
@@ -123,6 +132,7 @@ class AbsenceTable(tables.Table):
         model = Absence
         fields = (
             'employee',
+            'employment',
             'start',
             'end',
             'hours',

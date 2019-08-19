@@ -13,7 +13,7 @@ from core.validators import (
 )
 from core.utils import get_unique_slug
 
-from employee.models import Employee, Employment
+from employee.models import Employment
 
 # Create your models here.
 
@@ -252,18 +252,20 @@ class ProjectAssignment(models.Model):
 class AbsenceManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().select_related(
-            'employee',
+            'employment__employee',
+            'employment__staffing__department',
+            'employment__staffing__position',
         )
 
 
 class Absence(models.Model):
-    employee = models.ForeignKey(
-        Employee,
+    employment = models.ForeignKey(
+        Employment,
         null=False,
         blank=False,
         on_delete=models.PROTECT,
         related_name='absences',
-        verbose_name=_('Employee'),
+        verbose_name=_('Position'),
     )
     start = models.DateField(
         null=False,
@@ -295,7 +297,7 @@ class Absence(models.Model):
     class Meta:
         verbose_name = _("Employee's absence")
         verbose_name_plural = _("Employees' absences")
-        unique_together = (('employee', 'start', 'end'),)
+        unique_together = (('employment', 'start', 'end'),)
         ordering = ['-start']
         constraints = [
             models.CheckConstraint(
@@ -305,10 +307,11 @@ class Absence(models.Model):
         ]
 
     def __str__(self):
-        return _("{start}-{end}: {employee} ({hours_verbose}: {hours})").format(
+        return _("{start}-{end}: {employee} ({employment}) {hours_verbose}: {hours}").format(
             start=self.start,
             end=self.end,
-            employee=self.employee,
+            employee=self.employment.employee,
+            employment=self.employment,
             hours_verbose=self._meta.get_field('hours').verbose_name,
             hours=self.hours,
         )

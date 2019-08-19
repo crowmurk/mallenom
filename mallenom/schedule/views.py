@@ -207,6 +207,11 @@ class AbsenceUpdate(UpdateView):
     model = Absence
     form_class = AbsenceForm
 
+    def get_initial(self):
+        initial = {'employee': self.object.employment.employee}
+        initial.update(self.initial)
+        return initial
+
 
 class AbsenceDelete(DeleteMessageMixin, DeleteView):
     model = Absence

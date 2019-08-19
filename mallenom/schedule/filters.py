@@ -231,9 +231,9 @@ class AbsenceFilter(filters.FilterSet):
     def employee_filter(self, queryset, name, value):
         for word in value.split():
             queryset = queryset.filter(
-                models.Q(employee__last_name__icontains=word) |
-                models.Q(employee__first_name__icontains=word) |
-                models.Q(employee__middle_name__icontains=word)
+                models.Q(employment__employee__last_name__icontains=word) |
+                models.Q(employment__employee__first_name__icontains=word) |
+                models.Q(employment__employee__middle_name__icontains=word)
             )
         return queryset
 

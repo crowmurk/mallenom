@@ -24,8 +24,12 @@
             <div class="one column"></div>
             <div class="ten columns">
                 <dl>
-                    <dt><strong>{% field_verbose_name absence 'employee' %}:</strong></dt>
-                    <dd><a href="{{ absence.employee.get_absolute_url }}">{{ absence.employee }}</a></dd>
+                    <dt><strong>{% field_verbose_name absence.employment 'employee' %}:</strong></dt>
+                    <dd><a href="{{ absence.employment.employee.get_absolute_url }}">{{ absence.employment.employee }}</a></dd>
+                    <dt><strong>{% field_verbose_name absence.employment 'number' %}:</strong></dt>
+                    <dd>{{ absence.employment.number }}</dd>
+                    <dt><strong>{{ absence.employment|verbose_name }}:</strong></dt>
+                    <dd>{{ absence.employment.staffing }}</dd>
                     <dt><strong>{% field_verbose_name absence 'start' %}:</strong></dt>
                     <dd>{{ absence.start }}</dd>
                     <dt><strong>{% field_verbose_name absence 'end' %}:</strong></dt>
