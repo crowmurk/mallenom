@@ -48,6 +48,11 @@ $(document).ready(function() {
                     )
                 }).remove();
                 $(employment_field).attr('disabled', false);
+                // Select first available option
+                if (employment_valid_pks[0] === undefined)
+                    employment_field.val('');
+                else
+                    employment_field.val(employment_valid_pks[0]);
             });
         }
     });
