@@ -151,7 +151,7 @@ class ProjectAssignmentForm(forms.ModelForm):
         return cleaned_data
 
 
-class ProjectAssignmentFormsetForm(ProjectAssignmentForm):
+class ProjectAssignmentFormSetForm(ProjectAssignmentForm):
     check_hours = None
 
     class Meta(ProjectAssignmentForm.Meta):
@@ -221,10 +221,14 @@ class BaseProjectAssignmentFormSet(forms.BaseInlineFormSet):
         if any(self.errors):
             return cleaned_data
 
+        if self.instance.pk is None:
+            return cleaned_data
+
         if not self.data.get('check_hours'):
             return cleaned_data
 
         hours = []
+
         assignment = self.instance
 
         for form in self.forms:
@@ -267,7 +271,7 @@ ProjectAssignmentFormSet = forms.inlineformset_factory(
     Assignment,
     Assignment.projects.through,
     formset=BaseProjectAssignmentFormSet,
-    form=ProjectAssignmentFormsetForm,
+    form=ProjectAssignmentFormSetForm,
     can_delete=True,
     extra=0,
 )
