@@ -12,6 +12,8 @@
         </title>
         <link rel="icon" href="{% static 'site/images/favicon.ico' %}" type="image/x-icon">
         <link rel="shortcut icon" href="{% static 'site/images/favicon.ico' %}" type="image/x-icon">
+        <link rel="stylesheet" type="text/css" href="{% static 'site/css/jquery-ui.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'site/css/select2.min.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'site/css/normalize.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'site/css/skeleton.css' %}">
         <link rel="stylesheet" type="text/css" href="{% static 'site/css/style.css' %}">
@@ -66,6 +68,7 @@
                     <div class="dropdown-content">
                         <a href="{% url 'schedule:absence:list' %}">{% trans "Employees' absences" %}</a>
                         <a href="{% url 'schedule:project:list' %}">{% trans "Projects" %}</a>
+                        <a href="{% url 'reports:report' %}">{% trans "Reports" %}</a>
                     </div>
                 </div>
                 <div class="dropdown">
@@ -119,6 +122,9 @@
             {% endblock %}
             <p>&copy; {% now "Y" %} <a href="http://mallenom.ru/">Mallenom</a></p>
         </footer>
+        <script type="text/javascript" src="{% static 'site/js/jquery-ui.min.js' %}" defer></script>
+        <script type="text/javascript" src="{% static 'site/js/select2.min.js' %}" defer></script>
+        <script type="text/javascript" src="{% static 'site/js/select2-ru.js' %}" defer></script>
         <script type="text/javascript" src="{% static 'site/js/base.js' %}" defer></script>
         {% block body %}
         {% endblock %}
