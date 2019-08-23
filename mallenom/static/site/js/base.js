@@ -11,3 +11,10 @@ $(document).ready(function() {
         1000
     );
 });
+
+$(document).ready(function() {
+    $("select[name='language']").select2({
+        minimumResultsForSearch: Infinity,
+        width: '100%'
+    });
+});

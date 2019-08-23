@@ -3,6 +3,7 @@ $(document).ready(
         var current_language = $("select[name='language']").val()
         var date_after = $("#id_date__gte")
         var date_before = $("#id_date__lte")
+        var day_type = $("#id_day_type")
 
         // Disable form fields autocomplete
         date_after.attr('autocomplete', 'off');
@@ -16,6 +17,12 @@ $(document).ready(
             $.datepicker.regional[current_language]
         ));
 
+        // Add search option to form selects
+        day_type.select2({
+            minimumResultsForSearch: Infinity,
+            width: '150pt',
+        })
+
         // Auto submit form when fields changed
         date_after.change(function() {
             $(this).parents("form").submit();
@@ -23,7 +30,7 @@ $(document).ready(
         date_before.change(function() {
             $(this).parents("form").submit();
         });
-        $("#id_day_type").change(function() {
+        day_type.change(function() {
             $(this).parents("form").submit();
         });
     }
