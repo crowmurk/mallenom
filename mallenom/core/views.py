@@ -49,9 +49,15 @@ class ActionTableDeleteMixin:
 
         for action_table in self.action_table_multitables:
             model = action_table['model']
-            button = action_table['button']
-            error_message = action_table['error_message']
-            success_message = action_table['success_message']
+            button = action_table.get('button', self.action_table_button)
+            error_message = action_table.get(
+                'error_message',
+                self.action_table_error_message,
+            )
+            success_message = action_table.get(
+                'success_message',
+                self.action_table_success_message,
+            )
 
             if not success_message:
                 success_message = _("{name} were deleted successfuly").format(
