@@ -1,4 +1,4 @@
-$(window).on('load', function() {
+$(window).ready(function() {
     // Show page content after loading
     $('.loading-progress').remove();
     $('.main-container').css('visibility', 'visible');
