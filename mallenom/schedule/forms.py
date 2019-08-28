@@ -211,6 +211,59 @@ class AbsenceForm(forms.ModelForm):
                     },
                 ),
             )
+
+        hours = cleaned_data['hours']
+        hours_max = Day.objects.get_work_hours_count(
+            start,
+            end,
+        ) * employment.count
+
+        if hours > hours_max:
+            self.add_error(
+                'hours',
+                forms.ValidationError(
+                    _("This value must be less than or"
+                      " equal to %(hours)s"),
+                    code='invalid',
+                    params={
+                        'hours': hours_max,
+                    },
+                ),
+            )
+
+        absences = self._meta.model.objects.filter(
+            end__gte=start,
+            start__lte=end,
+            employment=employment,
+        )
+        if self.instance.pk:
+            absences = absences.exclude(
+                pk=self.instance.pk
+            )
+
+        if absences.exists():
+            self.add_error(
+                None,
+                forms.ValidationError(
+                    _("Range %(start_verbose)s - %(end_verbose)s overlapps"
+                      " already existed %(absence_verbose)s with this"
+                      " %(employment_verbose)s"),
+                    code='invalid',
+                    params={
+                        'start_verbose': self._meta.model._meta.get_field(
+                            'start',
+                        ).verbose_name,
+                        'end_verbose': self._meta.model._meta.get_field(
+                            'end',
+                        ).verbose_name,
+                        'absence_verbose': self._meta.model._meta.verbose_name,
+                        'employment_verbose': self._meta.model._meta.get_field(
+                            'employment',
+                        ).verbose_name,
+                    },
+                ),
+            )
+
         return cleaned_data
 
 
