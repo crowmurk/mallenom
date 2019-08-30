@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block content %}
+    <div class="row">
+        <section class="seven columns">
+            {% block reports_header %}
+            {% endblock %}
+        </section>
+        <section class="u-pull-right">
+            {% block reports_button %}
+            {% endblock %}
+        </section>
+    </div>
+    {% block reports_content %}
+    {% endblock %}
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "reports/base_reports.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% load forms %}
+{% load names %}
+
+{% block title %}
+    {{ block.super }} - {% trans "Report download" %}
+{% endblock %}
+
+{% block content %}
+    {% url 'schedule:assignment:list' as cancel_url %}
+    {% trans "Download report" as action_verbose %}
+    {% url 'reports:report' as form_url %}
+    {% form form_url action_verbose cancel_url=cancel_url upload=True %}
+{% endblock %}
+
+{% block body %}
+    <script type="text/javascript" src="{% static 'site/js/datepicker-ru.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'site/js/reports-report_download_form.js' %}" defer></script>
+{% endblock %}
