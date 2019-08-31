@@ -41,6 +41,7 @@ from .filters import (
 class ProjectList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Project
     table_class = ProjectTable
+    table_pagination = False
     filterset_class = ProjectFilter
     template_name = 'schedule/project_list.html'
     action_table_model = Project
@@ -62,6 +63,7 @@ class ProjectDetail(SingleTableMixin, ActionTableDeleteMixin, DetailView):
     model = Project
     form_class = ProjectForm
     table_class = ProjectAssignmentTable
+    table_pagination = False
     action_table_model = ProjectAssignment
 
     def get_table_kwargs(self):
@@ -88,6 +90,7 @@ class ProjectDelete(DeleteMessageMixin, DeleteView):
 class AssignmentList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Assignment
     table_class = AssignmentTable
+    table_pagination = False
     filterset_class = AssignmentFilter
     template_name = 'schedule/assignment_list.html'
     action_table_model = Assignment
@@ -110,6 +113,7 @@ class AssignmentDetail(SingleTableMixin, ActionTableDeleteMixin, DetailView):
     model = Assignment
     form_class = AssignmentForm
     table_class = ProjectAssignmentTable
+    table_pagination = False
     action_table_model = ProjectAssignment
 
     def get_table_kwargs(self):
@@ -146,6 +150,7 @@ class AssignmentDelete(DeleteMessageMixin, DeleteView):
 class ProjectAssignmentList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = ProjectAssignment
     table_class = ProjectAssignmentTable
+    table_pagination = False
     filterset_class = ProjectAssignmentFilter
     template_name = 'schedule/projectassignment_list.html'
     action_table_model = ProjectAssignment
@@ -181,6 +186,7 @@ class ProjectAssignmentDelete(DeleteMessageMixin, DeleteView):
 class AbsenceList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Absence
     table_class = AbsenceTable
+    table_pagination = False
     filterset_class = AbsenceFilter
     template_name = 'schedule/absence_list.html'
     action_table_model = Absence

@@ -33,6 +33,7 @@ from .utils import WorkCalendarParser
 class DayTypeList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = DayType
     table_class = DayTypeTable
+    table_pagination = False
     filterset_class = DayTypeFilter
     template_name = 'workcal/daytype_list.html'
     action_table_model = DayType
@@ -68,10 +69,10 @@ class DayTypeDelete(DeleteMessageMixin, DeleteView):
 class DayList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Day
     table_class = DayTable
+    table_pagination = False
     filterset_class = DayFilter
     template_name = 'workcal/day_list.html'
     action_table_model = Day
-    table_pagination = False
 
     def get_table_kwargs(self):
         if self.request.user.is_superuser:

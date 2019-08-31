@@ -30,6 +30,7 @@ from .filters import DepartmentFilter, PositionFilter, StaffingFilter
 class DepartmentList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Department
     table_class = DepartmentTable
+    table_pagination = False
     filterset_class = DepartmentFilter
     template_name = 'staffing/department_list.html'
     action_table_model = Department
@@ -52,6 +53,7 @@ class DepartmentDetail(SingleTableMixin, ActionTableDeleteMixin, DetailView):
     model = Department
     form_class = DepartmentForm
     table_class = StaffingTable
+    table_pagination = False
     action_table_model = Staffing
 
     def get_table_kwargs(self):
@@ -80,6 +82,7 @@ class DepartmentDelete(DeleteMessageMixin, DeleteView):
 class PositionList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Position
     table_class = PositionTable
+    table_pagination = False
     filterset_class = PositionFilter
     template_name = 'staffing/position_list.html'
     action_table_model = Position
@@ -101,6 +104,7 @@ class PositionDetail(SingleTableMixin, ActionTableDeleteMixin, DetailView):
     model = Position
     form_class = PositionForm
     table_class = StaffingTable
+    table_pagination = False
     action_table_model = Staffing
 
     def get_table_kwargs(self):
@@ -127,6 +131,7 @@ class PositionDelete(DeleteMessageMixin, DeleteView):
 class StaffingList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Staffing
     table_class = StaffingTable
+    table_pagination = False
     filterset_class = StaffingFilter
     template_name = 'staffing/staffing_list.html'
     action_table_model = Staffing

@@ -32,6 +32,7 @@ from .utils import EmployeeContextMixin, EmploymentGetObjectMixin
 class EmployeeList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Employee
     table_class = EmployeeTable
+    table_pagination = False
     filterset_class = EmployeeFilter
     template_name = 'employee/employee_list.html'
     action_table_model = Employee
@@ -54,6 +55,7 @@ class EmployeeDetail(SingleTableMixin, ActionTableDeleteMixin, DetailView):
     model = Employee
     form_class = EmployeeForm
     table_class = EmploymentTable
+    table_pagination = False
     action_table_model = Employment
 
     def get_table_kwargs(self):
@@ -81,6 +83,7 @@ class EmployeeDelete(DeleteMessageMixin, DeleteView):
 class EmploymentList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     model = Employment
     table_class = EmploymentTable
+    table_pagination = False
     filterset_class = EmploymentFilter
     template_name = 'employee/employment_list.html'
     action_table_model = Employment
@@ -100,6 +103,7 @@ class EmploymentListEmployee(
 ):
     model = Employment
     table_class = EmploymentTable
+    table_pagination = False
     template_name = 'employee/employment_list.html'
     action_table_model = Employment
 
