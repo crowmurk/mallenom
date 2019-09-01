@@ -81,7 +81,10 @@ class WorkCalendar(calendar.LocaleHTMLCalendar):
         """ Return a day as a table cell.
         """
         if day == 0:
-            return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
+            try:
+                return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
+            except AttributeError:
+                return '<td class="%s">&nbsp;</td>' % 'noday'
         else:
             date = datetime.date(self.year, self.month, day)
             unusual_day = self.unusual_days.get(date)

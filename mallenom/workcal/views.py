@@ -94,9 +94,16 @@ class DayCreate(CreateView):
             try:
                 date = datetime.date.fromisoformat(date)
             except ValueError:
-                pass
-            else:
-                initial.update({'date': date})
+                date = None
+            except AttributeError:
+                try:
+                    date = datetime.date(*map(int, date.split('-')))
+                except ValueError:
+                    date = None
+
+        if date is not None:
+            initial.update({'date': date})
+
         return initial
 
 
