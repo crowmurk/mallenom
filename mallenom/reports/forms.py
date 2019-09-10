@@ -13,6 +13,8 @@ class ReportDownloadForm(forms.Form):
             ('assignment_matrix_report', _("Employees' assignments matrix")),
             ('assignment_matrix_report_xlsx', _("Employees' assignments matrix (Excel)")),
             ('assignment_hours_check_xlsx', _("Employees' work hours check")),
+            ('index_of_labor_distribution_xlsx', _("Employees' indexes of labor distribution")),
+            ('index_of_labor_distribution_per_project_xlsx', _("Employees' indexes of labor distribution per project")),
         ),
         label=_('Report'),
     )

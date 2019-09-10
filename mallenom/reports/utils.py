@@ -10,9 +10,10 @@ from schedule.models import Assignment, ProjectAssignment, Absence
 
 
 class DataBuilder:
-    def __init__(self, start, end):
+    def __init__(self, start, end, **kwargs):
         self.start = start
         self.end = end
+        self.precision = kwargs.get('precision', 2)
 
     @staticmethod
     def _get_assignment_queryset(start, end, *fields):
@@ -105,6 +106,25 @@ class DataBuilder:
                 data.append(item)
 
         return data
+
+    def _round_portions_iterable(self, iterable, whole):
+        result = [
+            [index, *divmod(item * 10 ** self.precision, 1)]
+            for index, item in enumerate(iterable)
+        ]
+        delta = int(whole * 10 ** self.precision) - sum([int(item[1]) for item in result])
+
+        result = sorted(result, key=lambda i: i[-1], reverse=True)
+
+        index = 0
+        while delta:
+            result[index][1] += 1
+            index += 1
+            delta -= 1
+
+        result = sorted(result, key=lambda i: i[0])
+
+        return [item[1] / 10 ** self.precision for item in result]
 
     def _get_assignment_data(self, fields):
         search_fields = tuple(filter(
@@ -246,3 +266,91 @@ class DataBuilder:
         fields.append('work_hours_total')
 
         return sorted([[item[key] for key in fields] for item in data])
+
+    def index_of_labor_distribution(self, absence_name):
+        """Формирует данные для размещения в отчете
+        """
+        work_hours_total = Day.objects.get_work_hours_count(self.start, self.end)
+
+        fields = (
+            'employee', 'number', 'staff_units', 'project', 'project_hours',
+        )
+        data = self._get_assignment_data(fields)
+
+        for item in data:
+            item['project_hours'] /= work_hours_total
+
+        data = [[item[key] for key in fields] for item in data]
+
+        absence_fields = ('employee', 'number', 'staff_units', 'absence_hours',)
+        absence_data = self._get_absence_data(absence_fields)
+
+        for item in absence_data:
+            item['absence_hours'] /= work_hours_total
+
+        absence_data = [
+            [item[key] for key in absence_fields]
+            for item in absence_data
+        ]
+
+        for item in absence_data:
+            item.insert(3, absence_name)
+
+        data.extend(absence_data)
+
+        for item in data:
+            item.append(round(
+                sum(
+                    [oter[4] for oter in filter(
+                        lambda i: i[1] == item[1],
+                        data,
+                    )]
+                ),
+                self.precision,
+            ))
+
+        for employment, employment_hours in set([(item[1], item[5]) for item in data]):
+            items = [
+                (index, item[4])
+                for index, item in enumerate(data)
+                if item[1] == employment
+            ]
+            indexes, hours = zip(*items)
+            hours = self._round_portions_iterable(hours, employment_hours)
+            for index, hours in zip(indexes, hours):
+                data[index][4] = hours
+
+        return data
+
+    def index_of_labor_distribution_per_project(self):
+        """Формирует данные для размещения в отчете
+        """
+        fields = (
+            'employee', 'number', 'project',
+            'project_hours'
+        )
+        data = self._get_assignment_data(fields)
+
+        for item in data:
+            item['employment_hours'] = sum(
+                [oter['project_hours'] for oter in filter(
+                    lambda i: i['number'] == item['number'],
+                    data,
+                )]
+            )
+
+        for item in data:
+            item['project_hours'] /= item['employment_hours']
+
+        for employment in set([item['number'] for item in data]):
+            items = [
+                (index, item['project_hours'])
+                for index, item in enumerate(data)
+                if item['number'] == employment
+            ]
+            indexes, hours = zip(*items)
+            hours = self._round_portions_iterable(hours, 1)
+            for index, hours in zip(indexes, hours):
+                data[index]['project_hours'] = hours
+
+        return [[item[key] for key in fields] for item in data]

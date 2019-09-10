@@ -5,6 +5,7 @@ from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, Side
+from openpyxl.utils.cell import get_column_letter
 
 from django.http import HttpResponse
 from django.utils.translation import gettext, gettext_lazy as _
@@ -347,6 +348,182 @@ class ReportBuilder:
                 cell.value = value
                 if col_num >= 5 or col_num == 2:
                     cell.alignment = center_alignment
+
+        for column_cells in sheet.columns:
+            length = max(len(str(cell.value)) for cell in column_cells)
+            sheet.column_dimensions[column_cells[0].column_letter].width = length + 3
+
+        border = Border(
+            left=Side(border_style='thin', color='FF000000'),
+            right=Side(border_style='thin', color='FF000000'),
+            top=Side(border_style='thin', color='FF000000'),
+            bottom=Side(border_style='thin', color='FF000000'),
+        )
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.border = border
+
+        self._add_xlsx_title(sheet, title, len(header))
+
+        return document
+
+    def index_of_labor_distribution_xlsx(self, **kwargs):
+        """Формирует отчет
+        """
+        title = gettext("Employees' indexes of labor distribution")
+        absence_name = gettext('Absence hours')
+        staff_units_name = gettext('Staff units')
+        total_hours_name = gettext('Total')
+
+        data = self.data_builder.index_of_labor_distribution(absence_name)
+
+        document = self._get_xlsx_document(
+            orientation=kwargs.get('orientation'),
+        )
+        sheet = document.active
+        sheet.title = title
+
+        if not data:
+            self._add_xlsx_title(sheet, title, 9)
+            sheet.merge_cells(start_row=5, start_column=1, end_row=5, end_column=9)
+            cell = sheet.cell(row=5, column=1)
+            cell.value = self.empty_text
+            return document
+
+        employes = tuple(sorted(set('{} [{}]'.format(
+            *item[0:2]
+        ) for item in data)))
+
+        header = sorted(list(set(
+            item[3] for item in data if item[3] != absence_name
+        )))
+        header.insert(0, gettext('Employees'))
+        header.extend((absence_name, total_hours_name, staff_units_name))
+
+        header_font = Font(bold=True)
+        center_alignment = Alignment(horizontal='center', vertical='center')
+
+        for col_num, column_title in enumerate(header, 1):
+            cell = sheet.cell(row=1, column=col_num)
+            cell.value = column_title
+            cell.alignment = center_alignment
+            cell.font = header_font
+
+        for row_num, value in enumerate(employes, 2):
+            cell = sheet.cell(row=row_num, column=1)
+            cell.value = value
+
+        for employee, number, staff_units, project, hours, total_hours in data:
+            row = employes.index('{} [{}]'.format(employee, number)) + 2
+            col = header.index(project) + 1
+
+            cell = sheet.cell(row=row, column=col)
+            cell.value = hours
+            cell.alignment = center_alignment
+
+            col = header.index(staff_units_name) + 1
+            cell = sheet.cell(row=row, column=col)
+            cell.value = staff_units
+            cell.alignment = center_alignment
+
+            col = header.index(total_hours_name) + 1
+            cell = sheet.cell(row=row, column=col)
+            cell.value = total_hours
+            cell.alignment = center_alignment
+
+        row_num = len(employes) + 2
+        cell = sheet.cell(row=row_num, column=1)
+        cell.value = gettext('Total')
+        cell.font = header_font
+        for col_num, value in enumerate(header[1:], 2):
+            cell = sheet.cell(row=row_num, column=col_num)
+            cell.value = "=SUM({col}{start_row}:{col}{end_row})".format(
+                col=get_column_letter(col_num),
+                start_row=6,
+                end_row=row_num + 3,
+            )
+            cell.alignment = center_alignment
+            cell.font = header_font
+
+        for column_cells in sheet.columns:
+            length = max(len(str(cell.value)) for cell in column_cells)
+            sheet.column_dimensions[column_cells[0].column_letter].width = length + 3
+
+        border = Border(
+            left=Side(border_style='thin', color='FF000000'),
+            right=Side(border_style='thin', color='FF000000'),
+            top=Side(border_style='thin', color='FF000000'),
+            bottom=Side(border_style='thin', color='FF000000'),
+        )
+        for row in sheet.iter_rows():
+            for cell in row:
+                cell.border = border
+
+        self._add_xlsx_title(sheet, title, len(header))
+
+        return document
+
+    def index_of_labor_distribution_per_project_xlsx(self, **kwargs):
+        """Формирует отчет
+        """
+        title = gettext("Employees' indexes of labor distribution per project")
+
+        data = self.data_builder.index_of_labor_distribution_per_project()
+
+        document = self._get_xlsx_document(
+            orientation=kwargs.get('orientation'),
+        )
+        sheet = document.active
+        sheet.title = title
+
+        if not data:
+            self._add_xlsx_title(sheet, title, 9)
+            sheet.merge_cells(start_row=5, start_column=1, end_row=5, end_column=9)
+            cell = sheet.cell(row=5, column=1)
+            cell.value = self.empty_text
+            return document
+
+        employes = tuple(sorted(set('{} [{}]'.format(
+            *item[0:2]
+        ) for item in data)))
+
+        header = sorted(list(set(item[2] for item in data)))
+        header.insert(0, gettext('Employees'))
+
+        header_font = Font(bold=True)
+        center_alignment = Alignment(horizontal='center', vertical='center')
+
+        for col_num, column_title in enumerate(header, 1):
+            cell = sheet.cell(row=1, column=col_num)
+            cell.value = column_title
+            cell.alignment = center_alignment
+            cell.font = header_font
+
+        for row_num, value in enumerate(employes, 2):
+            cell = sheet.cell(row=row_num, column=1)
+            cell.value = value
+
+        for employee, number, project, hours in data:
+            row = employes.index('{} [{}]'.format(employee, number)) + 2
+            col = header.index(project) + 1
+
+            cell = sheet.cell(row=row, column=col)
+            cell.value = hours
+            cell.alignment = center_alignment
+
+        row_num = len(employes) + 2
+        cell = sheet.cell(row=row_num, column=1)
+        cell.value = gettext('Total')
+        cell.font = header_font
+        for col_num, value in enumerate(header[1:], 2):
+            cell = sheet.cell(row=row_num, column=col_num)
+            cell.value = "=SUM({col}{start_row}:{col}{end_row})".format(
+                col=get_column_letter(col_num),
+                start_row=6,
+                end_row=row_num + 3,
+            )
+            cell.alignment = center_alignment
+            cell.font = header_font
 
         for column_cells in sheet.columns:
             length = max(len(str(cell.value)) for cell in column_cells)
