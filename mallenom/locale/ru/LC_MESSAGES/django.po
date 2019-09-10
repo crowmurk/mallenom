@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-29 18:59+0300\n"
+"POT-Creation-Date: 2019-09-10 12:04+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,7 +87,7 @@ msgid "Filter"
 msgstr "Фильтр"
 
 #: core/templates/core/includes/formset_table.html:74 employee/tables.py:34
-#: employee/tables.py:67 reports/reports.py:17 schedule/tables.py:32
+#: employee/tables.py:67 reports/reports.py:18 schedule/tables.py:32
 #: schedule/tables.py:70 schedule/tables.py:110 schedule/tables.py:140
 #: staffing/tables.py:37 staffing/tables.py:69 staffing/tables.py:102
 #: workcal/tables.py:26 workcal/tables.py:51
@@ -154,21 +154,22 @@ msgstr "Невозможно удалить {name} при существующи
 msgid "{name} was deleted successfuly"
 msgstr "{name}, удаление прошло успешно"
 
-#: employee/apps.py:7 employee/models.py:90 reports/reports.py:208
-#: reports/reports.py:267 templates/base.html:75
+#: employee/apps.py:7 employee/models.py:90 reports/reports.py:209
+#: reports/reports.py:268 reports/reports.py:400 reports/reports.py:491
+#: templates/base.html:75
 msgid "Employees"
 msgstr "Сотрудники"
 
 #: employee/filters.py:11 employee/filters.py:36 employee/models.py:89
-#: employee/models.py:150 employee/tables.py:10 reports/reports.py:145
-#: reports/reports.py:329 schedule/filters.py:34 schedule/filters.py:117
+#: employee/models.py:150 employee/tables.py:10 reports/reports.py:146
+#: reports/reports.py:330 schedule/filters.py:34 schedule/filters.py:117
 #: schedule/filters.py:190
 msgid "Employee"
 msgstr "Сотрудник"
 
-#: employee/filters.py:15 employee/filters.py:50 reports/reports.py:330
-#: staffing/filters.py:13 staffing/filters.py:34 staffing/filters.py:62
-#: staffing/models.py:206 templates/base.html:81
+#: employee/filters.py:15 employee/filters.py:50 reports/reports.py:331
+#: reports/reports.py:375 staffing/filters.py:13 staffing/filters.py:34
+#: staffing/filters.py:62 staffing/models.py:206 templates/base.html:81
 msgid "Staff units"
 msgstr "Штатные единицы"
 
@@ -188,14 +189,14 @@ msgstr "Устаревшие"
 msgid "Actual"
 msgstr "Действующие"
 
-#: employee/filters.py:40 employee/tables.py:45 reports/reports.py:145
-#: reports/reports.py:330 staffing/filters.py:52 staffing/models.py:60
+#: employee/filters.py:40 employee/tables.py:45 reports/reports.py:146
+#: reports/reports.py:331 staffing/filters.py:52 staffing/models.py:60
 #: staffing/models.py:182 staffing/tables.py:10 staffing/tables.py:79
 msgid "Department"
 msgstr "Отдел"
 
-#: employee/filters.py:45 employee/tables.py:49 reports/reports.py:146
-#: reports/reports.py:330 schedule/models.py:111 schedule/models.py:268
+#: employee/filters.py:45 employee/tables.py:49 reports/reports.py:147
+#: reports/reports.py:331 schedule/models.py:111 schedule/models.py:268
 #: staffing/filters.py:57 staffing/models.py:132 staffing/models.py:190
 #: staffing/tables.py:42
 msgid "Position"
@@ -237,7 +238,7 @@ msgstr "URL идентификатор объекта"
 msgid "Positions held"
 msgstr "Занимаемые должности"
 
-#: employee/models.py:142 reports/reports.py:145 reports/reports.py:329
+#: employee/models.py:142 reports/reports.py:146 reports/reports.py:330
 msgid "Employee ID number"
 msgstr "Табельный номер"
 
@@ -359,11 +360,11 @@ msgstr "Администрирование сайта Mallenom"
 msgid "Site administration"
 msgstr "Администрирование сайта"
 
-#: reports/forms.py:12 reports/reports.py:135 schedule/models.py:141
+#: reports/forms.py:12 reports/reports.py:136 schedule/models.py:141
 msgid "Employees' assignments"
 msgstr "Назначения для сотрудников"
 
-#: reports/forms.py:13 reports/reports.py:195 reports/reports.py:242
+#: reports/forms.py:13 reports/reports.py:196 reports/reports.py:243
 msgid "Employees' assignments matrix"
 msgstr "Матрица назначений для сотрудников"
 
@@ -371,89 +372,102 @@ msgstr "Матрица назначений для сотрудников"
 msgid "Employees' assignments matrix (Excel)"
 msgstr "Матрица назначений для сотрудников (Excel)"
 
-#: reports/forms.py:15 reports/reports.py:312
+#: reports/forms.py:15 reports/reports.py:313
 msgid "Employees' work hours check"
 msgstr "Сверка рабочих часов сотрудников"
 
-#: reports/forms.py:17
+#: reports/forms.py:16 reports/reports.py:373
+msgid "Employees' indexes of labor distribution"
+msgstr "Коэффициенты трудового участия сотрудников"
+
+#: reports/forms.py:17 reports/reports.py:469
+msgid "Employees' indexes of labor distribution per project"
+msgstr "Коэффициенты трудового участия сотрудников по проектам"
+
+#: reports/forms.py:19
 msgid "Report"
 msgstr "Отчет"
 
-#: reports/forms.py:21
+#: reports/forms.py:23
 msgid "Start date"
 msgstr "Начальная дата"
 
-#: reports/forms.py:25
+#: reports/forms.py:27
 msgid "End date"
 msgstr "Конечная дата"
 
-#: reports/forms.py:30
+#: reports/forms.py:32
 msgid "Portrait"
 msgstr "Книжная"
 
-#: reports/forms.py:31
+#: reports/forms.py:33
 msgid "Landscape"
 msgstr "Альбомная"
 
-#: reports/forms.py:33
+#: reports/forms.py:35
 msgid "Page orientation"
 msgstr "Ориентация страницы"
 
-#: reports/forms.py:46
+#: reports/forms.py:48
 msgid "This value must be a Monday or first day of a month"
 msgstr "Это значение должно быть понедельником или первым днем месяца"
 
-#: reports/forms.py:59
+#: reports/forms.py:61
 msgid "This value must be a Sunday or last day of a month"
 msgstr "Это значение должно быть воскресеньем или последним днем месяца"
 
-#: reports/forms.py:75
+#: reports/forms.py:77
 #, python-format
 msgid "This value must be less than %(end)s"
 msgstr "Это значение должно быть меньше чем %(end)s"
 
-#: reports/forms.py:94
+#: reports/forms.py:96
 msgid "Report can be weeks or months range only"
 msgstr "Отчет может быть создан только по неделям или по месяцам"
 
-#: reports/reports.py:97
+#: reports/reports.py:98
 msgid "From "
 msgstr "С "
 
-#: reports/reports.py:99
+#: reports/reports.py:100
 msgid " to "
 msgstr " по "
 
-#: reports/reports.py:119
+#: reports/reports.py:120
 #, python-brace-format
 msgid "From {start} to {end}:"
 msgstr "С {start} по {end}:"
 
-#: reports/reports.py:146 schedule/filters.py:38 schedule/filters.py:112
+#: reports/reports.py:147 schedule/filters.py:38 schedule/filters.py:112
 #: schedule/models.py:57 schedule/models.py:197
 msgid "Project"
 msgstr "Проект"
 
-#: reports/reports.py:146 schedule/models.py:214 schedule/models.py:286
+#: reports/reports.py:147 schedule/models.py:214 schedule/models.py:286
 #: schedule/tables.py:17 schedule/tables.py:53 workcal/models.py:35
 msgid "Hours"
 msgstr "Часы"
 
-#: reports/reports.py:187 reports/reports.py:243 reports/reports.py:331
+#: reports/reports.py:188 reports/reports.py:244 reports/reports.py:332
+#: reports/reports.py:374
 msgid "Absence hours"
 msgstr "Часов отсутствия"
 
-#: reports/reports.py:331
+#: reports/reports.py:332
 msgid "Hours assigned"
 msgstr "Часов назначено"
 
-#: reports/reports.py:332
+#: reports/reports.py:333
 msgid "Hours total"
 msgstr "Часов всего"
 
-#: reports/reports.py:332
+#: reports/reports.py:333
 msgid "Work hours"
 msgstr "Рабочие часы"
+
+#: reports/reports.py:376 reports/reports.py:436 reports/reports.py:516
+msgid "Total"
+msgstr "Всего"
 
 #: reports/templates/reports/report_download_form.html:8
 msgid "Report download"
@@ -849,24 +863,24 @@ msgstr "Ошибка в CSV модуле: {error}"
 msgid "Invalid CSV format: {}"
 msgstr "Неверный формат CSV: {}"
 
-#: workcal/views.py:147
+#: workcal/views.py:155
 #, python-brace-format
 msgid "Uploaded file is too big ({0:.2f} MB)."
 msgstr "Загружаемый файл слишком велик ({0:.2f} MB)."
 
-#: workcal/views.py:161
+#: workcal/views.py:169
 #, python-brace-format
 msgid "Parsing error ({type}): {error}"
 msgstr "Ошибка парсера ({type}): {error}"
 
-#: workcal/views.py:171
+#: workcal/views.py:179
 msgid "Nothing to upload: data set is empty"
 msgstr "Нечего загружать, набор данных пуст"
 
-#: workcal/views.py:209
+#: workcal/views.py:217
 msgid "CSV import finished with errors (see more in logs)"
 msgstr "CSV импорт завершен с ошибками (подробности в логах)"
 
-#: workcal/views.py:215
+#: workcal/views.py:223
 msgid "CSV import finished without errors"
 msgstr "Импорт CSV завершен без ошибок"
