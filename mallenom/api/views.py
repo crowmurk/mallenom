@@ -14,8 +14,10 @@ class EmploymentListEmployee(View):
             Employee,
             pk=employee_pk,
         )
-
-        employments = Employment.objects.all().filter(employee=employee)
+        employments = Employment.objects.filter(
+            employee=employee,
+            count__gt=0,
+        )
         json_employments = serializers.serialize(
             "json",
             employments,

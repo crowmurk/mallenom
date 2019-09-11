@@ -4,7 +4,7 @@ from django.db import models
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from employee.models import Employee
+from employee.models import Employee, Employment
 from workcal.models import Day
 
 from .models import Project, Assignment, ProjectAssignment, Absence
@@ -19,7 +19,7 @@ class ProjectForm(forms.ModelForm):
 class AssignmentForm(forms.ModelForm):
     employee = forms.ModelChoiceField(
         required=True,
-        queryset=Employee.objects.all(),
+        queryset=Employee.objects.filter(staff_units_count__gt=0),
         label=Employee._meta.verbose_name,
     )
     check_hours = forms.BooleanField(
@@ -35,6 +35,12 @@ class AssignmentForm(forms.ModelForm):
             'start', 'end', 'check_hours',
         )
         exclude = ('projects', )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['employment'].queryset = Employment.objects.filter(
+            count__gt=0,
+        )
 
     def clean(self):
         cleaned_data = super().clean()
@@ -102,6 +108,10 @@ class ProjectAssignmentForm(forms.ModelForm):
         model = ProjectAssignment
         fields = '__all__'
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['project'].queryset = Project.objects.filter(status=True)
+
     def clean(self):
         cleaned_data = super().clean()
 
@@ -161,7 +171,7 @@ class ProjectAssignmentFormSetForm(ProjectAssignmentForm):
 class AbsenceForm(forms.ModelForm):
     employee = forms.ModelChoiceField(
         required=True,
-        queryset=Employee.objects.all(),
+        queryset=Employee.objects.filter(staff_units_count__gt=0),
         label=Employee._meta.verbose_name,
     )
 
@@ -170,6 +180,12 @@ class AbsenceForm(forms.ModelForm):
         fields = (
             'employee', 'employment',
             'start', 'end', 'hours', 'reason',
+        )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['employment'].queryset = Employment.objects.filter(
+            count__gt=0,
         )
 
     def clean(self):

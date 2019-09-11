@@ -3,6 +3,8 @@ from django import forms
 from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
+from staffing.models import Staffing
+
 from .models import Employee, Employment
 
 
@@ -16,6 +18,10 @@ class EmploymentForm(forms.ModelForm):
     class Meta:
         model = Employment
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['staffing'].queryset = Staffing.objects.filter(count__gt=0)
 
     def clean(self):
         cleaned_data = super().clean()
