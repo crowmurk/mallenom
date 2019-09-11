@@ -16,7 +16,7 @@ class DepartmentManager(models.Manager):
             Staffing.objects.filter(
                 department=OuterRef('pk')
             ).values('department').order_by('department').annotate(
-                sum=Coalesce(models.Sum('employments__count'), 0)
+                sum=Coalesce(models.Sum('employments__count'), 0.0)
             ).values('sum')
         )
 
@@ -25,7 +25,7 @@ class DepartmentManager(models.Manager):
             staff_units_count=models.functions.Coalesce(
                 models.Sum('staffing__count'), 0
             ),
-            staff_units_held=staff_units_held,
+            staff_units_held=Coalesce(staff_units_held, 0.0),
         )
 
 
@@ -95,7 +95,7 @@ class PositionManager(models.Manager):
             Staffing.objects.filter(
                 position=OuterRef('pk')
             ).values('position').order_by('position').annotate(
-                sum=Coalesce(models.Sum('employments__count'), 0)
+                sum=Coalesce(models.Sum('employments__count'), 0.0)
             ).values('sum')
         )
 
@@ -104,7 +104,7 @@ class PositionManager(models.Manager):
             staff_units_count=models.functions.Coalesce(
                 models.Sum('staffing__count'), 0
             ),
-            staff_units_held=staff_units_held,
+            staff_units_held=Coalesce(staff_units_held, 0.0),
         )
 
 
@@ -167,7 +167,7 @@ class StaffingManager(models.Manager):
             'department', 'position',
         ).annotate(
             staff_units_held=models.functions.Coalesce(
-                models.Sum('employments__count'), 0
+                models.Sum('employments__count'), 0.0
             )
         )
 
