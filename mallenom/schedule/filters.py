@@ -34,10 +34,9 @@ class AssignmentFilter(filters.FilterSet):
         label=_('Employee'),
         method='employee_filter',
     )
-    project = filters.CharFilter(
+    projects = filters.ModelChoiceFilter(
+        queryset=Project.objects.all(),
         label=_('Project'),
-        field_name='projects__name',
-        lookup_expr='icontains',
     )
     start__gte = filters.DateFilter(
         label=_('Starts after'),
