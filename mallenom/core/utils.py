@@ -37,7 +37,7 @@ def get_unique_slug(instance, slug_field, *args, **kwargs):
     if args and all([isinstance(arg, str) for arg in args]):
         source = [getattr(instance, arg, arg) for arg in args]
     else:
-        raise ValueError("Slug source must be str or iterable of str.")
+        raise ValueError("Slug source must be str type.")
 
     # Составляем список запрещенных slug
     prohibit = ['create', 'update', 'delete']
