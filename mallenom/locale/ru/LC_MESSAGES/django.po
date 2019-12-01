@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-10 12:04+0300\n"
+"POT-Creation-Date: 2019-12-01 17:52+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -117,58 +117,58 @@ msgstr "Последняя"
 msgid "Add"
 msgstr "Добавить"
 
-#: core/validators.py:10
+#: core/validators.py:12
 msgid "This date should be a Monday."
 msgstr "Эта дата должна быть Понедельником"
 
-#: core/validators.py:18
+#: core/validators.py:20
 msgid "This date should be a Sunday."
 msgstr "Эта дата должна быть Воскресеньем"
 
-#: core/validators.py:26
+#: core/validators.py:28
 #, python-format
 msgid "Slug must not be \"%(slug)s\""
 msgstr "Slug не может быть \"%(slug)s\""
 
-#: core/validators.py:35
+#: core/validators.py:37
 msgid "This value must be grater than zero"
 msgstr "Это число должно быть больше нуля"
 
-#: core/validators.py:47
+#: core/validators.py:49
 #, python-format
 msgid "An error was founded in %(value)s template: %(message)s"
 msgstr "Обнаружена ошибка в значении %(value)s шаблон: %(message)s"
 
-#: core/views.py:63
+#: core/views.py:78
 #, python-brace-format
 msgid "{name} were deleted successfuly"
 msgstr "{name} были успешно удалены"
 
-#: core/views.py:68 core/views.py:104 core/views.py:180
+#: core/views.py:83 core/views.py:124 core/views.py:203
 #, python-brace-format
 msgid "Cannot delete {name} because of foreign references"
 msgstr "Невозможно удалить {name} при существующих внешних ссылках"
 
-#: core/views.py:96
+#: core/views.py:114
 #, python-brace-format
 msgid "{name} was deleted successfuly"
 msgstr "{name}, удаление прошло успешно"
 
-#: employee/apps.py:7 employee/models.py:90 reports/reports.py:209
-#: reports/reports.py:268 reports/reports.py:400 reports/reports.py:491
+#: employee/apps.py:7 employee/models.py:90 reports/reports.py:287
+#: reports/reports.py:360 reports/reports.py:534 reports/reports.py:638
 #: templates/base.html:75
 msgid "Employees"
 msgstr "Сотрудники"
 
 #: employee/filters.py:11 employee/filters.py:36 employee/models.py:89
-#: employee/models.py:150 employee/tables.py:10 reports/reports.py:146
-#: reports/reports.py:330 schedule/filters.py:34 schedule/filters.py:117
-#: schedule/filters.py:190
+#: employee/models.py:150 employee/tables.py:10 reports/reports.py:204
+#: reports/reports.py:434 schedule/filters.py:34 schedule/filters.py:120
+#: schedule/filters.py:197
 msgid "Employee"
 msgstr "Сотрудник"
 
-#: employee/filters.py:15 employee/filters.py:50 reports/reports.py:331
-#: reports/reports.py:375 staffing/filters.py:13 staffing/filters.py:34
+#: employee/filters.py:15 employee/filters.py:50 reports/reports.py:435
+#: reports/reports.py:504 staffing/filters.py:13 staffing/filters.py:34
 #: staffing/filters.py:62 staffing/models.py:206 templates/base.html:81
 msgid "Staff units"
 msgstr "Штатные единицы"
@@ -189,25 +189,25 @@ msgstr "Устаревшие"
 msgid "Actual"
 msgstr "Действующие"
 
-#: employee/filters.py:40 employee/tables.py:45 reports/reports.py:146
-#: reports/reports.py:331 staffing/filters.py:52 staffing/models.py:60
+#: employee/filters.py:40 employee/tables.py:45 reports/reports.py:204
+#: reports/reports.py:435 staffing/filters.py:52 staffing/models.py:60
 #: staffing/models.py:182 staffing/tables.py:10 staffing/tables.py:79
 msgid "Department"
 msgstr "Отдел"
 
-#: employee/filters.py:45 employee/tables.py:49 reports/reports.py:147
-#: reports/reports.py:331 schedule/models.py:111 schedule/models.py:268
+#: employee/filters.py:45 employee/tables.py:49 reports/reports.py:205
+#: reports/reports.py:435 schedule/models.py:111 schedule/models.py:268
 #: staffing/filters.py:57 staffing/models.py:132 staffing/models.py:190
 #: staffing/tables.py:42
 msgid "Position"
 msgstr "Должность"
 
-#: employee/forms.py:49
+#: employee/forms.py:62
 #, python-format
 msgid "This value must be less than or equal to %(count)s"
 msgstr "Это значение должно быть меньше или равно %(count)s"
 
-#: employee/forms.py:115
+#: employee/forms.py:138
 #, python-format
 msgid ""
 "%(units_count_name)s for all values %(staffing_name)s \"%(staffing)s\" must "
@@ -229,7 +229,7 @@ msgid "Middle name"
 msgstr "Отчество"
 
 #: employee/models.py:76 schedule/models.py:51 staffing/models.py:47
-#: staffing/models.py:126 workcal/models.py:65 workcal/models.py:166
+#: staffing/models.py:126 workcal/models.py:65 workcal/models.py:198
 msgid "A label for URL config."
 msgstr "URL идентификатор объекта"
 
@@ -238,7 +238,7 @@ msgstr "URL идентификатор объекта"
 msgid "Positions held"
 msgstr "Занимаемые должности"
 
-#: employee/models.py:142 reports/reports.py:146 reports/reports.py:330
+#: employee/models.py:142 reports/reports.py:204 reports/reports.py:434
 msgid "Employee ID number"
 msgstr "Табельный номер"
 
@@ -360,112 +360,117 @@ msgstr "Администрирование сайта Mallenom"
 msgid "Site administration"
 msgstr "Администрирование сайта"
 
-#: reports/forms.py:12 reports/reports.py:136 schedule/models.py:141
+#: reports/forms.py:13 reports/reports.py:191 schedule/models.py:141
 msgid "Employees' assignments"
 msgstr "Назначения для сотрудников"
 
-#: reports/forms.py:13 reports/reports.py:196 reports/reports.py:243
+#: reports/forms.py:14 reports/reports.py:271 reports/reports.py:330
 msgid "Employees' assignments matrix"
 msgstr "Матрица назначений для сотрудников"
 
-#: reports/forms.py:14
+#: reports/forms.py:15
 msgid "Employees' assignments matrix (Excel)"
 msgstr "Матрица назначений для сотрудников (Excel)"
 
-#: reports/forms.py:15 reports/reports.py:313
+#: reports/forms.py:16 reports/reports.py:412
 msgid "Employees' work hours check"
 msgstr "Сверка рабочих часов сотрудников"
 
-#: reports/forms.py:16 reports/reports.py:373
+#: reports/forms.py:17 reports/reports.py:500
 msgid "Employees' indexes of labor distribution"
 msgstr "Коэффициенты трудового участия сотрудников"
 
-#: reports/forms.py:17 reports/reports.py:469
+#: reports/forms.py:18 reports/reports.py:611
 msgid "Employees' indexes of labor distribution per project"
 msgstr "Коэффициенты трудового участия сотрудников по проектам"
 
-#: reports/forms.py:19
+#: reports/forms.py:20
 msgid "Report"
 msgstr "Отчет"
 
-#: reports/forms.py:23
+#: reports/forms.py:24
 msgid "Start date"
 msgstr "Начальная дата"
 
-#: reports/forms.py:27
+#: reports/forms.py:28
 msgid "End date"
 msgstr "Конечная дата"
 
-#: reports/forms.py:32
+#: reports/forms.py:33
 msgid "Portrait"
 msgstr "Книжная"
 
-#: reports/forms.py:33
+#: reports/forms.py:34
 msgid "Landscape"
 msgstr "Альбомная"
 
-#: reports/forms.py:35
+#: reports/forms.py:36
 msgid "Page orientation"
 msgstr "Ориентация страницы"
 
-#: reports/forms.py:48
+#: reports/forms.py:49
 msgid "This value must be a Monday or first day of a month"
 msgstr "Это значение должно быть понедельником или первым днем месяца"
 
-#: reports/forms.py:61
+#: reports/forms.py:62
 msgid "This value must be a Sunday or last day of a month"
 msgstr "Это значение должно быть воскресеньем или последним днем месяца"
 
-#: reports/forms.py:77
+#: reports/forms.py:78
 #, python-format
 msgid "This value must be less than %(end)s"
 msgstr "Это значение должно быть меньше чем %(end)s"
 
-#: reports/forms.py:96
+#: reports/forms.py:97
 msgid "Report can be weeks or months range only"
 msgstr "Отчет может быть создан только по неделям или по месяцам"
 
-#: reports/reports.py:98
+#: reports/reports.py:142
 msgid "From "
 msgstr "С "
 
-#: reports/reports.py:100
+#: reports/reports.py:144
 msgid " to "
 msgstr " по "
 
-#: reports/reports.py:120
+#: reports/reports.py:172
 #, python-brace-format
 msgid "From {start} to {end}:"
 msgstr "С {start} по {end}:"
 
-#: reports/reports.py:147 schedule/filters.py:38 schedule/filters.py:112
+#: reports/reports.py:205 schedule/filters.py:39 schedule/filters.py:115
 #: schedule/models.py:57 schedule/models.py:197
 msgid "Project"
 msgstr "Проект"
 
-#: reports/reports.py:147 schedule/models.py:214 schedule/models.py:286
+#: reports/reports.py:205 schedule/models.py:214 schedule/models.py:286
 #: schedule/tables.py:17 schedule/tables.py:53 workcal/models.py:35
 msgid "Hours"
 msgstr "Часы"
 
-#: reports/reports.py:188 reports/reports.py:244 reports/reports.py:332
-#: reports/reports.py:374
+#: reports/reports.py:262 reports/reports.py:331 reports/reports.py:436
+#: reports/reports.py:503
 msgid "Absence hours"
 msgstr "Часов отсутствия"
 
-#: reports/reports.py:332
+#: reports/reports.py:436
 msgid "Hours assigned"
 msgstr "Часов назначено"
 
-#: reports/reports.py:333
+#: reports/reports.py:437
 msgid "Hours total"
 msgstr "Часов всего"
 
-#: reports/reports.py:333
+#: reports/reports.py:437
 msgid "Work hours"
 msgstr "Рабочие часы"
 
-#: reports/reports.py:376 reports/reports.py:436 reports/reports.py:516
+#: reports/reports.py:437
+msgid "Difference"
+msgstr "Разница"
+
+#: reports/reports.py:460 reports/reports.py:505 reports/reports.py:574
+#: reports/reports.py:667
 msgid "Total"
 msgstr "Всего"
 
@@ -489,58 +494,58 @@ msgstr "Закрыт"
 msgid "Active"
 msgstr "Активен"
 
-#: schedule/filters.py:43 schedule/filters.py:121 schedule/filters.py:194
+#: schedule/filters.py:42 schedule/filters.py:124 schedule/filters.py:201
 msgid "Starts after"
 msgstr "Начинается после"
 
-#: schedule/filters.py:47 schedule/filters.py:55 schedule/filters.py:125
-#: schedule/filters.py:133 schedule/filters.py:198 schedule/filters.py:206
+#: schedule/filters.py:46 schedule/filters.py:54 schedule/filters.py:128
+#: schedule/filters.py:136 schedule/filters.py:205 schedule/filters.py:213
 #: workcal/filters.py:27 workcal/filters.py:35
 msgid "MM/DD/YYYY"
 msgstr "ДД.ММ.ГГГГ"
 
-#: schedule/filters.py:51 schedule/filters.py:129 schedule/filters.py:202
+#: schedule/filters.py:50 schedule/filters.py:132 schedule/filters.py:209
 msgid "Ends before"
 msgstr "Заканчивается до"
 
-#: schedule/filters.py:59 schedule/filters.py:137 schedule/filters.py:210
+#: schedule/filters.py:58 schedule/filters.py:140 schedule/filters.py:217
 msgid "Month/Year"
 msgstr "Месяц/Год"
 
-#: schedule/filters.py:62 schedule/filters.py:140 schedule/filters.py:213
+#: schedule/filters.py:61 schedule/filters.py:143 schedule/filters.py:220
 msgid "[MM/]YYYY"
 msgstr "[ММ]/ГГГГ"
 
-#: schedule/forms.py:28 schedule/forms.py:98
+#: schedule/forms.py:28 schedule/forms.py:108
 msgid "Check hours"
 msgstr "Проверить часы"
 
-#: schedule/forms.py:52 schedule/forms.py:188
+#: schedule/forms.py:61 schedule/forms.py:216
 #, python-format
 msgid "Selected %(employee_verbose)s does not hold this %(position_verbose)s"
 msgstr "Выбранный %(employee_verbose)s не занимает эту %(position_verbose)s"
 
-#: schedule/forms.py:73
+#: schedule/forms.py:83
 #, python-format
 msgid "Start date must be less than %(end)s"
 msgstr "Начальная дата должна быть меньше чем %(end)s"
 
-#: schedule/forms.py:84
+#: schedule/forms.py:94
 #, python-format
 msgid "There are seven days in a week, not %(delta)s"
 msgstr "В неделе семь дней, не %(delta)s"
 
-#: schedule/forms.py:143 schedule/forms.py:225
+#: schedule/forms.py:162 schedule/forms.py:256
 #, python-format
 msgid "This value must be less than or equal to %(hours)s"
 msgstr "Это значение должно быть меньше или равно %(hours)s"
 
-#: schedule/forms.py:207
+#: schedule/forms.py:236
 #, python-format
 msgid "Start date must be less or equal %(end)s"
 msgstr "Начальная дата должна быть меньше или равна %(end)s"
 
-#: schedule/forms.py:248
+#: schedule/forms.py:280
 #, python-format
 msgid ""
 "Range %(start_verbose)s - %(end_verbose)s overlapps already existed "
@@ -549,7 +554,7 @@ msgstr ""
 "Диапазон %(start_verbose)s - %(end_verbose)s пересекается с уже сущестующим "
 "%(absence_verbose)s с таким же значением %(employment_verbose)s"
 
-#: schedule/forms.py:303
+#: schedule/forms.py:338
 #, python-format
 msgid ""
 "%(hours_name)s must be less than or equal to %(hours_available)s summary"
@@ -632,7 +637,7 @@ msgstr "Число назначений"
 msgid "Staffing"
 msgstr "Штатное расписание"
 
-#: staffing/forms.py:39
+#: staffing/forms.py:42
 #, python-brace-format
 msgid "This value must be greater than or equal to {staff_units_holded}"
 msgstr "Это значение должно быть больше или равно {staff_units_holded}"
@@ -715,7 +720,7 @@ msgstr "Отчеты"
 msgid "Calendar"
 msgstr "Календарь"
 
-#: templates/base.html:90 workcal/models.py:173
+#: templates/base.html:90 workcal/models.py:205
 msgid "Days"
 msgstr "Дни"
 
@@ -809,11 +814,11 @@ msgstr "Отметка в CSV файле"
 msgid "CSS class"
 msgstr "Класс CSS"
 
-#: workcal/models.py:71 workcal/models.py:155
+#: workcal/models.py:71 workcal/models.py:187
 msgid "Day type"
 msgstr "Тип дня"
 
-#: workcal/models.py:147 workcal/models.py:172
+#: workcal/models.py:179 workcal/models.py:204
 msgid "Day"
 msgstr "День"
 
@@ -838,49 +843,49 @@ msgstr "Загрузка календаря"
 msgid "None"
 msgstr "Нет"
 
-#: workcal/utils.py:59
+#: workcal/utils.py:65
 msgid "Language '{}' does not supported"
 msgstr "Язык '{}' не поддерживается"
 
-#: workcal/utils.py:78
+#: workcal/utils.py:86
 msgid "Day types not specified"
 msgstr "Типы дней не определены"
 
-#: workcal/utils.py:136
+#: workcal/utils.py:168
 msgid "Invalid day format: '{}'"
 msgstr "Неверный формат дня: '{}'"
 
-#: workcal/utils.py:146
+#: workcal/utils.py:180
 msgid "Unknown day type: '{}'"
 msgstr "Неизвестный тип дня: '{}'"
 
-#: workcal/utils.py:164
+#: workcal/utils.py:202
 #, python-brace-format
 msgid "CSV module exception: {error}"
 msgstr "Ошибка в CSV модуле: {error}"
 
-#: workcal/utils.py:177
+#: workcal/utils.py:217
 msgid "Invalid CSV format: {}"
 msgstr "Неверный формат CSV: {}"
 
-#: workcal/views.py:155
+#: workcal/views.py:163
 #, python-brace-format
 msgid "Uploaded file is too big ({0:.2f} MB)."
 msgstr "Загружаемый файл слишком велик ({0:.2f} MB)."
 
-#: workcal/views.py:169
+#: workcal/views.py:177
 #, python-brace-format
 msgid "Parsing error ({type}): {error}"
 msgstr "Ошибка парсера ({type}): {error}"
 
-#: workcal/views.py:179
+#: workcal/views.py:187
 msgid "Nothing to upload: data set is empty"
 msgstr "Нечего загружать, набор данных пуст"
 
-#: workcal/views.py:217
+#: workcal/views.py:225
 msgid "CSV import finished with errors (see more in logs)"
 msgstr "CSV импорт завершен с ошибками (подробности в логах)"
 
-#: workcal/views.py:223
+#: workcal/views.py:231
 msgid "CSV import finished without errors"
 msgstr "Импорт CSV завершен без ошибок"
