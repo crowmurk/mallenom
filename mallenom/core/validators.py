@@ -5,7 +5,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 def validate_monday(value):
-    """Проверяет является ли дата понедельником
+    """Проверяет является ли дата понедельником.
     """
     if value.weekday() != 0:
         raise ValidationError(
@@ -13,7 +13,7 @@ def validate_monday(value):
         )
 
 def validate_sunday(value):
-    """Проверяет является ли дата воскресеньем
+    """Проверяет является ли дата воскресеньем.
     """
     if value.weekday() != 6:
         raise ValidationError(
@@ -21,7 +21,7 @@ def validate_sunday(value):
         )
 
 def validate_slug(value):
-    """Проверяет поле slug на допустимые значения
+    """Проверяет поле slug на допустимые значения.
     """
     if value.lower() in ('create', 'update', 'delete'):
         raise ValidationError(
@@ -30,7 +30,7 @@ def validate_slug(value):
         )
 
 def validate_positive(value):
-    """Проверяет числовое поле на значения большее 0
+    """Проверяет числовое поле на значения большее 0.
     """
     if value <= 0:
         raise ValidationError(
@@ -39,7 +39,7 @@ def validate_positive(value):
 
 def validate_json(value):
     """Проверяет текстовое поле на соответствие
-    формату json
+    формату json.
     """
     try:
         if value:

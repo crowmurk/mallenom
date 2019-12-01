@@ -20,10 +20,15 @@ class EmploymentForm(forms.ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
+        """В форме должны отображаться только действующие штатные еденицы.
+        """
         super().__init__(*args, **kwargs)
         self.fields['staffing'].queryset = Staffing.objects.filter(count__gt=0)
 
     def clean(self):
+        """Колличество штатных едениц назначаемых сотруднику
+        не должно превышать доступное по штатному расписанию.
+        """
         cleaned_data = super().clean()
 
         if any(self.errors):
@@ -33,6 +38,7 @@ class EmploymentForm(forms.ModelForm):
         staff_units = cleaned_data['count']
         staff_units_max = staffing.count
 
+        # Занятое колличество штатных едениц (исключая указанные в форме)
         staff_units_holded = self._meta.model.objects.filter(
             staffing=staffing
         )
@@ -52,6 +58,7 @@ class EmploymentForm(forms.ModelForm):
         )
 
         if staff_units > staff_units_avalable:
+            # Добавляем ошибку в форму
             message = _('This value must be less than or equal to %(count)s')
             self.add_error(
                 'count',
@@ -68,6 +75,9 @@ class EmploymentForm(forms.ModelForm):
 
 class BaseEmploymentFormSet(forms.BaseInlineFormSet):
     def clean(self):
+        """Колличество штатных едениц назначаемых сотруднику
+        не должно превышать доступное по штатному расписанию.
+        """
         cleaned_data = super().clean()
 
         if any(self.errors):
@@ -78,13 +88,16 @@ class BaseEmploymentFormSet(forms.BaseInlineFormSet):
         for form in self.forms:
             pk = form.instance.pk
             if not pk and not form.changed_data:
+                # Новая, пустая форма
                 continue
             staffing = form.cleaned_data['staffing']
             if self.can_delete and self._should_delete_form(form):
+                # Форма назначена для удаления
                 staff_units = 0
             else:
                 staff_units = form.cleaned_data['count']
 
+            # Добавляем данные формы для проверки
             if staffing in validate_again:
                 validate_again[staffing]['staff_units'] += staff_units
                 validate_again[staffing]['pks'].append(pk)
@@ -94,9 +107,11 @@ class BaseEmploymentFormSet(forms.BaseInlineFormSet):
                     'staff_units': staff_units,
                 }
 
+        # Проверяем корректность назначения штатных едениц
         for staffing, data in validate_again.items():
             staff_units_max = staffing.count
 
+            # Занятое колличество штатных едениц (исключая указанные в формах)
             staff_units_holded = self.model.objects.filter(
                 staffing=staffing
             )
@@ -115,9 +130,11 @@ class BaseEmploymentFormSet(forms.BaseInlineFormSet):
                 staff_units_max - staff_units_holded,
                 settings.FLOAT_TOLERANCE,
             )
+
             staff_units = round(data['staff_units'], settings.FLOAT_TOLERANCE)
 
             if staff_units > staff_units_avalable:
+                # Добавляем ошибку к форме
                 message = _('%(units_count_name)s for all values'
                             ' %(staffing_name)s "%(staffing)s" must be less'
                             ' than or equal to %(count)s summary')

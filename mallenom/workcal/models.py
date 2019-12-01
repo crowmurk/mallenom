@@ -107,6 +107,12 @@ class DayManager(models.Manager):
         )
 
     def get_days(self, start, end):
+        """Возвращает queryset содержащий дни в интервале.
+
+        Args:
+            start - начало интервала
+            end - конец интервала
+        """
         if start > end:
             start, end = end, start
 
@@ -116,21 +122,47 @@ class DayManager(models.Manager):
         )
 
     def get_rest_days(self, start, end):
+        """Возвращает queryset содержащий выходные дни
+        в интервале.
+
+        Args:
+            start - начало интервала
+            end - конец интервала
+        """
         return self.get_days(start, end).filter(
             day_type__hours=0,
         )
 
     def get_uncommon_days(self, start, end):
+        """Возвращает queryset содержащий рабочие дни
+        не являющиеся обычными в интервале.
+
+        Args:
+            start - начало интервала
+            end - конец интервала
+        """
         return self.get_days(start, end).filter(
             day_type__hours__gt=0,
         )
 
     def get_work_days_count(self, start, end):
+        """Возвращает колличество рабочих дней в интервале.
+
+        Args:
+            start - начало интервала
+            end - конец интервала
+        """
         days_total = abs(end - start).days + 1
         return days_total - self.get_rest_days(start, end).count()
 
     def get_work_hours_count(self, start, end,
                              day_hours=settings.WORK_DAY_HOURS):
+        """Возвращает колличество рабочих часов в интервале.
+
+        Args:
+            start - начало интервала
+            end - конец интервала
+        """
         work_days = self.get_work_days_count(start, end)
         uncommon_days = self.get_uncommon_days(start, end).aggregate(
             count=models.Count('id'),

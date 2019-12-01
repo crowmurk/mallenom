@@ -68,6 +68,8 @@ class AssignmentFilter(filters.FilterSet):
 
     def __init__(self, data=None, *args, **kwargs):
         if data is None:
+            # Если фильтры не заданы, задаем
+            # фильтр year_month по текущему месяцу
             today = datetime.date.today()
             data = QueryDict("year_month={}/{}".format(
                 today.month,
@@ -87,10 +89,12 @@ class AssignmentFilter(filters.FilterSet):
 
     def year_month_filter(self, queryset, name, value):
         try:
+            # Разделяем строку фильтра [MM/]YYYY на месяц и год
             value = list(map(int, value.split('/')))
             value.append(None)
             month, year, *_ = value
             if not year:
+                # Задано только одно значение - значит это год
                 year, month = month, year
         except ValueError:
             return queryset.none()
@@ -146,6 +150,8 @@ class ProjectAssignmentFilter(filters.FilterSet):
 
     def __init__(self, data=None, *args, **kwargs):
         if data is None:
+            # Если фильтры не заданы, задаем
+            # фильтр year_month по текущему месяцу
             today = datetime.date.today()
             data = QueryDict("year_month={}/{}".format(
                 today.month,
@@ -165,10 +171,12 @@ class ProjectAssignmentFilter(filters.FilterSet):
 
     def year_month_filter(self, queryset, name, value):
         try:
+            # Разделяем строку фильтра [MM/]YYYY на месяц и год
             value = list(map(int, value.split('/')))
             value.append(None)
             month, year, *_ = value
             if not year:
+                # Задано только одно значение - значит это год
                 year, month = month, year
         except ValueError:
             return queryset.none()
@@ -219,6 +227,8 @@ class AbsenceFilter(filters.FilterSet):
 
     def __init__(self, data=None, *args, **kwargs):
         if data is None:
+            # Если фильтры не заданы, задаем
+            # фильтр year_month по текущему месяцу
             today = datetime.date.today()
             data = QueryDict("year_month={}/{}".format(
                 today.month,
@@ -238,10 +248,12 @@ class AbsenceFilter(filters.FilterSet):
 
     def year_month_filter(self, queryset, name, value):
         try:
+            # Разделяем строку фильтра [MM/]YYYY на месяц и год
             value = list(map(int, value.split('/')))
             value.append(None)
             month, year, *_ = value
             if not year:
+                # Задано только одно значение - значит это год
                 year, month = month, year
         except ValueError:
             return queryset.none()

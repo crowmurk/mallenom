@@ -8,6 +8,7 @@ class ReportDownloadForm(forms.Form):
     report = forms.ChoiceField(
         required=True,
         choices=(
+            # Результатом выбора должен быть метод ReportBuilder
             ('', '---------'),
             ('assignment_report', _("Employees' assignments")),
             ('assignment_matrix_report', _("Employees' assignments matrix")),

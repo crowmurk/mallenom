@@ -87,6 +87,10 @@ class DayCreate(CreateView):
     form_class = DayForm
 
     def get_initial(self):
+        """Получает дату из аргументов запроса
+        и добавяет к начальным данным формы.
+        """
+
         initial = super().get_initial()
 
         if self.request.method == 'GET':
@@ -125,6 +129,10 @@ class CalendarDetail(TemplateView):
     template_name = "workcal/calendar_detail.html"
 
     def get_context_data(self, **kwargs):
+        """Изменяет контекст, контролируя год календаря
+        для отображения (должен быть в допустимых пределах).
+        """
+
         context = super().get_context_data(**kwargs)
         year = context.get('year')
 
@@ -199,7 +207,7 @@ class CalendarUpload(FormView):
         errors = False
 
         for day_raw in days_raw:
-            # Добавляем дни
+            # Добавляем дни, используя форму
             day_form = DayForm(day_raw)
             if day_form.is_valid():
                 day_form.save()

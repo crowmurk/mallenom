@@ -9,6 +9,9 @@ from employee.models import Employee, Employment
 
 class EmploymentListEmployee(View):
     def get(self, request, *args, **kwargs):
+        """Возвращает response c JSON содержащим
+        все записи о должностях сотрудника.
+        """
         employee_pk = kwargs.get('pk')
         employee = get_object_or_404(
             Employee,

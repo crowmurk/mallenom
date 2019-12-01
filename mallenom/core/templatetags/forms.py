@@ -9,7 +9,7 @@ register = Library()
     takes_context=True,
 )
 def filter_table_form(context, *args, **kwargs):
-    """Тег представления filter form как таблицы
+    """Тег представления filter form как таблицы.
     """
     filter_form = (args[0] if len(args) > 0
                    else kwargs.get('filter'))
@@ -32,7 +32,7 @@ def filter_table_form(context, *args, **kwargs):
     takes_context=True,
 )
 def action_table_form(context, *args, **kwargs):
-    """Тег формы таблицы с выбираемыми строками
+    """Тег формы таблицы с выбираемыми строками.
     """
     request = context.get('request')
 
@@ -89,7 +89,7 @@ def action_table_form(context, *args, **kwargs):
     takes_context=True,
 )
 def formset_table(context, *args, **kwargs):
-    """Тег представления formset как таблицы
+    """Тег представления formset как таблицы.
     """
     request = context.get('request')
 

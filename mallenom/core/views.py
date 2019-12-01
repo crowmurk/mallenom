@@ -12,6 +12,15 @@ from django.utils.translation import ugettext_lazy as _
 # Create your views here.
 
 class ActionTableDeleteMixin:
+    """Удаляет записи из таблиц в представлении.
+
+    Для для удаления из БД должна быть задана model в переменной
+    action_table_model. Если представление содержит несколько
+    таблиц, необходимио в списке action_table_multitables для
+    каждой таблице задать словарь содержащий имя модели (ключ
+    action_table_model) и имя соответствующей кнопки (ключ
+    action_table_button) для обработки нажатия.
+    """
     action_table_model = None
     action_table_button = "action-table-button"
     action_table_success_message = None
@@ -20,6 +29,7 @@ class ActionTableDeleteMixin:
 
     def post(self, request, *args, **kwargs):
         if self.action_table_model:
+            # Задана одна таблица
             self.action_table_multitables = [
                 {
                     'model': self.action_table_model,
@@ -29,7 +39,9 @@ class ActionTableDeleteMixin:
                 }
             ]
         elif self.action_table_multitables:
+            # Задано несолько таблиц
             for action_table in self.action_table_multitables:
+                # Должна быть задана как минимум model
                 if not action_table.get('model'):
                     raise ImproperlyConfigured(
                         "You must specify model in action_table_multitables"
@@ -39,6 +51,7 @@ class ActionTableDeleteMixin:
                         )
                     )
         else:
+            # Должна быть задана как минимум model
             raise ImproperlyConfigured(
                 "You must specify action_table_model or action_table_multitables"
                 " ({class_name}) to configure {mixin_name}".format(
@@ -47,6 +60,7 @@ class ActionTableDeleteMixin:
                 )
             )
 
+        # Удаляем записи из таблиц
         for action_table in self.action_table_multitables:
             model = action_table['model']
             button = action_table.get('button', self.action_table_button)
@@ -59,6 +73,7 @@ class ActionTableDeleteMixin:
                 self.action_table_success_message,
             )
 
+            # Сообщения по умолчанию
             if not success_message:
                 success_message = _("{name} were deleted successfuly").format(
                     name=model._meta.verbose_name_plural
@@ -70,6 +85,7 @@ class ActionTableDeleteMixin:
                                       name=model._meta.verbose_name_plural.lower()
                 )
 
+            # Удаляем записи из БД
             button = request.POST.get(button)
             pks = request.POST.getlist(button)
             if pks:
@@ -84,6 +100,8 @@ class ActionTableDeleteMixin:
 
 
 class DeleteMessageMixin:
+    """Выводит сообщение о результате удаления записи.
+    """
     success_message = None
     error_message = None
 
@@ -96,8 +114,10 @@ class DeleteMessageMixin:
                 success_message = _("{name} was deleted successfuly").format(
                     name=self.model._meta.verbose_name
                 )
+            # Удаление прошло успешно
             messages.success(self.request, success_message)
         except ProtectedError:
+            # Запись защищена от удаления
             if self.error_message:
                 error_message = self.error_message
             else:
@@ -111,13 +131,13 @@ class DeleteMessageMixin:
 
 
 class SingleFormSetMixin:
-    """Добавляет formset форму
+    """Добавляет formset в контекст формы.
     """
     formset = None
     paginate_by = None
 
     def get_context_data(self, *args, **kwargs):
-        """ Добавляет formset в контекст
+        """ Добавляет formset в контекст.
         """
         if not self.formset:
             raise ImproperlyConfigured(
@@ -134,6 +154,7 @@ class SingleFormSetMixin:
             **{self.formset.fk.name: self.object}
         )
 
+        # Добавляем paginator
         if self.paginate_by:
             paginator = Paginator(queryset, self.paginate_by)
             page = self.request.GET.get('page')
@@ -151,6 +172,7 @@ class SingleFormSetMixin:
 
             context_data['paginator'] = page_objects
 
+        # Добавляем formset
         if self.request.method == 'POST':
             context_data['formset'] = self.formset(
                 self.request.POST,
@@ -165,7 +187,7 @@ class SingleFormSetMixin:
         return context_data
 
     def form_valid(self, form):
-        """ Сохраняет formset
+        """ Сохраняет formset.
         """
         redirect = super().form_valid(form)
         formset = self.formset(
@@ -177,6 +199,7 @@ class SingleFormSetMixin:
             try:
                 formset.save()
             except ProtectedError:
+                # Запись защищена от удаления
                 error_message = _("Cannot delete {name} because of"
                                   " foreign references").format(
                                       name=formset.model._meta.verbose_name.lower()

@@ -37,6 +37,8 @@ class AssignmentForm(forms.ModelForm):
         exclude = ('projects', )
 
     def __init__(self, *args, **kwargs):
+        """В форме должны отображаться только занимаемые должности.
+        """
         super().__init__(*args, **kwargs)
         self.fields['employment'].queryset = Employment.objects.filter(
             count__gt=0,
@@ -51,6 +53,7 @@ class AssignmentForm(forms.ModelForm):
         employee = cleaned_data['employee']
         employment = cleaned_data['employment']
 
+        # Знанимаемя должность должна соответствовать сотруднику
         if employee != employment.employee:
             self.add_error(
                 'employment',
@@ -67,6 +70,7 @@ class AssignmentForm(forms.ModelForm):
                 ),
             )
 
+        # Назначения задаются на неделю
         start = cleaned_data['start']
         end = cleaned_data['end']
 
@@ -109,10 +113,15 @@ class ProjectAssignmentForm(forms.ModelForm):
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
+        """В форме должны отображаться только активыне проекты.
+        """
         super().__init__(*args, **kwargs)
         self.fields['project'].queryset = Project.objects.filter(status=True)
 
     def clean(self):
+        """Колличество часов в назначении не должно превышать максимально
+        допустимое кол-во рабочих часов c учетом штатных едениц.
+        """
         cleaned_data = super().clean()
 
         if any(self.errors):
@@ -183,6 +192,8 @@ class AbsenceForm(forms.ModelForm):
         )
 
     def __init__(self, *args, **kwargs):
+        """В форме должны отображаться только занимаемые должности.
+        """
         super().__init__(*args, **kwargs)
         self.fields['employment'].queryset = Employment.objects.filter(
             count__gt=0,
@@ -197,6 +208,7 @@ class AbsenceForm(forms.ModelForm):
         employee = cleaned_data['employee']
         employment = cleaned_data['employment']
 
+        # Занимаемая должность должна соответствовать сотруднику
         if employee != employment.employee:
             self.add_error(
                 'employment',
@@ -213,6 +225,7 @@ class AbsenceForm(forms.ModelForm):
                 ),
             )
 
+        # Неделя должна начинаться раньше чем заканчиваться
         start = cleaned_data['start']
         end = cleaned_data['end']
 
@@ -228,6 +241,8 @@ class AbsenceForm(forms.ModelForm):
                 ),
             )
 
+        # Кол-во часов не должно превышать допустимое
+        # кол-во рабочих часов за период
         hours = cleaned_data['hours']
         hours_max = Day.objects.get_work_hours_count(
             start,
@@ -247,6 +262,7 @@ class AbsenceForm(forms.ModelForm):
                 ),
             )
 
+        # Отсутствия по занимаемой должности не должны пересекаться
         absences = self._meta.model.objects.filter(
             end__gte=start,
             start__lte=end,
@@ -285,6 +301,9 @@ class AbsenceForm(forms.ModelForm):
 
 class BaseProjectAssignmentFormSet(forms.BaseInlineFormSet):
     def clean(self):
+        """Кол-во часов не должно превышать допустимое
+        кол-во рабочих часов за период.
+        """
         cleaned_data = super().clean()
 
         if any(self.errors):

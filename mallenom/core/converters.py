@@ -1,4 +1,7 @@
 class RussianSlugConverter:
+    """URL converter для поддержки кирилицы
+    в адресной строке (необходима регистрация).
+    """
     regex = '[-а-яА-Яa-zA-Z0-9_]+'
 
     def to_python(self, value):

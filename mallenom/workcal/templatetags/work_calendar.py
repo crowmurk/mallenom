@@ -33,6 +33,9 @@ class WorkCalendarNode(template.Node):
 
 class WorkCalendar(calendar.LocaleHTMLCalendar):
     def __init__(self, firstweekday=0, locale=None):
+        """Метод переопределен для поддержки языков,
+        добавления ссылок и стилей к элементам календаря.
+        """
         locales = {
             'en': 'en_US.UTF-8',
             'ru': 'ru_RU.UTF-8',
@@ -57,12 +60,14 @@ class WorkCalendar(calendar.LocaleHTMLCalendar):
             if locale == locales['en']:
                 calendar.month_name = month_name_en
 
+        # Дни, присутствующие в БД
         self.unusual_days = {
             day.date: {
                 'css_class': day.day_type.css_class,
                 'url': day.get_absolute_url(),
             } for day in Day.objects.all()
         }
+
         self.cssclass_year_head = 'year-head'
 
         self.day_create_url = reverse('workcal:day:create')
@@ -70,6 +75,9 @@ class WorkCalendar(calendar.LocaleHTMLCalendar):
         super(WorkCalendar, self).__init__(firstweekday, locale)
 
     def formatmonth(self, theyear, themonth, withyear=True):
+        """Переопределен для добавления переменных year и month
+        для доступа из formatday к данным о текущем годе и месяце.
+        """
         self.year, self.month = theyear, themonth
         return super(WorkCalendar, self).formatmonth(
             theyear,
@@ -78,9 +86,11 @@ class WorkCalendar(calendar.LocaleHTMLCalendar):
         )
 
     def formatday(self, day, weekday):
-        """ Return a day as a table cell.
+        """ Возвращает день ка ячейку html таблицы
+            (добавляет css стили и ссылки на дни).
         """
         if day == 0:
+            # День отсутствует в сетке на месяц
             try:
                 return '<td class="%s">&nbsp;</td>' % self.cssclass_noday
             except AttributeError:
@@ -90,6 +100,7 @@ class WorkCalendar(calendar.LocaleHTMLCalendar):
             unusual_day = self.unusual_days.get(date)
 
             if unusual_day:
+                # День присутствует в БД
                 return '<td class="{csscls}"><a class="{acls}" href="{url}">{day}</a></td>'.format(
                     csscls=self.cssclasses[weekday],
                     acls=unusual_day['css_class'],

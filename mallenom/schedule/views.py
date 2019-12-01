@@ -137,6 +137,8 @@ class AssignmentUpdate(SingleFormSetMixin, UpdateView):
     formset = ProjectAssignmentFormSet
 
     def get_initial(self):
+        """Добавляет Employee в контекст формы.
+        """
         initial = {'employee': self.object.employment.employee}
         initial.update(self.initial)
         return initial
@@ -214,6 +216,8 @@ class AbsenceUpdate(UpdateView):
     form_class = AbsenceForm
 
     def get_initial(self):
+        """Добавляет Employee в контекст формы.
+        """
         initial = {'employee': self.object.employment.employee}
         initial.update(self.initial)
         return initial

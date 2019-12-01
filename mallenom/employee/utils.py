@@ -4,16 +4,19 @@ from .models import Employee, Employment
 
 
 class EmployeeContextMixin():
+    """Добавляет объект Employee в контекст
+    представлений Employment.
+    """
     # Имя переменной для использования в контексте
     employee_context_object_name = 'employee'
-    """Имя переданного аргумента в URLConf,
-    содержащего значение slug
-    """
+
+    # Имя переданного аргумента в URLConf,
+    # содержащего значение slug
     employee_slug_url_kwarg = 'slug'
 
     def get_context_data(self, **kwargs):
         """Добавляет объект Employee в контекст
-        представлений Employment
+        представлений Employment.
         """
         if hasattr(self, 'employee'):
             context = {
@@ -35,9 +38,10 @@ class EmployeeContextMixin():
 
 
 class EmploymentGetObjectMixin():
+    """Получает связаный с Employee объект Employment.
+    """
     def get_object(self, queryset=None):
-        """Возвращает объект Employment, который отображается
-        представлениями
+        """Возвращает связанный с Employee объект Employment.
         """
         # Получаем slug из аргументов переданных представлению
         employee_slug = self.kwargs.get(self.employee_slug_url_kwarg)

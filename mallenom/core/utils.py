@@ -3,17 +3,21 @@ from django.utils.text import slugify
 
 def get_unique_slug(instance, slug_field, *args, **kwargs):
     """ Генерирует уникальный slug.
-    Аргументы:
+
+    Args:
         instance - экземпляр модели
         slug_field - строка с именем поля в котором хранится slug
         args - источник для создания slug:
             строки с  именами полей экземпляра или
             строки значений для создания slug
+
+    Kwargs:
         unique=True - должен ли slug быть уникальным или
         unique_for= () - строка или список строк с именами полей
             экземпляра с учетом которых slug должен быть уникальным
         prohibit = () - строка или  список строк запрещенных значений slug
-    Возвращает:
+
+    Returns:
         строку с уникальным slug
     """
     def tuple_from_kwarg(name, **kwargs):

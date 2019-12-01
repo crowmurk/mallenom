@@ -131,6 +131,8 @@ class EmploymentCreate(
     form_class = EmploymentForm
 
     def get_initial(self):
+        """Добавляет Employee в контекст формы.
+        """
         employee_slug = self.kwargs.get(
             self.employee_slug_url_kwarg)
         self.employee = get_object_or_404(

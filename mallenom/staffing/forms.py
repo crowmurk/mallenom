@@ -25,6 +25,9 @@ class StaffingForm(forms.ModelForm):
         fields = '__all__'
 
     def clean_count(self):
+        """Колличество штатных единиц в рассписании не должно
+        быть меньше чем занято по штатной расстановке.
+        """
         if any(self.errors):
             return None
 
