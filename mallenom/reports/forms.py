@@ -54,8 +54,9 @@ class ReportDownloadForm(forms.Form):
             return None
 
         end = self.cleaned_data['end']
+        month_length = monthrange(end.year, end.month)[1]
 
-        if end.weekday() == 6 or end.day == monthrange(end.year, end.month)[1]:
+        if end.weekday() == 6 or end.day == month_length:
             return end
 
         raise forms.ValidationError(
@@ -71,11 +72,11 @@ class ReportDownloadForm(forms.Form):
         start = cleaned_data['start']
         end = cleaned_data['end']
 
-        if start >= end:
+        if start > end:
             self.add_error(
                 'start',
                 forms.ValidationError(
-                    _('This value must be less than %(end)s'),
+                    _('This value must be less or equal than %(end)s'),
                     code='invalid',
                     params={
                         'end': end,

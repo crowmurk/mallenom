@@ -1,19 +1,18 @@
-import datetime
-
 from django.db import models
+
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.core.validators import validate_unicode_slug, MaxValueValidator
 
-from core.validators import (
-    validate_slug,
-    validate_monday,
-    validate_sunday,
-    validate_positive,
-)
+from core.validators import validate_slug, validate_positive
 from core.utils import get_unique_slug
 
 from employee.models import Employment
+
+from schedule.validators import (
+    validate_assignment_start,
+    validate_assignment_end,
+)
 
 # Create your models here.
 
@@ -114,7 +113,7 @@ class Assignment(models.Model):
         null=False,
         blank=False,
         validators=[
-            validate_monday,
+            validate_assignment_start,
         ],
         verbose_name=_('Start'),
     )
@@ -122,7 +121,7 @@ class Assignment(models.Model):
         null=False,
         blank=False,
         validators=[
-            validate_sunday,
+            validate_assignment_end,
         ],
         verbose_name=_('End'),
     )
@@ -143,10 +142,8 @@ class Assignment(models.Model):
         ordering = ['-start', ]
         constraints = [
             models.CheckConstraint(
-                check=models.Q(
-                    start__exact=models.F('end') - datetime.timedelta(days=6)
-                ),
-                name='correct_assignment_week_range',
+                check=models.Q(start__lte=models.F('end')),
+                name='correct_assignment_range',
             ),
         ]
 

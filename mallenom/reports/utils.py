@@ -1,6 +1,3 @@
-import datetime
-from copy import deepcopy
-
 from django.db.models import F, Value as V, Sum, PositiveSmallIntegerField
 from django.db.models.expressions import Subquery, OuterRef
 from django.db.models.functions import Concat, Coalesce
@@ -28,13 +25,10 @@ class DataBuilder:
         # Точность округления
         self.precision = kwargs.get('precision', 2)
 
-    @staticmethod
-    def _get_assignment_queryset(start, end, *fields):
+    def _get_assignment_queryset(self, *fields):
         """Формирует queryset к Assignment.
 
         Args:
-            start - начальная дата
-            end - конечная дата
             *fields - поля запроса
 
         Returns:
@@ -46,8 +40,8 @@ class DataBuilder:
             ProjectAssignment.objects.filter(
                 project=OuterRef('projectassignments__project'),
                 assignment__employment=OuterRef('employment'),
-                assignment__start__gte=start,
-                assignment__end__lte=end,
+                assignment__start__gte=self.start,
+                assignment__end__lte=self.end,
             ).values('project').order_by('project').annotate(
                 sum=Coalesce(Sum('hours'), 0)
             ).values('sum'),
@@ -58,8 +52,8 @@ class DataBuilder:
         employment_hours = Subquery(
             ProjectAssignment.objects.filter(
                 assignment__employment=OuterRef('employment'),
-                assignment__start__gte=start,
-                assignment__end__lte=end,
+                assignment__start__gte=self.start,
+                assignment__end__lte=self.end,
             ).values('assignment__employment').order_by(
                 'assignment__employment'
             ).annotate(
@@ -71,8 +65,8 @@ class DataBuilder:
         # Выбираем записи полностью попадающие в интервал
         queryset = Assignment.objects.filter(
             projects__isnull=False,
-            start__gte=start,
-            end__lte=end,
+            start__gte=self.start,
+            end__lte=self.end,
         ).annotate(
             employee=Concat(
                 F('employment__employee__last_name'), V(' '),
@@ -90,23 +84,20 @@ class DataBuilder:
 
         return queryset
 
-    @staticmethod
-    def _get_absence_queryset(start, end, *fields):
+    def _get_absence_queryset(self, *fields):
         """Формирует queryset к Absence.
 
         Args:
-            start - начальная дата
-            end - конечная дата
             *fields - поля запроса
 
         Returns:
             queryset
         """
 
-        # Выбираем записи частично попадающие в интервал
+        # Выбираем записи полностью попадающие в интервал
         queryset = Absence.objects.filter(
-            end__gte=start,
-            start__lte=end
+            start__gte=self.start,
+            end__lte=self.end,
         ).annotate(
             employee=Concat(
                 F('employment__employee__last_name'), V(' '),
@@ -122,57 +113,13 @@ class DataBuilder:
 
         return queryset
 
-    @staticmethod
-    def _update_data(data, addition, key_fields, update_fields, factor=1):
-        """Обновляет список data данными из addition:
-
-        Ищет элементы в списках data и addition, значения полей key_fields
-        которых совпадают. Суммирует значения соответствующих полей
-        update_fields, результат сохраняет в data. Если элемент из addition
-        отсутсвует в data, он туда добавляется.
-
-        Args:
-            data, addition, key_fields, update_fields
-
-        Kwargs:
-            factor - множитель, модификатор значений полей
-                update_fields из addition при добавлении
-
-        Returns:
-            модифицированную копию data
-        """
-
-        data = deepcopy(data)
-        addition = deepcopy(addition)
-
-        for item in addition:
-            # Обновляем значения update_fields в addition
-            for field in update_fields:
-                item[field] *= factor
-
-            # Ищем элемент в data по key_fields
-            index = next((
-                index for index, value in enumerate(data)
-                if all([value[field] == item[field] for field in key_fields])
-            ), None)
-
-            # Если элемент найден
-            if index is not None:
-                # Обновляем update_fields в data
-                for field in update_fields:
-                    data[index][field] += item[field]
-            else:
-                data.append(item)
-
-        return data
-
     def _round_iterable(self, iterable, whole):
-        """Округляет значения из списка iterable так, чтобы
-        сумма округленных значений была равна округленной
-        сумме значений списка - whole.
+        """Округляет значения из списка так, чтобы сумма округленных
+        значений списка была равна округленной сумме значений.
 
         Args:
-            iterable, whole
+            iterable - список значений для округления
+            whole - округленная сумма значений списка
 
         Returns:
             список округленных значений
@@ -212,11 +159,6 @@ class DataBuilder:
     def _get_assignment_data(self, fields):
         """Формирует данные о назначениях.
 
-        т.к. назначения задаются по неделям, а начало и конец отчета
-        могут быть так же началом и концом месяца, необходимо данные о
-        часах в назначениях полностью входящих в диапазон отчета обновить
-        данными назначений попадающих в отчет частично.
-
         Args:
             fields - поля, которые должны присутсвовать в данных
 
@@ -225,68 +167,10 @@ class DataBuilder:
         """
 
         # Получаем данные из БД
-        # (назначения, полностю входящие в диапазон отчета)
-        data = list(self._get_assignment_queryset(self.start, self.end, *fields))
-
-        # Поля для идентификации назначений в полученных данных
-        search_fields = tuple(filter(
-            lambda i: i in fields,
-            ('number', 'project'),
-        ))
-        # Поля в назначениях, которые необходимо обновить
-        update_fields = tuple(filter(
-            lambda i: i in fields,
-            ('project_hours', 'employment_hours'),
-        ))
-
-        # Если дата начала отчета не начало недели
-        if self.start.weekday():
-            # Определяем начало и конец недели
-            week_start = self.start - datetime.timedelta(days=self.start.weekday())
-            week_end = self.start + datetime.timedelta(days=6 - self.start.weekday())
-            # Получаем назначения на эту неделю
-            week = list(self._get_assignment_queryset(week_start, week_end, *fields))
-
-            # Находим долю рабочих часов в назначениях, попадающую в отчет
-            total_work_hours = Day.objects.get_work_hours_count(week_start, week_end)
-            assignment_work_hours = Day.objects.get_work_hours_count(self.start, week_end)
-            factor = assignment_work_hours / total_work_hours
-
-            # Обновляем данные для отчета
-            data = self._update_data(
-                data, week,
-                search_fields, update_fields,
-                factor,
-            )
-
-        # Дата конца отчета не конец недели
-        if self.end.weekday() < 6:
-            # Определяем начало и конец недели
-            week_start = self.end - datetime.timedelta(days=self.end.weekday())
-            week_end = self.end + datetime.timedelta(days=6 - self.end.weekday())
-            # Получаем назначения на эту неделю
-            week = list(self._get_assignment_queryset(week_start, week_end, *fields))
-
-            # Находим долю рабочих часов в назначениях, попадающую в отчет
-            total_work_hours = Day.objects.get_work_hours_count(week_start, week_end)
-            assignment_work_hours = Day.objects.get_work_hours_count(week_start, self.end)
-            factor = assignment_work_hours / total_work_hours
-
-            # Обновляем данные для отчета
-            data = self._update_data(
-                data, week,
-                search_fields, update_fields,
-                factor,
-            )
-
-        return data
+        return list(self._get_assignment_queryset(self.start, self.end, *fields))
 
     def _get_absence_data(self, fields):
         """Формирует данные об отсутствиях.
-
-        т.к дни отсутсвия сотрудников могут пересекаться с диапазоном
-        отчета частично, необходимо часы отсутсвия обновить пропорционально
-        пересечению, попадающему в отчет.
 
         Args:
             fields - поля, которые должны присутсвовать в данных
@@ -295,40 +179,8 @@ class DataBuilder:
             данные об отсутствиях
         """
 
-        queryset_fields = list(fields)
-        queryset_fields.extend(['start', 'end'])
-
         # Получаем данные из БД
-        # (отсутсвия частично или полностью попадающие в отчет)
-        data = list(self._get_absence_queryset(self.start, self.end, *queryset_fields))
-
-        for item in data:
-            # Отсутствие полностью попадает в отчет
-            if self.start <= item['start'] and self.end >= item['end']:
-                continue
-
-            # Колличество рабочих часов на дни отсутствия
-            absence_work_hours = Day.objects.get_work_hours_count(item['start'], item['end'])
-
-            # Колличество рабочих часов в дни отсутствия, попадающие в отчет
-            if item['start'] < self.start and item['end'] > self.end:
-                intersection_work_hours = Day.objects.get_work_hours_count(self.start, self.end)
-            elif item['start'] >= self.start and item['end'] > self.end:
-                intersection_work_hours = Day.objects.get_work_hours_count(item['start'], self.end)
-            elif item['start'] < self.start and item['end'] <= self.end:
-                intersection_work_hours = Day.objects.get_work_hours_count(self.start, item['end'])
-
-            # Обновляем часы отсутсвия
-            item['absence_hours'] *= (intersection_work_hours / absence_work_hours)
-
-        # Формируем данные об отсутствиях (убираем дубликаты
-        # для занимаемых должностей, суммируя часы)
-        data = self._update_data([], data, ('number', ), ('absence_hours', ), 1)
-
-        # Убираем лишние поля
-        data = [{key: item[key] for key in fields} for item in data]
-
-        return data
+        return list(self._get_absence_queryset(self.start, self.end, *fields))
 
     def assignment_report(self):
         """Формирует данные для размещения в отчете.

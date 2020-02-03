@@ -1,7 +1,5 @@
-import datetime
-
-from django.db import models
 from django import forms
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from employee.models import Employee, Employment
@@ -50,10 +48,10 @@ class AssignmentForm(forms.ModelForm):
         if any(self.errors):
             return cleaned_data
 
+        # Знанимаемая должность должна соответствовать сотруднику
         employee = cleaned_data['employee']
         employment = cleaned_data['employment']
 
-        # Знанимаемя должность должна соответствовать сотруднику
         if employee != employment.employee:
             self.add_error(
                 'employment',
@@ -70,34 +68,38 @@ class AssignmentForm(forms.ModelForm):
                 ),
             )
 
-        # Назначения задаются на неделю
+        # Назначение должно начинаться раньше чем заканчиваться
         start = cleaned_data['start']
         end = cleaned_data['end']
 
-        delta = end - start
-
-        if start >= end:
+        if start > end:
             self.add_error(
                 'start',
                 forms.ValidationError(
-                    _('Start date must be less than %(end)s'),
+                    _('This value must be less or equal than %(end)s'),
                     code='invalid',
                     params={
                         'end': end,
                     },
                 ),
             )
-        elif delta != datetime.timedelta(days=6):
+
+        # Назначения должно быть в пределах недели и месяца
+        start_week = start.isocalendar()[1]
+        end_week = end.isocalendar()[1]
+
+        if start.year != end.year or start.month != end.month or start_week != end_week:
             self.add_error(
-                'end',
+                'start',
                 forms.ValidationError(
-                    _('There are seven days in a week, not %(delta)s'),
+                    _('%(model_verbose)s dates must be within same week and month'),
                     code='invalid',
                     params={
-                        'delta': delta.days + 1,
+                        'model_verbose': self._meta.model._meta.verbose_name.lower(),
                     },
                 ),
             )
+
         return cleaned_data
 
 
@@ -205,10 +207,10 @@ class AbsenceForm(forms.ModelForm):
         if any(self.errors):
             return cleaned_data
 
+        # Занимаемая должность должна соответствовать сотруднику
         employee = cleaned_data['employee']
         employment = cleaned_data['employment']
 
-        # Занимаемая должность должна соответствовать сотруднику
         if employee != employment.employee:
             self.add_error(
                 'employment',
@@ -225,7 +227,7 @@ class AbsenceForm(forms.ModelForm):
                 ),
             )
 
-        # Неделя должна начинаться раньше чем заканчиваться
+        # Отсутствие должно начинаться раньше чем заканчиваться
         start = cleaned_data['start']
         end = cleaned_data['end']
 
@@ -233,10 +235,26 @@ class AbsenceForm(forms.ModelForm):
             self.add_error(
                 'start',
                 forms.ValidationError(
-                    _('Start date must be less or equal %(end)s'),
+                    _('This value must be less or equal %(end)s'),
                     code='invalid',
                     params={
                         'end': end,
+                    },
+                ),
+            )
+
+        # Отсутствие должно быть в пределах недели и месяца
+        start_week = start.isocalendar()[1]
+        end_week = end.isocalendar()[1]
+
+        if start.year != end.year or start.month != end.month or start_week != end_week:
+            self.add_error(
+                'start',
+                forms.ValidationError(
+                    _('%(model_verbose)s dates must be within same week and month'),
+                    code='invalid',
+                    params={
+                        'model_verbose': self._meta.model._meta.verbose_name.lower(),
                     },
                 ),
             )

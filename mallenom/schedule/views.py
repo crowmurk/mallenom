@@ -1,3 +1,7 @@
+from django.db.models import Q
+from django.db.models.functions import ExtractMonth, ExtractWeek
+from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -94,6 +98,13 @@ class AssignmentList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     filterset_class = AssignmentFilter
     template_name = 'schedule/assignment_list.html'
     action_table_model = Assignment
+
+    def get(self, request, *args, **kwargs):
+        """Сообщение при наличии назначений приходящихся на разные месяцы
+        """
+        if Assignment.objects.exclude(start__month=ExtractMonth('end')).exists():
+            messages.error(self.request, _('Records with invalid dates were found'))
+        return super(AssignmentList, self).get(request, *args, **kwargs)
 
     def get_table_kwargs(self):
         if self.request.user.is_superuser:
@@ -192,6 +203,16 @@ class AbsenceList(SingleTableMixin, ActionTableDeleteMixin, FilterView):
     filterset_class = AbsenceFilter
     template_name = 'schedule/absence_list.html'
     action_table_model = Absence
+
+    def get(self, request, *args, **kwargs):
+        """Сообщение при наличии отсутствий
+        приходящихся на разные недели или месяцы
+        """
+        if Absence.objects.exclude(
+                Q(start__month=ExtractMonth('end')) | Q(start__week=ExtractWeek('end')),
+        ).exists():
+            messages.error(self.request, _('Records with invalid dates were found'))
+        return super(AbsenceList, self).get(request, *args, **kwargs)
 
     def get_table_kwargs(self):
         if self.request.user.is_superuser:
