@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-01 17:52+0300\n"
+"POT-Creation-Date: 2020-02-03 19:02+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -196,7 +196,7 @@ msgid "Department"
 msgstr "Отдел"
 
 #: employee/filters.py:45 employee/tables.py:49 reports/reports.py:205
-#: reports/reports.py:435 schedule/models.py:111 schedule/models.py:268
+#: reports/reports.py:435 schedule/models.py:110 schedule/models.py:265
 #: staffing/filters.py:57 staffing/models.py:132 staffing/models.py:190
 #: staffing/tables.py:42
 msgid "Position"
@@ -228,7 +228,7 @@ msgstr "Имя"
 msgid "Middle name"
 msgstr "Отчество"
 
-#: employee/models.py:76 schedule/models.py:51 staffing/models.py:47
+#: employee/models.py:76 schedule/models.py:50 staffing/models.py:47
 #: staffing/models.py:126 workcal/models.py:65 workcal/models.py:198
 msgid "A label for URL config."
 msgstr "URL идентификатор объекта"
@@ -360,7 +360,11 @@ msgstr "Администрирование сайта Mallenom"
 msgid "Site administration"
 msgstr "Администрирование сайта"
 
-#: reports/forms.py:13 reports/reports.py:191 schedule/models.py:141
+#: reports/apps.py:7 templates/base.html:71
+msgid "Reports"
+msgstr "Отчеты"
+
+#: reports/forms.py:13 reports/reports.py:191 schedule/models.py:140
 msgid "Employees' assignments"
 msgstr "Назначения для сотрудников"
 
@@ -412,16 +416,16 @@ msgstr "Ориентация страницы"
 msgid "This value must be a Monday or first day of a month"
 msgstr "Это значение должно быть понедельником или первым днем месяца"
 
-#: reports/forms.py:62
+#: reports/forms.py:63
 msgid "This value must be a Sunday or last day of a month"
 msgstr "Это значение должно быть воскресеньем или последним днем месяца"
 
-#: reports/forms.py:78
+#: reports/forms.py:79 schedule/forms.py:79
 #, python-format
-msgid "This value must be less than %(end)s"
-msgstr "Это значение должно быть меньше чем %(end)s"
+msgid "This value must be less or equal than %(end)s"
+msgstr "Это значение должно быть меньше или равно %(end)s"
 
-#: reports/forms.py:97
+#: reports/forms.py:98
 msgid "Report can be weeks or months range only"
 msgstr "Отчет может быть создан только по неделям или по месяцам"
 
@@ -439,11 +443,11 @@ msgid "From {start} to {end}:"
 msgstr "С {start} по {end}:"
 
 #: reports/reports.py:205 schedule/filters.py:39 schedule/filters.py:115
-#: schedule/models.py:57 schedule/models.py:197
+#: schedule/models.py:56 schedule/models.py:194
 msgid "Project"
 msgstr "Проект"
 
-#: reports/reports.py:205 schedule/models.py:214 schedule/models.py:286
+#: reports/reports.py:205 schedule/models.py:211 schedule/models.py:283
 #: schedule/tables.py:17 schedule/tables.py:53 workcal/models.py:35
 msgid "Hours"
 msgstr "Часы"
@@ -516,36 +520,31 @@ msgstr "Месяц/Год"
 msgid "[MM/]YYYY"
 msgstr "[ММ]/ГГГГ"
 
-#: schedule/forms.py:28 schedule/forms.py:108
+#: schedule/forms.py:26 schedule/forms.py:110
 msgid "Check hours"
 msgstr "Проверить часы"
 
-#: schedule/forms.py:61 schedule/forms.py:216
+#: schedule/forms.py:59 schedule/forms.py:218
 #, python-format
 msgid "Selected %(employee_verbose)s does not hold this %(position_verbose)s"
 msgstr "Выбранный %(employee_verbose)s не занимает эту %(position_verbose)s"
 
-#: schedule/forms.py:83
+#: schedule/forms.py:95 schedule/forms.py:254
 #, python-format
-msgid "Start date must be less than %(end)s"
-msgstr "Начальная дата должна быть меньше чем %(end)s"
+msgid "%(model_verbose)s dates must be within same week and month"
+msgstr "Даты для %(model_verbose)s должны быть в пределах недели и месяца"
 
-#: schedule/forms.py:94
-#, python-format
-msgid "There are seven days in a week, not %(delta)s"
-msgstr "В неделе семь дней, не %(delta)s"
-
-#: schedule/forms.py:162 schedule/forms.py:256
+#: schedule/forms.py:164 schedule/forms.py:274
 #, python-format
 msgid "This value must be less than or equal to %(hours)s"
 msgstr "Это значение должно быть меньше или равно %(hours)s"
 
-#: schedule/forms.py:236
+#: schedule/forms.py:238
 #, python-format
-msgid "Start date must be less or equal %(end)s"
-msgstr "Начальная дата должна быть меньше или равна %(end)s"
+msgid "This value must be less or equal %(end)s"
+msgstr "Это значение должно быть меньше или равно %(end)s"
 
-#: schedule/forms.py:280
+#: schedule/forms.py:298
 #, python-format
 msgid ""
 "Range %(start_verbose)s - %(end_verbose)s overlapps already existed "
@@ -554,77 +553,77 @@ msgstr ""
 "Диапазон %(start_verbose)s - %(end_verbose)s пересекается с уже сущестующим "
 "%(absence_verbose)s с таким же значением %(employment_verbose)s"
 
-#: schedule/forms.py:338
+#: schedule/forms.py:356
 #, python-format
 msgid ""
 "%(hours_name)s must be less than or equal to %(hours_available)s summary"
 msgstr ""
 "%(hours_name)s должны быть меньше или равны %(hours_available)s в сумме"
 
-#: schedule/models.py:34 staffing/models.py:36 staffing/models.py:115
+#: schedule/models.py:33 staffing/models.py:36 staffing/models.py:115
 #: workcal/models.py:27
 msgid "Name"
 msgstr "Название"
 
-#: schedule/models.py:40
+#: schedule/models.py:39
 msgid "Status"
 msgstr "Статус"
 
-#: schedule/models.py:58 schedule/models.py:134 templates/base.html:70
+#: schedule/models.py:57 schedule/models.py:133 templates/base.html:70
 msgid "Projects"
 msgstr "Проекты"
 
-#: schedule/models.py:119 schedule/models.py:273
+#: schedule/models.py:118 schedule/models.py:270
 msgid "Start"
 msgstr "Начало"
 
-#: schedule/models.py:127 schedule/models.py:278
+#: schedule/models.py:126 schedule/models.py:275
 msgid "End"
 msgstr "Конец"
 
-#: schedule/models.py:140
+#: schedule/models.py:139
 msgid "Employee's assignments"
 msgstr "Назначения для сотрудника"
 
-#: schedule/models.py:154
+#: schedule/models.py:151
 #, python-brace-format
 msgid "{start}-{end}: {employee} ({employment})"
 msgstr "{start}-{end}: {employee} ({employment})"
 
-#: schedule/models.py:205
+#: schedule/models.py:202
 msgid "Assignment"
 msgstr "Назначение"
 
-#: schedule/models.py:220
+#: schedule/models.py:217
 msgid "Project's assigment"
 msgstr "Назначение для проекта"
 
-#: schedule/models.py:221
+#: schedule/models.py:218
 msgid "Projects' assigments"
 msgstr "Назначения для проектов"
 
-#: schedule/models.py:226
+#: schedule/models.py:223
 #, python-brace-format
 msgid "{project}: {assignment} ({hours_verbose}: {hours})"
 msgstr "{project}: {assignment} ({hours_verbose}: {hours})"
 
-#: schedule/models.py:291
+#: schedule/models.py:288
 msgid "Reason"
 msgstr "Причина"
 
-#: schedule/models.py:292
+#: schedule/models.py:289
 msgid "Reason for employee absence"
 msgstr "Причина отсутствия сотрудника"
 
-#: schedule/models.py:298
+#: schedule/models.py:295
 msgid "Employee's absence"
 msgstr "Отсутствие сотрудника"
 
-#: schedule/models.py:299 templates/base.html:69
+#: schedule/models.py:296 templates/base.html:69
 msgid "Employees' absences"
 msgstr "Отсутствия сотрудников"
 
-#: schedule/models.py:310
+#: schedule/models.py:307
 #, python-brace-format
 msgid "{start}-{end}: {employee} ({employment}) {hours_verbose}: {hours}"
 msgstr "{start}-{end}: {employee} ({employment}) {hours_verbose}: {hours}"
@@ -632,6 +631,18 @@ msgstr "{start}-{end}: {employee} ({employment}) {hours_verbose}: {hours}"
 #: schedule/tables.py:11
 msgid "Assignments count"
 msgstr "Число назначений"
+
+#: schedule/validators.py:12
+msgid "This date should be a Monday or first day of a month."
+msgstr "Эта дата должна быть понедельником или первым днем месяца"
+
+#: schedule/validators.py:23
+msgid "This date should be a Sunday or last day of a month."
+msgstr "Эта дата должна быть воскресеньем или последним днем месяца"
+
+#: schedule/views.py:106 schedule/views.py:214
+msgid "Records with invalid dates were found"
+msgstr "Найдены записи с неверными датами"
 
 #: staffing/apps.py:7
 msgid "Staffing"
@@ -711,10 +722,6 @@ msgstr "Выйти"
 #: templates/base.html:34 templates/registration/login.html:37
 msgid "LogIn"
 msgstr "Войти"
-
-#: templates/base.html:71
-msgid "Reports"
-msgstr "Отчеты"
 
 #: templates/base.html:88 workcal/templates/workcal/calendar_detail.html:8
 msgid "Calendar"
@@ -889,3 +896,15 @@ msgstr "CSV импорт завершен с ошибками (подробно�
 #: workcal/views.py:231
 msgid "CSV import finished without errors"
 msgstr "Импорт CSV завершен без ошибок"
+
+#, python-format
+#~ msgid "Start date must be less than %(end)s"
+#~ msgstr "Начальная дата должна быть меньше чем %(end)s"
+
+#, python-format
+#~ msgid "There are seven days in a week, not %(delta)s"
+#~ msgstr "В неделе семь дней, не %(delta)s"
+
+#, python-format
+#~ msgid "Start date must be less or equal %(end)s"
+#~ msgstr "Начальная дата должна быть меньше или равна %(end)s"
