@@ -167,7 +167,7 @@ class DataBuilder:
         """
 
         # Получаем данные из БД
-        return list(self._get_assignment_queryset(self.start, self.end, *fields))
+        return list(self._get_assignment_queryset(*fields))
 
     def _get_absence_data(self, fields):
         """Формирует данные об отсутствиях.
@@ -180,7 +180,7 @@ class DataBuilder:
         """
 
         # Получаем данные из БД
-        return list(self._get_absence_queryset(self.start, self.end, *fields))
+        return list(self._get_absence_queryset(*fields))
 
     def assignment_report(self):
         """Формирует данные для размещения в отчете.
