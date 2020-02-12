@@ -94,6 +94,20 @@ class DataBuilder:
             queryset
         """
 
+        # Сумма часов отсутствия для должности (employment)
+        absence_hours = Subquery(
+            Absence.objects.filter(
+                employment=OuterRef('employment'),
+                start__gte=self.start,
+                end__lte=self.end,
+            ).values('employment').order_by(
+                'employment'
+            ).annotate(
+                sum=Coalesce(Sum('hours'), 0)
+            ).values('sum'),
+            output_field=PositiveSmallIntegerField(),
+        )
+
         # Выбираем записи полностью попадающие в интервал
         queryset = Absence.objects.filter(
             start__gte=self.start,
@@ -108,7 +122,7 @@ class DataBuilder:
             department=F('employment__staffing__department__name'),
             position=F('employment__staffing__position__name'),
             staff_units=F('employment__count'),
-            absence_hours=F('hours'),
+            absence_hours=Coalesce(absence_hours, 0),
         ).order_by('employee').values(*fields).distinct()
 
         return queryset
