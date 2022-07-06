@@ -17,7 +17,7 @@ ipython==7.9.0
 ipython-genutils==0.2.0
 jdcal==1.4.1
 jedi==0.15.1
-lxml==4.4.1
+lxml==4.9.1
 MarkupPy==1.14
 odfpy==1.4.0
 openpyxl==3.0.1
